@@ -23,7 +23,7 @@ public class TestGuest {
 
 
        // System.out.println(guestController.updateGuest(guestRequestDTO));
-        System.out.println(guestController.softUpdateGuest(6L));
+       // System.out.println(guestController.softUpdateGuest(6L));
         guestController.getAllGuest().forEach(System.out::println);
 
     }

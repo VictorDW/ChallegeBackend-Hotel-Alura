@@ -1,19 +1,19 @@
 package controller;
 
 import DAO.LoginDAO;
+import DAO.impl.LoginDAOImpl;
 import DTO.UserDTO;
-import jakarta.persistence.EntityManager;
 import service.LoginService;
 import service.impl.LoginServiceImpl;
 import util.JPAUtils;
 
 public class LoginController {
 
-    private LoginDAO loginDAO;
-    private LoginService loginService;
+    private final LoginService loginService;
 
     public LoginController() {
-        loginDAO = new LoginDAO(JPAUtils.getEntityManager());
+
+        LoginDAO loginDAO = new LoginDAOImpl(JPAUtils.getEntityManager());
         loginService = new LoginServiceImpl(loginDAO);
     }
 
