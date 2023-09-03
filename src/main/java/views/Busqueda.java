@@ -12,6 +12,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -99,16 +100,7 @@ public class Busqueda extends JFrame {
 		tablaHuesped();
 
 		//Codigo para saber en qué tap esta
-	/*panel.addChangeListener((ChangeEvent e) -> {
-				int selectedIndex = panel.getSelectedIndex();
-				if (selectedIndex == 0) {
-					System.out.println("Tab 1 selected");
-
-				} else if (selectedIndex == 1) {
-					System.out.println("Tab 2 selected");
-				}
-			}
-		);*/
+		eventoTapTablas();
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/Ha-100px.png")));
@@ -208,7 +200,7 @@ public class Busqueda extends JFrame {
 		txtFechaEntrada.setBackground(Color.WHITE);
 		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
-		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 16));
 		contentPane.add(txtFechaEntrada);
 
 		//La fecha de salida
@@ -216,6 +208,7 @@ public class Busqueda extends JFrame {
 		JTextFieldDateEditor editorFechaSalida = (JTextFieldDateEditor) txtFechaSalida.getDateEditor();
 		//EVENTO
 		eventoFechas(editorFechaSalida, "Check Out");
+		txtFechaSalida.transferFocus();
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
@@ -224,13 +217,14 @@ public class Busqueda extends JFrame {
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setBorder(new LineBorder(SystemColor.window));
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
-		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 16));
 		contentPane.add(txtFechaSalida);
 
 		//campo de texto de buscar
 		txtBuscar = new JTextField();
+		placeHolderTxtBuscar("Numero de Reserva");
 		eventoTxtBuscar();
-		txtBuscar.requestFocus(true);
+		txtBuscar.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtBuscar.setBounds(589, 115, 150, 31);
 		txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentPane.add(txtBuscar);
@@ -371,6 +365,28 @@ public class Busqueda extends JFrame {
 		cargarTablaHuesped(guestController.getAllGuest());
 	}
 
+	private void eventoTapTablas() {
+
+		panel.addChangeListener((ChangeEvent e) -> {
+
+					int selectedIndex = panel.getSelectedIndex();
+
+					if (selectedIndex == 0) {
+
+						eventoTxtBuscar();
+						txtFechaEntrada.setVisible(true);
+						txtFechaSalida.setVisible(true);
+
+					} else if (selectedIndex == 1) {
+
+						eventoTxtBuscar();
+						txtFechaEntrada.setVisible(false);
+						txtFechaSalida.setVisible(false);
+					}
+				}
+		);
+	}
+
 	private void eventoFechas(JTextFieldDateEditor editorFecha, String placeHolder) {
 		editorFecha.addFocusListener(new FocusListener() {
 			@Override
@@ -390,29 +406,38 @@ public class Busqueda extends JFrame {
 	}
 
 	private void eventoTxtBuscar(){
-		this.txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+		txtBuscar.addFocusListener(new FocusListener() {
 			@Override
-			public void insertUpdate(DocumentEvent e) {
-				checkEmpty();
+			public void focusGained(FocusEvent e) {
+
+				if (txtBuscar.getText().equals("Numero de Reserva") || txtBuscar.getText().equals("Cedula")) {
+					placeHolderTxtBuscar("");
+				}
 			}
 
 			@Override
-			public void removeUpdate(DocumentEvent e) {
-				checkEmpty();
-			}
+			public void focusLost(FocusEvent e) {
 
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				checkEmpty();
-			}
+				int selectedIndex = panel.getSelectedIndex();
 
-			private void checkEmpty() {
 				if (txtBuscar.getText().isEmpty()) {
-					limpiarTabla();
-					cargarTablaReserva(reservationController.getAllReservation());
+
+					if(selectedIndex == 0) {
+						placeHolderTxtBuscar("Numero de Reserva");
+						limpiarTabla(modeloReserva);
+						cargarTablaReserva(reservationController.getAllReservation());
+
+					}else if (selectedIndex == 1){
+
+						placeHolderTxtBuscar("Cedula");
+						limpiarTabla(modeloHuesped);
+						cargarTablaHuesped(guestController.getAllGuest());
+					}
+
 				}
 			}
 		});
+
 	}
 
 	private void eventoBtnBuscar(JPanel btnBuscar, JTabbedPane panel){
@@ -440,20 +465,27 @@ public class Busqueda extends JFrame {
 
 					}
 
-					limpiarTabla();
+					limpiarTabla(modeloReserva);
 					consultaParametrosReserva(txtBuscar.getText().toUpperCase(), checkIn, checkOut);
 					placeHolderFechas((JTextFieldDateEditor) txtFechaEntrada.getDateEditor(),"Check In");
 					placeHolderFechas((JTextFieldDateEditor) txtFechaSalida.getDateEditor(),"Check Out");
-				}else
-					System.out.println("huesped");
+				}else{
+					limpiarTabla(modeloHuesped);
+					consultarParametroCedula(txtBuscar.getText());
+				}
 			}
+
 		});
 	}
 
-	private void limpiarTabla() {
-		modeloReserva.getDataVector().clear();
+	private void limpiarTabla(DefaultTableModel modelo) {
+		modelo.getDataVector().clear();
 	}
 
+	private void placeHolderTxtBuscar(String placeHolder){
+		txtBuscar.setText(placeHolder);
+		txtBuscar.setForeground(Color.GRAY);
+	}
 	private void placeHolderFechas(JTextFieldDateEditor editorFecha, String placeHolder){
 		editorFecha.setText(placeHolder);
 		editorFecha.setForeground(Color.GRAY);
@@ -463,7 +495,7 @@ public class Busqueda extends JFrame {
 
 		//SE CREA EL DTO QUE VA ALMACENAR LA INFORMACIÓN
 		ReservationByParametersDTO reservationByParametersDTO = new ReservationByParametersDTO();
-		reservationByParametersDTO.setReservationCod(cod);
+		reservationByParametersDTO.setReservationCod(cod.equals("NUMERO DE RESERVA") ? null : cod);
 		reservationByParametersDTO.setCheckIn(checkIn);
 		reservationByParametersDTO.setCheckOut(checkOut);
 
@@ -475,6 +507,17 @@ public class Busqueda extends JFrame {
 		else
 			cargarTablaReserva(reservationList);
 
+	}
+
+	private void consultarParametroCedula(String cedula) {
+
+		List<GuestDTO> guestList = guestController.getGuestsByCedula(cedula.equals("Cedula") ? null : cedula);
+
+		if (guestList.isEmpty()){
+			JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
+		}
+		else
+			cargarTablaHuesped(guestList);
 	}
 
 	private void cargarTablaReserva(List<ReservationDTO> list) {

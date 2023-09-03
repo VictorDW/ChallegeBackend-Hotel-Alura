@@ -13,7 +13,8 @@ import java.util.List;
 
 public class GuestServiceImpl implements GuestService {
 
-    private  final GuestDAO guestDAO;
+    private final GuestDAO guestDAO;
+
     public GuestServiceImpl(GuestDAO guestDAO) {
         this.guestDAO = guestDAO;
     }
@@ -23,7 +24,7 @@ public class GuestServiceImpl implements GuestService {
 
         Guest guest = guestDAO.findGuestByCedula(guestRequestDTO.getCedula());
 
-        if(guest != null) {
+        if (guest != null) {
             guest.setStatus(Status.Activa);
             return guest;
         }
@@ -37,9 +38,24 @@ public class GuestServiceImpl implements GuestService {
         List<GuestDTO> guestDTOList = new ArrayList<>();
 
         guestDAO.getAll().forEach(guest ->
-                 guestDTOList.add(
-                         MapperGuest.mapperGuestToGuestDTO(guest)
-                 )
+                guestDTOList.add(
+                        MapperGuest.mapperGuestToGuestDTO(guest)
+                )
+        );
+
+        return guestDTOList;
+    }
+
+    @Override
+    public List<GuestDTO> getGuestsByCedula(String cedula) {
+
+        Guest guest = guestDAO.findGuestByCedula(cedula);
+        List<GuestDTO> guestDTOList = new ArrayList<>();
+
+        if (guest == null) return guestDTOList;
+
+        guestDTOList.add(
+                MapperGuest.mapperGuestToGuestDTO(guest)
         );
 
         return guestDTOList;
@@ -70,6 +86,8 @@ public class GuestServiceImpl implements GuestService {
                 MapperGuest.mapperGuestToSoftDelete(guest)
         );
 
-        return  true;
+        return true;
     }
 }
+
+

@@ -23,6 +23,10 @@ public class GuestController {
         return guestService.getAllGuest();
     }
 
+    public  List<GuestDTO> getGuestsByCedula(String cedula) {
+        return guestService.getGuestsByCedula(cedula);
+    }
+
     public Boolean updateGuest(GuestRequestDTO guestRequestDTO) {
         return guestService.updateGuest(guestRequestDTO);
     }
