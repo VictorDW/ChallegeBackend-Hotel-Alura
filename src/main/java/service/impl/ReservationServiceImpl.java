@@ -1,7 +1,7 @@
 package service.impl;
 
-import DTO.GuestRequestDTO;
 import DAO.ReservationDAO;
+import DTO.GuestRequestDTO;
 import DTO.ReservationByParametersDTO;
 import DTO.ReservationDTO;
 import DTO.ReservationRequestDTO;
@@ -21,6 +21,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDAO reservationDAO;
 
     public ReservationServiceImpl(ReservationDAO reservationDAO, GuestService guestService) {
+
         this.reservationDAO = reservationDAO;
         this.guestService = guestService;
     }

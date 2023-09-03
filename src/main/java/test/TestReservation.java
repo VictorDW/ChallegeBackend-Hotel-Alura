@@ -31,9 +31,9 @@ public class TestReservation {
         */
 
         ReservationByParametersDTO reservationByParametersDTO = new ReservationByParametersDTO();
-        //reservationByParametersDTO.setReservationCod("Z6N95T");
+        reservationByParametersDTO.setReservationCod("2MD3E5");
         reservationByParametersDTO.setCheckIn(LocalDate.of(2023,8,18));
-        reservationByParametersDTO.setCheckOut(LocalDate.of(2023,8,25));
+        reservationByParametersDTO.setCheckOut(LocalDate.of(2023,8,30));
 
 
 

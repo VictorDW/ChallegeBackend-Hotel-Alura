@@ -1,5 +1,6 @@
-package DAO;
+package DAO.impl;
 
+import DAO.GuestDAO;
 import DTO.GuestDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -8,7 +9,7 @@ import modelo.Status;
 
 import java.util.List;
 
-public class GuestDAOImpl implements GuestDAO{
+public class GuestDAOImpl implements GuestDAO {
     private final EntityManager entityManager;
 
     public GuestDAOImpl(EntityManager entityManager) {

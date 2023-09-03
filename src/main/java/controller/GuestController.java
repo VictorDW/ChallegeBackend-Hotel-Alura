@@ -1,6 +1,6 @@
 package controller;
 
-import DAO.GuestDAOImpl;
+import DAO.impl.GuestDAOImpl;
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
 import service.GuestService;

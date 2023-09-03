@@ -1,9 +1,10 @@
 package controller;
 
 import DAO.GuestDAO;
-import DAO.GuestDAOImpl;
-import DTO.GuestRequestDTO;
+import DAO.impl.GuestDAOImpl;
 import DAO.ReservationDAO;
+import DTO.GuestRequestDTO;
+import DAO.impl.ReservationDAOImpl;
 import DTO.ReservationByParametersDTO;
 import DTO.ReservationDTO;
 import DTO.ReservationRequestDTO;
@@ -20,7 +21,7 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     public ReservationController() {
-        ReservationDAO reservationDAO = new ReservationDAO(JPAUtils.getEntityManager());
+        ReservationDAO reservationDAO = new ReservationDAOImpl(JPAUtils.getEntityManager());
         GuestDAO guestDAO= new GuestDAOImpl(JPAUtils.getEntityManager());
 
         GuestService guestService = new GuestServiceImpl(guestDAO);
