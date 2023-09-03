@@ -27,7 +27,9 @@ public class ReservationDAOImpl implements ReservationDAO {
     @Override
     public List<Reservation> getAll() {
         String query = "SELECT R FROM Reservation R WHERE NOT (R.status =:status)";
-        return entityManager.createQuery(query, Reservation.class).setParameter("status", Status.Inactiva).getResultList();
+        return entityManager.createQuery(query, Reservation.class)
+                                        .setParameter("status", Status.Inactiva)
+                                        .getResultList();
     }
 
     @Override
@@ -42,7 +44,7 @@ public class ReservationDAOImpl implements ReservationDAO {
     @Override
     public List<Reservation> getByParameters(String reservationCod, LocalDate checkIn, LocalDate checkOut) {
 
-        StringBuilder queryBasic = new StringBuilder("SELECT R FROM Reservation R WHERE 1=1 ");
+        StringBuilder queryBasic = new StringBuilder("SELECT R FROM Reservation R WHERE NOT (R.status =:status) ");
 
         if (reservationCod != null && !reservationCod.trim().isEmpty()) {
             queryBasic.append("AND R.reservationCod=:cod ");
@@ -51,7 +53,8 @@ public class ReservationDAOImpl implements ReservationDAO {
             queryBasic.append("AND R.checkIn BETWEEN :checkin AND :checkout AND R.checkOut BETWEEN :checkin AND :checkout");
         }
 
-        TypedQuery<Reservation> queryComplet = entityManager.createQuery(queryBasic.toString(), Reservation.class);
+        TypedQuery<Reservation> queryComplet = entityManager.createQuery(queryBasic.toString(), Reservation.class)
+                .setParameter("status", Status.Inactiva);
 
         if (reservationCod != null && !reservationCod.trim().isEmpty()) {
            queryComplet.setParameter("cod", reservationCod);
