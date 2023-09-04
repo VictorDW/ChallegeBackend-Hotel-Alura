@@ -1,6 +1,6 @@
 package DTO;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import modelo.Nationality;
 
