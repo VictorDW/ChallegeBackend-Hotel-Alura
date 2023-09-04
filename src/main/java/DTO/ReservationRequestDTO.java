@@ -1,6 +1,8 @@
 package DTO;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -12,17 +14,22 @@ public class ReservationRequestDTO {
 
     private Long id;
     private String reservationCod;
-    private final LocalDate checkIn;
-    private final LocalDate checkOut;
+    @Setter
+    private LocalDate checkIn;
+    @Setter
+    private LocalDate checkOut;
     private BigDecimal cost;
+    @Setter
     private String methodPayment;
 
     public ReservationRequestDTO(Long id,
                                                  LocalDate checkIn,
-                                                 LocalDate checkOut) {
+                                                 LocalDate checkOut,
+                                                 String methodPayment) {
         this.id = id;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        this.methodPayment = methodPayment;
     }
 
     public ReservationRequestDTO(String reservationCod,

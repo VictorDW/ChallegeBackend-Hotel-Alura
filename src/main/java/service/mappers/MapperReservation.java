@@ -48,6 +48,7 @@ public final class MapperReservation {
             reservation.setCheckIn(reservationRequestDTO.getCheckIn());
             reservation.setCheckOut(reservationRequestDTO.getCheckOut());
             reservation.setCostOfReservation(cost);
+            reservation.setMethodPayment(reservationRequestDTO.getMethodPayment());
         }
 
         return reservation;

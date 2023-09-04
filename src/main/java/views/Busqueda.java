@@ -457,6 +457,7 @@ public class Busqueda extends JFrame {
 					LocalDate checkOut = null;
 
 					try {
+						//Permite cambiar el formato de un Date a un LocalDate
 
 						Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
 						Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
@@ -488,9 +489,8 @@ public class Busqueda extends JFrame {
 				int selectedIndex = panel.getSelectedIndex();
 
 				if (selectedIndex == 0) {
-					modificarReserva();
-					limpiarTabla(modeloReserva);
-					cargarTablaReserva(reservationController.getAllReservation());
+					enviarDatosReserva();
+					
 				}else if (selectedIndex == 1){
 					modificarHuesped();
 					limpiarTabla(modeloHuesped);
@@ -614,7 +614,7 @@ public class Busqueda extends JFrame {
 		return table.getSelectedRowCount() == 0 || table.getSelectedColumnCount() == 0;
 	}
 
-	private void modificarReserva() {
+	private void enviarDatosReserva(){
 
 		if(tieneFilaElegida(tbReservas)) {
 			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
@@ -626,18 +626,17 @@ public class Busqueda extends JFrame {
 			String checkIn =  String.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(),2));
 			String checkOut =  String.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(),3));
 
-			ReservationRequestDTO reservationDTO = new ReservationRequestDTO(
+			ReservationRequestDTO reservationRequestDTO = new ReservationRequestDTO(
 					Long.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(),0).toString()),
 					LocalDate.parse(checkIn),
-					LocalDate.parse(checkOut)
+					LocalDate.parse(checkOut),
+					String.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(),5))
 			);
 
-			if(this.reservationController.updateReservation(reservationDTO))
-				JOptionPane.showMessageDialog(this,  " Item actualizado con éxito!");
-			else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+			UpdateReservasView updateReserva = new UpdateReservasView(reservationRequestDTO, reservationController);
+			updateReserva.setVisible(true);
 
-		}catch (ArrayIndexOutOfBoundsException ignored){}
+		}catch(ArrayIndexOutOfBoundsException ignored){}
 	}
 
 	private void modificarHuesped() {
