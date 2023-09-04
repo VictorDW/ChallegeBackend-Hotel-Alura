@@ -31,7 +31,7 @@ public class GuestController {
         return guestService.updateGuest(guestRequestDTO);
     }
 
-    public Boolean softUpdateGuest(Long guestID) {
+    public Boolean softDeleteGuest(Long guestID) {
         return guestService.softDeleteGuest(guestID);
     }
 

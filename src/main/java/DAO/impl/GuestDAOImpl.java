@@ -1,7 +1,6 @@
 package DAO.impl;
 
 import DAO.GuestDAO;
-import DTO.GuestDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import modelo.Guest;

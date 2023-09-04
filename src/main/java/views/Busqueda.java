@@ -16,9 +16,7 @@ import java.awt.event.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import javax.swing.table.TableColumnModel;
 
 @SuppressWarnings("serial")
@@ -31,6 +29,7 @@ public class Busqueda extends JFrame {
 	private JTable tbReservas;
 	private final JPanel btnbuscar;
 	private final JPanel btnEditar;
+	private  final JPanel btnEliminar;
 	private DefaultTableModel modeloReserva;
 	private DefaultTableModel modeloHuesped;
 	private final JTextField txtBuscar;
@@ -133,17 +132,15 @@ public class Busqueda extends JFrame {
 				usuario.setVisible(true);
 				dispose();
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnAtras.setBackground(new Color(12, 138, 199));
 				labelAtras.setForeground(Color.white);
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnAtras.setBackground(Color.white);
-				labelAtras.setForeground(Color.black);
+				 btnAtras.setBackground(Color.white);
+			     labelAtras.setForeground(Color.black);
 			}
 		});
 		btnAtras.setLayout(null);
@@ -165,17 +162,15 @@ public class Busqueda extends JFrame {
 				usuario.setVisible(true);
 				dispose();
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) { //Al usuario pasar el mouse por el botón este cambiará de color
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) { //Al usuario quitar el mouse por el botón este volverá al estado original
-				btnexit.setBackground(Color.white);
-				labelExit.setForeground(Color.black);
+				 btnexit.setBackground(Color.white);
+			     labelExit.setForeground(Color.black);
 			}
 		});
 		btnexit.setLayout(null);
@@ -272,7 +267,9 @@ public class Busqueda extends JFrame {
 		lblEditar.setBounds(0, 0, 122, 35);
 		btnEditar.add(lblEditar);
 
-		JPanel btnEliminar = new JPanel();
+		//PANEL QUE SIMULA EL BOTÓN DE ElIMINAR
+		btnEliminar = new JPanel();
+		eventoBtnEliminar(panel);
 		btnEliminar.setLayout(null);
 		btnEliminar.setBackground(new Color(12, 138, 199));
 		btnEliminar.setBounds(767, 508, 122, 35);
@@ -335,7 +332,7 @@ public class Busqueda extends JFrame {
 			//Se habilitan para editar solo las columna que se necesitan
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column == 1 | column == 2 | column == 3 | column == 4 | column == 7;
+				return column==1 | column==2 | column==3 | column==4 | column==7;
 			}
 		};
 
@@ -397,7 +394,7 @@ public class Busqueda extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (editorFecha.getText().equals(placeHolder)) {
-					placeHolderFechas(editorFecha, "");
+					placeHolderFechas(editorFecha,"");
 				}
 			}
 
@@ -410,7 +407,7 @@ public class Busqueda extends JFrame {
 		});
 	}
 
-	private void eventoTxtBuscar() {
+	private void eventoTxtBuscar(){
 		txtBuscar.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -427,12 +424,12 @@ public class Busqueda extends JFrame {
 
 				if (txtBuscar.getText().isEmpty()) {
 
-					if (selectedIndex == 0) {
+					if(selectedIndex == 0) {
 						placeHolderTxtBuscar("Numero de Reserva");
 						limpiarTabla(modeloReserva);
 						cargarTablaReserva(reservationController.getAllReservation());
 
-					} else if (selectedIndex == 1) {
+					}else if (selectedIndex == 1){
 
 						placeHolderTxtBuscar("Cedula");
 						limpiarTabla(modeloHuesped);
@@ -445,7 +442,7 @@ public class Busqueda extends JFrame {
 
 	}
 
-	private void eventoBtnBuscar(JPanel btnBuscar, JTabbedPane panel) {
+	private void eventoBtnBuscar(JPanel btnBuscar, JTabbedPane panel){
 		btnBuscar.addMouseListener(new MouseAdapter() {
 
 			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
@@ -462,25 +459,25 @@ public class Busqueda extends JFrame {
 					try {
 
 						Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
-						Instant instantCheckOut = txtFechaSalida.getDate().toInstant();
+						Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
 						checkIn = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
 						checkOut = instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
 
-					} catch (NullPointerException ex) {
-
-					}
+					}catch(NullPointerException ignore){}
 
 					limpiarTabla(modeloReserva);
 					consultaParametrosReserva(txtBuscar.getText().toUpperCase(), checkIn, checkOut);
-					placeHolderFechas((JTextFieldDateEditor) txtFechaEntrada.getDateEditor(), "Check In");
-					placeHolderFechas((JTextFieldDateEditor) txtFechaSalida.getDateEditor(), "Check Out");
-				} else {
+					placeHolderFechas((JTextFieldDateEditor) txtFechaEntrada.getDateEditor(),"Check In");
+					placeHolderFechas((JTextFieldDateEditor) txtFechaSalida.getDateEditor(),"Check Out");
+				}else{
 					limpiarTabla(modeloHuesped);
 					consultarParametroCedula(txtBuscar.getText());
 				}
 			}
 
 		});
+	}
+
 	private void eventoBtnModificar(JTabbedPane panel){
 		btnEditar.addMouseListener(new MouseAdapter() {
 
@@ -496,6 +493,29 @@ public class Busqueda extends JFrame {
 					cargarTablaReserva(reservationController.getAllReservation());
 				}else if (selectedIndex == 1){
 					modificarHuesped();
+					limpiarTabla(modeloHuesped);
+					cargarTablaHuesped(guestController.getAllGuest());
+				}
+			}
+
+		});
+	}
+
+	private void eventoBtnEliminar(JTabbedPane panel){
+		btnEliminar.addMouseListener(new MouseAdapter() {
+
+			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+				int selectedIndex = panel.getSelectedIndex();
+
+				if (selectedIndex == 0) {
+					eliminarReserva();
+					limpiarTabla(modeloReserva);
+					cargarTablaReserva(reservationController.getAllReservation());
+				}else if (selectedIndex == 1){
+					eliminarHuesped();
 					limpiarTabla(modeloHuesped);
 					cargarTablaHuesped(guestController.getAllGuest());
 				}
@@ -647,8 +667,48 @@ public class Busqueda extends JFrame {
 
 		}catch (ArrayIndexOutOfBoundsException ignored){}
 	}
-	
-//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
+
+	private void eliminarReserva(){
+
+		if (tieneFilaElegida(tbReservas)) {
+			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			return;
+		}
+
+		try {
+
+			Long ReservaID = Long.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+
+			if(this.reservationController.softDeleteReservation(ReservaID)) {
+				modeloReserva.removeRow(tbReservas.getSelectedRow());
+				JOptionPane.showMessageDialog(this, " Item actualizado con éxito!");
+			}else
+				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+
+		}catch (ArrayIndexOutOfBoundsException ignore){}
+	}
+
+	private void eliminarHuesped(){
+
+		if (tieneFilaElegida(tbHuespedes)) {
+			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			return;
+		}
+
+		try {
+
+			Long huespedID = Long.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
+
+			if(this.guestController.softDeleteGuest(huespedID)) {
+				modeloReserva.removeRow(tbReservas.getSelectedRow());
+				JOptionPane.showMessageDialog(this, " Item actualizado con éxito!");
+			}else
+				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+
+		}catch (ArrayIndexOutOfBoundsException ignore){}
+	}
+
+	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
 	 private void headerMousePressed(MouseEvent evt) {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
