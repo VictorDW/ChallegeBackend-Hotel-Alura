@@ -4,8 +4,10 @@ import DAO.GuestDAO;
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
 import modelo.Guest;
+import modelo.Nationality;
 import modelo.Status;
 import service.GuestService;
+import service.NationalityService;
 import service.mappers.MapperGuest;
 
 import java.util.ArrayList;
@@ -13,9 +15,16 @@ import java.util.List;
 
 public class GuestServiceImpl implements GuestService {
 
-    private  final GuestDAO guestDAO;
+    private final GuestDAO guestDAO;
+    private  NationalityService nationalityService;
+
     public GuestServiceImpl(GuestDAO guestDAO) {
         this.guestDAO = guestDAO;
+
+    }
+    @Override
+    public void loadNationality(NationalityService nationalityService) {
+        this.nationalityService = nationalityService;
     }
 
     @Override
@@ -23,12 +32,15 @@ public class GuestServiceImpl implements GuestService {
 
         Guest guest = guestDAO.findGuestByCedula(guestRequestDTO.getCedula());
 
-        if(guest != null) {
+        if (guest != null) {
             guest.setStatus(Status.Activa);
             return guest;
         }
 
-        return MapperGuest.mapperGuest(guestRequestDTO);
+        Nationality nationality =
+                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+
+        return MapperGuest.mapperGuest(guestRequestDTO, nationality);
     }
 
     @Override
@@ -37,9 +49,24 @@ public class GuestServiceImpl implements GuestService {
         List<GuestDTO> guestDTOList = new ArrayList<>();
 
         guestDAO.getAll().forEach(guest ->
-                 guestDTOList.add(
-                         MapperGuest.mapperGuestToGuestDTO(guest)
-                 )
+                guestDTOList.add(
+                        MapperGuest.mapperGuestToGuestDTO(guest)
+                )
+        );
+
+        return guestDTOList;
+    }
+
+    @Override
+    public List<GuestDTO> getGuestsByCedula(String cedula) {
+
+        Guest guest = guestDAO.findGuestByCedula(cedula);
+        List<GuestDTO> guestDTOList = new ArrayList<>();
+
+        if (guest == null) return guestDTOList;
+
+        guestDTOList.add(
+                MapperGuest.mapperGuestToGuestDTO(guest)
         );
 
         return guestDTOList;
@@ -52,8 +79,11 @@ public class GuestServiceImpl implements GuestService {
 
         if (guest == null) return false;
 
+        Nationality nationality =
+                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+
         guestDAO.update(
-                MapperGuest.mapperGuestToUpdate(guestRequestDTO, guest)
+                MapperGuest.mapperGuestToUpdate(guestRequestDTO, guest, nationality)
         );
 
         return true;
@@ -70,6 +100,8 @@ public class GuestServiceImpl implements GuestService {
                 MapperGuest.mapperGuestToSoftDelete(guest)
         );
 
-        return  true;
+        return true;
     }
 }
+
+

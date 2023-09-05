@@ -58,7 +58,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservation == null) return false;
 
         Period period = Period.between(reservationRequestDTO.getCheckIn(),
-                reservationRequestDTO.getCheckOut());
+                                                        reservationRequestDTO.getCheckOut());
 
         BigDecimal cost = new BigDecimal(period.getDays() * 43300);
 

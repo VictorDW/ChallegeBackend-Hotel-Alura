@@ -10,14 +10,14 @@ public class TestGuest {
     public static void main(String[] args) {
 
         //prueba para el Update
-        GuestRequestDTO guestRequestDTO = new GuestRequestDTO(
+     /*   GuestRequestDTO guestRequestDTO = new GuestRequestDTO(
                 6L,
                 "116268898",
                 "Victor",
                 "Arenas",
                 LocalDate.of(1995,9,19),
                 "3156360926"
-        );
+        );*/
 
         GuestController guestController = new GuestController();
 

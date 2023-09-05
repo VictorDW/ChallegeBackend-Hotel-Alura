@@ -1,12 +1,13 @@
 package DTO;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Data;
 import lombok.Getter;
-import modelo.Nationality;
+import lombok.ToString;
 
 import java.time.LocalDate;
-@Getter
-
+@Data
+@ToString
 public class GuestRequestDTO {
     private Long id;
     private String cedula;
@@ -14,9 +15,9 @@ public class GuestRequestDTO {
     private String lastName;
     private LocalDate dateOfBirth;
     private String phone;
-    private Nationality nationality;
+    private NationalityRequestDTO nationality;
 
-    public GuestRequestDTO(String cedula, String firsName, String lastName, LocalDate dateOfBirth, String phone, Nationality nationality) {
+    public GuestRequestDTO(String cedula, String firsName, String lastName, LocalDate dateOfBirth, String phone, NationalityRequestDTO nationality) {
         this.cedula = cedula;
         this.firsName = firsName;
         this.lastName = lastName;
@@ -25,12 +26,13 @@ public class GuestRequestDTO {
         this.nationality = nationality;
     }
 
-    public GuestRequestDTO(Long id, String cedula, String firsName, String lastName, LocalDate dateOfBirth, String phone) {
+    public GuestRequestDTO(Long id, String cedula, String firsName, String lastName, LocalDate dateOfBirth, String phone, NationalityRequestDTO nationality) {
         this.id = id;
         this.cedula = cedula;
         this.firsName = firsName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
+        this.nationality = nationality;
     }
 }
