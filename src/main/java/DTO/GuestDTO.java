@@ -16,6 +16,6 @@ public class GuestDTO {
     private String lastName;
     private LocalDate dateOfBirth;
     private String phone;
-    private String nationality;
+    private NationalityRequestDTO nationality;
     private String status;
 }

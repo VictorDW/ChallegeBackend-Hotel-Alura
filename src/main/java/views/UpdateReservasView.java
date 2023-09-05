@@ -19,9 +19,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 
 @SuppressWarnings("serial")
@@ -41,6 +40,8 @@ public class UpdateReservasView extends JFrame {
 	private final ReservationController reservationController;
 	private  final ReservationRequestDTO reservationRequestDTO;
 
+	private final Busqueda jFrameBusqueda;
+
 
 	/**
 	 * Launch the application.
@@ -50,11 +51,11 @@ public class UpdateReservasView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UpdateReservasView(ReservationRequestDTO reservationRequestDTO, ReservationController reservationController) {
+	public UpdateReservasView(Busqueda jFrameBusqueda, ReservationRequestDTO reservationRequestDTO, ReservationController reservationController) {
 
 		super("Editar Reserva");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UpdateReservasView.class.getResource("/imagenes/aH-40px.png")));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -70,6 +71,7 @@ public class UpdateReservasView extends JFrame {
 		//SE OBTIENEN LOS DATOS PARA AUTOCARGAR EL FORMULARIO
 		this.reservationRequestDTO = reservationRequestDTO;
 		this.reservationController = reservationController;
+		this.jFrameBusqueda = jFrameBusqueda;
 		
 
 		// PANEL DEL FORMULARIO
@@ -260,9 +262,8 @@ public class UpdateReservasView extends JFrame {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Busqueda busquedaView = new Busqueda();
-				busquedaView.setVisible(true);
-				dispose();
+				jFrameBusqueda.setVisible(true);
+				setVisible(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -279,19 +280,17 @@ public class UpdateReservasView extends JFrame {
 
 	private void cargarCombo() {
 
-		Map<String, String[]> cargar = new HashMap<>(){{
-			put("Tarjeta de Crédito", new String[]{ "Tarjeta de Débito","Dinero en efectivo"});
-			put("Tarjeta de Débito", new String[]{ "Tarjeta de Crédito","Dinero en efectivo"});
-			put("Dinero en efectivo", new String[]{ "Tarjeta de Crédito","Tarjeta de Débito"});
+		String eleccionBase = reservationRequestDTO.getMethodPayment();
+		List<String> eleccionCombo = new ArrayList<>(){{
+			add("Tarjeta de Crédito");
+			add("Tarjeta de Débito");
+			add("Dinero en efectivo");
 		}};
 
-		txtFormaPago.addItem(
-				cargar.get(reservationRequestDTO.getMethodPayment())[0]
-		);
-
-		txtFormaPago.addItem(
-				cargar.get(reservationRequestDTO.getMethodPayment())[1]
-		);
+		eleccionCombo.forEach(eleccion ->{
+			if(!eleccion.equals(eleccionBase))
+				txtFormaPago.addItem(eleccion);
+		});
 	}
 	private Date configurarFecha(LocalDate fecha) {
 

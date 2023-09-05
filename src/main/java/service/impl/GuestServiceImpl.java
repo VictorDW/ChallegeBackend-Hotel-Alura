@@ -4,8 +4,10 @@ import DAO.GuestDAO;
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
 import modelo.Guest;
+import modelo.Nationality;
 import modelo.Status;
 import service.GuestService;
+import service.NationalityService;
 import service.mappers.MapperGuest;
 
 import java.util.ArrayList;
@@ -14,9 +16,15 @@ import java.util.List;
 public class GuestServiceImpl implements GuestService {
 
     private final GuestDAO guestDAO;
+    private  NationalityService nationalityService;
 
     public GuestServiceImpl(GuestDAO guestDAO) {
         this.guestDAO = guestDAO;
+
+    }
+    @Override
+    public void loadNationality(NationalityService nationalityService) {
+        this.nationalityService = nationalityService;
     }
 
     @Override
@@ -29,7 +37,10 @@ public class GuestServiceImpl implements GuestService {
             return guest;
         }
 
-        return MapperGuest.mapperGuest(guestRequestDTO);
+        Nationality nationality =
+                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+
+        return MapperGuest.mapperGuest(guestRequestDTO, nationality);
     }
 
     @Override
@@ -68,8 +79,11 @@ public class GuestServiceImpl implements GuestService {
 
         if (guest == null) return false;
 
+        Nationality nationality =
+                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+
         guestDAO.update(
-                MapperGuest.mapperGuestToUpdate(guestRequestDTO, guest)
+                MapperGuest.mapperGuestToUpdate(guestRequestDTO, guest, nationality)
         );
 
         return true;
