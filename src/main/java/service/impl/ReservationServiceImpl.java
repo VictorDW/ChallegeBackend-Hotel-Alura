@@ -9,6 +9,7 @@ import modelo.Reservation;
 import service.GuestService;
 import service.ReservationService;
 import service.mappers.MapperReservation;
+import service.util.DataReservationTemporary;
 
 import java.math.BigDecimal;
 import java.time.Period;
@@ -57,11 +58,9 @@ public class ReservationServiceImpl implements ReservationService {
 
         if (reservation == null) return false;
 
-        Period period = Period.between(reservationRequestDTO.getCheckIn(),
-                                                        reservationRequestDTO.getCheckOut());
-
-        BigDecimal cost = new BigDecimal(period.getDays() * 43300);
-
+        BigDecimal cost = DataReservationTemporary.calculateReservationCost(
+                                                                                reservationRequestDTO.getCheckIn(),
+                                                                                reservationRequestDTO.getCheckOut());
         reservationDAO.update(
                 MapperReservation.mapperReservationToUpdate(
                         reservationRequestDTO,

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class ReservationRequestDTO {
 
     private Long id;
+    @Setter
     private String reservationCod;
     @Setter
     private LocalDate checkIn;
@@ -30,6 +31,12 @@ public class ReservationRequestDTO {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.methodPayment = methodPayment;
+    }
+
+    public ReservationRequestDTO(LocalDate checkIn, LocalDate checkOut, BigDecimal cost) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.cost = cost;
     }
 
     public ReservationRequestDTO(String reservationCod,
