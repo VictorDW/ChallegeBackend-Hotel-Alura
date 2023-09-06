@@ -1,5 +1,7 @@
 package views;
 
+import controller.LoginController;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,8 +29,13 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUsuario;
 	private JPasswordField txtContrasena;
+
+	private final JPanel btnLogin;
+	private final JPanel btnExit;
 	int xMouse, yMouse;
 	private JLabel labelExit;
+
+	private final LoginController loginController;
 
 	/**
 	 * Launch the application.
@@ -51,6 +58,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,13 +68,62 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		
+
+		//INICIAMOS EL CONTROLER
+		this.loginController = new LoginController();
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 788, 527);
 		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
+
+		JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
+		labelTitulo.setForeground(SystemColor.textHighlight);
+		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
+		labelTitulo.setBounds(65, 149, 202, 26);
+		panel.add(labelTitulo);
+
+		JLabel LabelUsuario = new JLabel("USUARIO");
+		LabelUsuario.setForeground(SystemColor.textInactiveText);
+		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
+		LabelUsuario.setBounds(65, 219, 107, 26);
+		panel.add(LabelUsuario);
+
+		txtUsuario = new JTextField();
+		placeHolderUsuario();
+		txtUsuario.setFont(new Font("Roboto", Font.PLAIN, 16));
+		txtUsuario.setText("Ingrese su nombre de usuario");
+		txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtUsuario.setForeground(SystemColor.activeCaptionBorder);
+		txtUsuario.setBounds(65, 256, 324, 32);
+		panel.add(txtUsuario);
+		txtUsuario.setColumns(10);
+
+		JSeparator separator = new JSeparator();
+		separator.setBackground(new Color(0, 120, 215));
+		separator.setBounds(65, 292, 324, 2);
+		panel.add(separator);
+
+		JLabel lblContrasea = new JLabel("CONTRASEÑA");
+		lblContrasea.setForeground(SystemColor.textInactiveText);
+		lblContrasea.setFont(new Font("Roboto Black", Font.PLAIN, 20));
+		lblContrasea.setBounds(65, 316, 140, 26);
+		panel.add(lblContrasea);
+
+		txtContrasena = new JPasswordField();
+		txtContrasena.setText("********");
+		placeHolderContrasenha();
+		txtContrasena.setForeground(SystemColor.activeCaptionBorder);
+		txtContrasena.setFont(new Font("Roboto", Font.PLAIN, 16));
+		txtContrasena.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtContrasena.setBounds(65, 353, 324, 32);
+		panel.add(txtContrasena);
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBackground(SystemColor.textHighlight);
+		separator_1.setBounds(65, 393, 324, 2);
+		panel.add(separator_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(12, 138, 199));
@@ -79,123 +136,23 @@ public class Login extends JFrame {
 		panel_1.add(imgHotel);
 		imgHotel.setIcon(new ImageIcon(Login.class.getResource("/imagenes/img-hotel-login-.png")));
 		
-		JPanel btnexit = new JPanel();
-		btnexit.setBounds(251, 0, 53, 36);
-		panel_1.add(btnexit);
-		btnexit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
-			}			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(new Color(12, 138, 199));
-			     labelExit.setForeground(Color.white);
-			}
-		});
-		btnexit.setBackground(new Color(12, 138, 199));
-		btnexit.setLayout(null);
-		btnexit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnExit = new JPanel();
+		eventoSalir();
+		btnExit.setBounds(251, 0, 53, 36);
+		panel_1.add(btnExit);
+		btnExit.setBackground(new Color(12, 138, 199));
+		btnExit.setLayout(null);
+		btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
 		labelExit = new JLabel("X");
 		labelExit.setBounds(0, 0, 53, 36);
-		btnexit.add(labelExit);
+		btnExit.add(labelExit);
 		labelExit.setForeground(SystemColor.text);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);		
-		
-		txtUsuario = new JTextField();
-		txtUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				 if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
-					 txtUsuario.setText("");
-					 txtUsuario.setForeground(Color.black);
-			        }
-			        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
-			        	txtContrasena.setText("********");
-			        	txtContrasena.setForeground(Color.gray);
-			        }
-			}
-		});
-		txtUsuario.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtUsuario.setText("Ingrese su nombre de usuario");
-		txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		txtUsuario.setForeground(SystemColor.activeCaptionBorder);
-		txtUsuario.setBounds(65, 256, 324, 32);
-		panel.add(txtUsuario);
-		txtUsuario.setColumns(10);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBackground(new Color(0, 120, 215));
-		separator.setBounds(65, 292, 324, 2);
-		panel.add(separator);
-		
-		JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
-		labelTitulo.setForeground(SystemColor.textHighlight);
-		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
-		labelTitulo.setBounds(65, 149, 202, 26);
-		panel.add(labelTitulo);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBackground(SystemColor.textHighlight);
-		separator_1.setBounds(65, 393, 324, 2);
-		panel.add(separator_1);
-		
-		txtContrasena = new JPasswordField();
-		txtContrasena.setText("********");
-		txtContrasena.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (String.valueOf(txtContrasena.getPassword()).equals("********")) {
-					txtContrasena.setText("");
-					txtContrasena.setForeground(Color.black);
-		        }
-		        if (txtUsuario.getText().isEmpty()) {
-		        	txtUsuario.setText("Ingrese su nombre de usuario");
-		        	txtUsuario.setForeground(Color.gray);
-		        }
-			}
-		});
-		txtContrasena.setForeground(SystemColor.activeCaptionBorder);
-		txtContrasena.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtContrasena.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		txtContrasena.setBounds(65, 353, 324, 32);
-		panel.add(txtContrasena);
-		
-		JLabel LabelUsuario = new JLabel("USUARIO");
-		LabelUsuario.setForeground(SystemColor.textInactiveText);
-		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-		LabelUsuario.setBounds(65, 219, 107, 26);
-		panel.add(LabelUsuario);
-		
-		JLabel lblContrasea = new JLabel("CONTRASEÑA");
-		lblContrasea.setForeground(SystemColor.textInactiveText);
-		lblContrasea.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-		lblContrasea.setBounds(65, 316, 140, 26);
-		panel.add(lblContrasea);
-		
-		JPanel btnLogin = new JPanel();
-		btnLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(0, 156, 223));
-			}
-		
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnLogin.setBackground(SystemColor.textHighlight);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Login();
-			}
-		});
+
+		btnLogin = new JPanel();
+		eventoBtnLogin();
 		btnLogin.setBackground(SystemColor.textHighlight);
 		btnLogin.setBounds(65, 431, 122, 44);
 		panel.add(btnLogin);
@@ -234,14 +191,77 @@ public class Login extends JFrame {
 		panel.add(header);
 		header.setLayout(null);
 	}
-	
-	private void Login() {
-		 String Usuario= "admin";
-	     String Contraseña="admin";
 
-	        String contrase=new String (txtContrasena.getPassword());
+	private void eventoBtnLogin() {
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnLogin.setBackground(new Color(0, 156, 223));
+			}
 
-	        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contraseña)){
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnLogin.setBackground(SystemColor.textHighlight);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				login();
+			}
+		});
+	}
+	private void eventoSalir() {
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnExit.setBackground(Color.red);
+				labelExit.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnExit.setBackground(new Color(12, 138, 199));
+				labelExit.setForeground(Color.white);
+			}
+		});
+	}
+	private void placeHolderUsuario() {
+		txtUsuario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
+					txtUsuario.setText("");
+					txtUsuario.setForeground(Color.black);
+				}
+				if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
+					txtContrasena.setText("********");
+					txtContrasena.setForeground(Color.gray);
+				}
+			}
+		});
+	}
+	private void placeHolderContrasenha() {
+		txtContrasena.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (String.valueOf(txtContrasena.getPassword()).equals("********")) {
+					txtContrasena.setText("");
+					txtContrasena.setForeground(Color.black);
+				}
+				if (txtUsuario.getText().isEmpty()) {
+					txtUsuario.setText("Ingrese su nombre de usuario");
+					txtUsuario.setForeground(Color.gray);
+				}
+			}
+		});
+	}
+	private void login() {
+
+	        String contrasenha=new String (txtContrasena.getPassword());
+
+			if(loginController.autenticarUser(txtUsuario.getText(), contrasenha)){
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
 	            dispose();	 

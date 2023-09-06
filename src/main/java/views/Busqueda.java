@@ -702,8 +702,6 @@ public class Busqueda extends JFrame {
 					(NationalityRequestDTO) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(),5)
 			);
 
-
-
 			UpdateHuespedView updateHuespedView = new UpdateHuespedView(Busqueda.this, guestRequestDTO, this.guestController);
 			updateHuespedView.setVisible(true);
 
