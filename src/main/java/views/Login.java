@@ -273,8 +273,7 @@ public class Login extends JFrame {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
 	    }//GEN-LAST:event_headerMousePressed
-
-	    private void headerMouseDragged(MouseEvent evt) {
+	private void headerMouseDragged(MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
