@@ -34,8 +34,7 @@ public class ReservasView extends JFrame {
 	private final JPanel btnsiguiente;
 
 	//
-
-	private ReservationRequestDTO reservationDTO;
+	private ReservationRequestDTO reservationRequestDTO;
 
 	/**
 	 * Launch the application.
@@ -328,7 +327,7 @@ public class ReservasView extends JFrame {
 					if (validarOrdenFechas()) {
 
 						missingReserveData();
-						RegistroHuesped registro = new RegistroHuesped();
+						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);
 						registro.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Error en las fechas");
@@ -347,11 +346,11 @@ public class ReservasView extends JFrame {
 		try {
 
 			if (validarOrdenFechas()) {
-				this.reservationDTO =
+				this.reservationRequestDTO =
 						DataReservationTemporary
 								.dataOfReserve(configurarFecha().get(0), configurarFecha().get(1));
 
-				txtValor.setText(this.reservationDTO.getCost().toString());
+				txtValor.setText(this.reservationRequestDTO.getCost().toString());
 			}else {
 				JOptionPane.showMessageDialog(null, "Error en las fechas");
 				txtValor.setText("0");
@@ -376,8 +375,8 @@ public class ReservasView extends JFrame {
 			}};
 		}
 		private void missingReserveData() {
-			this.reservationDTO.setReservationCod(DataReservationTemporary.createReservationCod());
-			this.reservationDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
+			this.reservationRequestDTO.setReservationCod(DataReservationTemporary.createReservationCod());
+			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
 		}
 		private void cargarCombo() {
 			List<String> eleccionCombo = new ArrayList<>(){{

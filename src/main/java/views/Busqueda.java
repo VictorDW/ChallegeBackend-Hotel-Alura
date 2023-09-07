@@ -38,6 +38,8 @@ public class Busqueda extends JFrame {
 	public static JDateChooser txtFechaSalida;
 	private JLabel labelAtras;
 	private JLabel labelExit;
+	private final JPanel btnExit;
+	private final JPanel btnAtras;
 	int xMouse, yMouse;
 
 
@@ -126,66 +128,6 @@ public class Busqueda extends JFrame {
 		header.setBounds(0, 0, 910, 36);
 		contentPane.add(header);
 
-		JPanel btnAtras = new JPanel();
-		btnAtras.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MenuUsuario usuario = new MenuUsuario();
-				usuario.setVisible(true);
-				dispose();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnAtras.setBackground(new Color(12, 138, 199));
-				labelAtras.setForeground(Color.white);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				 btnAtras.setBackground(Color.white);
-			     labelAtras.setForeground(Color.black);
-			}
-		});
-		btnAtras.setLayout(null);
-		btnAtras.setBackground(Color.WHITE);
-		btnAtras.setBounds(0, 0, 53, 36);
-		header.add(btnAtras);
-
-		labelAtras = new JLabel("<");
-		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
-		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
-		labelAtras.setBounds(0, 0, 53, 36);
-		btnAtras.add(labelAtras);
-
-		JPanel btnexit = new JPanel();
-		btnexit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MenuUsuario usuario = new MenuUsuario();
-				usuario.setVisible(true);
-				dispose();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) { //Al usuario pasar el mouse por el botón este cambiará de color
-				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) { //Al usuario quitar el mouse por el botón este volverá al estado original
-				 btnexit.setBackground(Color.white);
-			     labelExit.setForeground(Color.black);
-			}
-		});
-		btnexit.setLayout(null);
-		btnexit.setBackground(Color.WHITE);
-		btnexit.setBounds(857, 0, 53, 36);
-		header.add(btnexit);
-
-		labelExit = new JLabel("X");
-		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
-		labelExit.setForeground(Color.BLACK);
-		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
-		labelExit.setBounds(0, 0, 53, 36);
-		btnexit.add(labelExit);
 
 		//La fecha de ingreso
 		txtFechaEntrada = new JDateChooser();
@@ -305,6 +247,33 @@ public class Busqueda extends JFrame {
 		lblEliminar.setBounds(0, 0, 122, 35);
 		btnEliminar.add(lblEliminar);
 		setResizable(false);
+
+		btnAtras = new JPanel();
+		eventoRegresar();
+		btnAtras.setLayout(null);
+		btnAtras.setBackground(Color.WHITE);
+		btnAtras.setBounds(0, 0, 53, 36);
+		header.add(btnAtras);
+
+		labelAtras = new JLabel("<");
+		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
+		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
+		labelAtras.setBounds(0, 0, 53, 36);
+		btnAtras.add(labelAtras);
+
+		btnExit = new JPanel();
+		eventoSalir();
+		btnExit.setLayout(null);
+		btnExit.setBackground(Color.WHITE);
+		btnExit.setBounds(857, 0, 53, 36);
+		header.add(btnExit);
+
+		labelExit = new JLabel("X");
+		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
+		labelExit.setForeground(Color.BLACK);
+		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelExit.setBounds(0, 0, 53, 36);
+		btnExit.add(labelExit);
 	}
 
 	private void tablaReserva() {
@@ -314,7 +283,8 @@ public class Busqueda extends JFrame {
 			//Se habilitan para editar solo las columna que se necesitan
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column == 2 || column == 3;
+				//return column == 2 || column == 3;
+				return false;
 			}
 		};
 		tbReservas.getTableHeader().setReorderingAllowed(false);
@@ -354,7 +324,8 @@ public class Busqueda extends JFrame {
 			//Se habilitan para editar solo las columna que se necesitan
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column==1 | column==2 | column==3 | column==4 | column==7;
+				//return column==1 | column==2 | column==3 | column==4 | column==7;
+				return false;
 			}
 		};
 
@@ -429,6 +400,48 @@ public class Busqueda extends JFrame {
 		});
 	}
 
+	private void eventoSalir() {
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MenuUsuario usuario = new MenuUsuario();
+				usuario.setVisible(true);
+				dispose();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) { //Al usuario pasar el mouse por el botón este cambiará de color
+				btnExit.setBackground(Color.red);
+				labelExit.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) { //Al usuario quitar el mouse por el botón este volverá al estado original
+				btnExit.setBackground(Color.white);
+				labelExit.setForeground(Color.black);
+			}
+		});
+	}
+
+	private void eventoRegresar() {
+		btnAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MenuUsuario usuario = new MenuUsuario();
+				usuario.setVisible(true);
+				dispose();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAtras.setBackground(new Color(12, 138, 199));
+				labelAtras.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAtras.setBackground(Color.white);
+				labelAtras.setForeground(Color.black);
+			}
+		});
+	}
+
 	private void eventoTxtBuscar(){
 		this.txtBuscar.addFocusListener(new FocusListener() {
 			@Override
@@ -465,6 +478,7 @@ public class Busqueda extends JFrame {
 	}
 
 	private void eventoBtnBuscar(JTabbedPane panel){
+
 		btnbuscar.addMouseListener(new MouseAdapter() {
 
 			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
