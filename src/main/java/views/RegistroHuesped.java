@@ -14,15 +14,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.Format;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
@@ -49,6 +47,7 @@ public class RegistroHuesped extends JFrame {
 	private final NationalityController nationalityController;
 	private final ReservationRequestDTO reservationRequestDTO;
 	private GuestRequestDTO guestRequestDTO;
+	private boolean findGuest;
 
 	/**
 	 * Create the frame.
@@ -67,13 +66,14 @@ public class RegistroHuesped extends JFrame {
 		setUndecorated(true);
 		contentPane.setLayout(null);
 
-		//
+		// INICIALIZACIÓN DE LAS VARIABLES
 
 		this.jFrameRegistrarHuesped = jFrameRegistrarHuesped;
 		this.reservationController = new ReservationController();
 		this.guestController = new GuestController();
 		this.nationalityController = new NationalityController();
 		this.reservationRequestDTO = reservationRequestDTO;
+		this.findGuest = false;
 
 
 		JLabel lblTitulo = new JLabel("Registro Huesped");
@@ -151,6 +151,8 @@ public class RegistroHuesped extends JFrame {
 
 		txtFechaN = new JDateChooser();
 		editorFecha = (JTextFieldDateEditor) txtFechaN.getDateEditor();
+		eventoBtnFecha();
+		eventoTxtFecha();
 		txtFechaN.setBounds(560, 308, 285, 36);
 		txtFechaN.getCalendarButton().setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
@@ -319,6 +321,32 @@ public class RegistroHuesped extends JFrame {
 		btnGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
+				if (!(txtFechaN.getDate() != null &&
+						txtCedula.getText() != null &&
+						txtNombre.getText() != null &&
+						txtApellido.getText() != null &&
+						txtTelefono.getText() != null)) {
+
+					JOptionPane.showMessageDialog(contentPane, "Debes llenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+
+				}else if(isMenordeEdad(txtFechaN.getDate())){
+					JOptionPane.showMessageDialog(contentPane, "El huesped debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
+				}else {
+					//ENVIAMOS LOS DATOS PARA EL REGISTRO
+					reservationController
+							.createReservation(
+									reservationRequestDTO,
+									findGuest ?
+											guestRequestDTO :
+											newHuesped()
+							);
+
+					JOptionPane.showMessageDialog(contentPane, "Reserva hecha satisfactoriamente", "Creación Correcta", JOptionPane.INFORMATION_MESSAGE);
+					//REGRESAMOS A LA VISTA DE RESERVA
+					jFrameRegistrarHuesped.setVisible(true);
+					setVisible(false);
+				}
 			}
 		});
 	}
@@ -334,6 +362,45 @@ public class RegistroHuesped extends JFrame {
 		});
 
 	}
+	private void eventoBtnFecha() {
+		txtFechaN.getCalendarButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//CON ESTO EVITAMOS QUE SE ACTIVE INNECESARIAMENTE EL EVENTO DEL CAMPO CEDULA
+				txtCedula.setFocusable(false);
+				txtFechaN.requestFocus();
+			}
+		});
+	}
+	private void eventoTxtFecha() {
+		editorFecha.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+
+				//SE VALIDA QUE TENGA LA EDAD MINIMA
+				try {
+					if (isMenordeEdad(txtFechaN.getDate())){
+						JOptionPane.showMessageDialog(null, "El huesped debe ser mayor de edad");
+						editorFecha.setText("");
+					}
+				}catch (NullPointerException ignore){}
+
+			}
+		});
+	}
+	private boolean isMenordeEdad(Date fecha) throws NullPointerException {
+
+		Instant instantDateBirth = fecha.toInstant();
+		LocalDate dateBirth = instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate fechaActual = LocalDate.now();
+
+		Period period = Period.between(dateBirth, fechaActual);
+
+		return period.getYears() < 18;
+	}
 	private void cargarComboNacionalidad() {
 
 		// SE CARGAN TODAS LAS NACIONALIDADES
@@ -343,67 +410,42 @@ public class RegistroHuesped extends JFrame {
 		);
 
 	}
-	private NationalityRequestDTO obtenerNacionalidad(NationalityRequestDTO nacionalidad) {
-
-		ComboBoxModel<NationalityRequestDTO> model =  txtNacionalidad.getModel();
-		NationalityRequestDTO nationality = null;
-
-		for (int i = 0; i < model.getSize(); i++) {
-
-			NationalityRequestDTO item = model.getElementAt(i);
-
-			if (item.getId().equals(nacionalidad.getId()))
-				nationality = item;
-		}
-
-		return nationality;
-	}
 	private void consultarParametroCedula(String cedula) {
 
 		Optional<GuestDTO> guest = guestController.getGuestsByCedula(cedula).stream().findFirst();
 
 		guest.ifPresentOrElse(
-						this::cargarDatosHuesped,
+						this::loadDataOfExistingGuest,
 						this::limpiarCampos
 		);
 
 	}
-	private void paramastarde() {
+	private GuestRequestDTO newHuesped() {
 
 		Instant instantDateBirth = txtFechaN.getDate().toInstant();
 		LocalDate dateBirth = instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
 
 		NationalityRequestDTO nationalityRequestDTO = (NationalityRequestDTO) txtNacionalidad.getSelectedItem();
 
-		crearGuestRequestDTO(txtCedula.getText(),
-				txtNombre.getText(),
-				txtApellido.getText(),
-				dateBirth,
-				txtTelefono.getText(),
-				nationalityRequestDTO);
+		 return this.guestRequestDTO = crearGuestRequestDTO(txtCedula.getText(),
+																							txtNombre.getText(),
+																							txtApellido.getText(),
+																							dateBirth,
+																							txtTelefono.getText(),
+																							nationalityRequestDTO);
 	}
-	private void limpiarCampos() {
+	private void loadDataOfExistingGuest(GuestDTO guestDTO) {
 
-		List<JTextField> campos = List.of(txtNombre, txtApellido, txtTelefono);
-
-		campos.forEach(campo -> {
-			campo.setText("");
-			campo.setEditable(true);
-		});
-
-		editorFecha.setText("");
-		editorFecha.setEditable(true);
-		txtNacionalidad.setEnabled(true);
-	}
-	private void cargarDatosHuesped(GuestDTO guestDTO) {
-
-		crearGuestRequestDTO(guestDTO.getCedula(),
-											guestDTO.getFirstName(),
-											guestDTO.getLastName(),
-											guestDTO.getDateOfBirth(),
-											guestDTO.getPhone(),
-											guestDTO.getNationality()
+		this.guestRequestDTO = crearGuestRequestDTO(guestDTO.getCedula(),
+																			guestDTO.getFirstName(),
+																			guestDTO.getLastName(),
+																			guestDTO.getDateOfBirth(),
+																			guestDTO.getPhone(),
+																			guestDTO.getNationality()
 		);
+
+		//CONFIRMAMOS LA EXISTENCIA DEL HUESPED
+		this.findGuest = true;
 
 		//SE LE AGREGAN LOS DATOS DEL HUESPED YA EXISTENTE EN LA BD
 		txtCedula.setText(guestDTO.getCedula());
@@ -417,20 +459,49 @@ public class RegistroHuesped extends JFrame {
 		txtNombre.setEditable(false);
 		txtApellido.setEditable(false);
 		editorFecha.setEditable(false);
+		txtFechaN.getCalendarButton().setEnabled(false);
 		txtNacionalidad.setEnabled(false);
 		txtTelefono.setEditable(false);
 	}
+	private NationalityRequestDTO obtenerNacionalidad(NationalityRequestDTO nacionalidad) {
 
-	private void crearGuestRequestDTO(String cedula,
-														  String firsName,
-														  String lastName,
-														  LocalDate dateOfBirth,
-														  String phone,
-														  NationalityRequestDTO nationality) {
+		ComboBoxModel<NationalityRequestDTO> model =  txtNacionalidad.getModel();
+		NationalityRequestDTO nationality;
 
-		this.guestRequestDTO = new GuestRequestDTO(cedula, firsName, lastName, dateOfBirth, phone, nationality);
+		for (int i = 0; i < model.getSize(); i++) {
+
+			 nationality = model.getElementAt(i);
+
+			if (nationality.getId().equals(nacionalidad.getId()))
+				return  nationality;
+		}
+
+		return model.getElementAt(0);
 	}
+	private GuestRequestDTO crearGuestRequestDTO(String cedula,
+																			  String firsName,
+																			  String lastName,
+																			  LocalDate dateOfBirth,
+																			  String phone,
+																			  NationalityRequestDTO nationality) {
 
+		return new GuestRequestDTO(cedula, firsName, lastName, dateOfBirth, phone, nationality);
+	}
+	private void limpiarCampos() {
+
+		findGuest = false;
+		List<JTextField> campos = List.of(txtNombre, txtApellido, txtTelefono);
+
+		campos.forEach(campo -> {
+			campo.setText("");
+			campo.setEditable(true);
+		});
+
+		editorFecha.setText("");
+		editorFecha.setEditable(true);
+		txtFechaN.getCalendarButton().setEnabled(true);
+		txtNacionalidad.setEnabled(true);
+	}
 	private Date configurarFecha(LocalDate fecha) {
 
 		//Permite cambiar el formato de un LocalDate a Date
@@ -441,8 +512,7 @@ public class RegistroHuesped extends JFrame {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
 	    }
-
-	    private void headerMouseDragged(MouseEvent evt) {
+		private void headerMouseDragged(MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);

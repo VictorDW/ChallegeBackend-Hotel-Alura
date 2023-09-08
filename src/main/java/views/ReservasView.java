@@ -320,7 +320,7 @@ public class ReservasView extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 
 					if (!(ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null)) {
-						JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+						JOptionPane.showMessageDialog(contentPane, "Debes llenar todos los campos.","Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 
@@ -330,7 +330,7 @@ public class ReservasView extends JFrame {
 						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);
 						registro.setVisible(true);
 					} else {
-						JOptionPane.showMessageDialog(null, "Error en las fechas");
+						JOptionPane.showMessageDialog(contentPane, "Error en las fechas", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
@@ -340,7 +340,7 @@ public class ReservasView extends JFrame {
 	}
 		private void eventoFechaCheckOut() {
 		txtFechaSalida.addPropertyChangeListener( evt -> storeReservationData());
-	}
+		}
 		private void storeReservationData() {
 
 		try {
@@ -352,7 +352,7 @@ public class ReservasView extends JFrame {
 
 				txtValor.setText(this.reservationRequestDTO.getCost().toString());
 			}else {
-				JOptionPane.showMessageDialog(null, "Error en las fechas");
+				JOptionPane.showMessageDialog(contentPane, "Error en las fechas", "Error", JOptionPane.ERROR_MESSAGE);
 				txtValor.setText("0");
 			}
 
