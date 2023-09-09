@@ -9,6 +9,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
 import controller.NationalityController;
 import controller.ReservationController;
+import service.util.ConfigureDates;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -322,16 +323,26 @@ public class RegistroHuesped extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				try {
+					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
+				}catch (NullPointerException ignore){}
+
 				if (!(txtFechaN.getDate() != null &&
 						txtCedula.getText() != null &&
 						txtNombre.getText() != null &&
 						txtApellido.getText() != null &&
 						txtTelefono.getText() != null)) {
 
-					JOptionPane.showMessageDialog(contentPane, "Debes llenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(contentPane,
+																	"Debes llenar todos los campos.",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
 
-				}else if(isMenordeEdad(txtFechaN.getDate())){
-					JOptionPane.showMessageDialog(contentPane, "El huesped debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
+				}else if(ConfigureDates.isUnderAge()){
+					JOptionPane.showMessageDialog(contentPane,
+																	"El huesped debe ser mayor de edad",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
 				}else {
 					//ENVIAMOS LOS DATOS PARA EL REGISTRO
 					reservationController
@@ -342,7 +353,10 @@ public class RegistroHuesped extends JFrame {
 											newHuesped()
 							);
 
-					JOptionPane.showMessageDialog(contentPane, "Reserva hecha satisfactoriamente", "Creación Correcta", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(contentPane,
+																	"Reserva hecha satisfactoriamente",
+																	"Creación Correcta",
+																	JOptionPane.INFORMATION_MESSAGE);
 					//REGRESAMOS A LA VISTA DE RESERVA
 					jFrameRegistrarHuesped.setVisible(true);
 					setVisible(false);
@@ -382,24 +396,19 @@ public class RegistroHuesped extends JFrame {
 
 				//SE VALIDA QUE TENGA LA EDAD MINIMA
 				try {
-					if (isMenordeEdad(txtFechaN.getDate())){
-						JOptionPane.showMessageDialog(null, "El huesped debe ser mayor de edad");
+					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
+
+					if (ConfigureDates.isUnderAge()) {
+						JOptionPane.showMessageDialog(contentPane,
+																		"El huesped debe ser mayor de edad",
+																		"Error",
+																		JOptionPane.ERROR_MESSAGE);
 						editorFecha.setText("");
 					}
 				}catch (NullPointerException ignore){}
 
 			}
 		});
-	}
-	private boolean isMenordeEdad(Date fecha) throws NullPointerException {
-
-		Instant instantDateBirth = fecha.toInstant();
-		LocalDate dateBirth = instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate fechaActual = LocalDate.now();
-
-		Period period = Period.between(dateBirth, fechaActual);
-
-		return period.getYears() < 18;
 	}
 	private void cargarComboNacionalidad() {
 
@@ -422,8 +431,7 @@ public class RegistroHuesped extends JFrame {
 	}
 	private GuestRequestDTO newHuesped() {
 
-		Instant instantDateBirth = txtFechaN.getDate().toInstant();
-		LocalDate dateBirth = instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate dateBirth = ConfigureDates.getDateOfBirth();
 
 		NationalityRequestDTO nationalityRequestDTO = (NationalityRequestDTO) txtNacionalidad.getSelectedItem();
 
@@ -436,6 +444,7 @@ public class RegistroHuesped extends JFrame {
 	}
 	private void loadDataOfExistingGuest(GuestDTO guestDTO) {
 
+		//SE LE SETEAN LOS DATOS PROVENIENTES DEL HUESPED EXISTENTE
 		this.guestRequestDTO = crearGuestRequestDTO(guestDTO.getCedula(),
 																			guestDTO.getFirstName(),
 																			guestDTO.getLastName(),
@@ -447,11 +456,11 @@ public class RegistroHuesped extends JFrame {
 		//CONFIRMAMOS LA EXISTENCIA DEL HUESPED
 		this.findGuest = true;
 
-		//SE LE AGREGAN LOS DATOS DEL HUESPED YA EXISTENTE EN LA BD
+		//SE LE AGREGAN LOS DATOS DEL HUESPED YA EXISTENTE A LOS CAMPOS
 		txtCedula.setText(guestDTO.getCedula());
 		txtNombre.setText(guestDTO.getFirstName());
 		txtApellido.setText(guestDTO.getLastName());
-		txtFechaN.setDate(configurarFecha(guestDTO.getDateOfBirth()));
+		txtFechaN.setDate(ConfigureDates.mapperLocalDateToData(guestDTO.getDateOfBirth()));
 		txtNacionalidad.setSelectedItem(obtenerNacionalidad(guestDTO.getNationality()));
 		txtTelefono.setText(guestDTO.getPhone());
 
@@ -502,11 +511,7 @@ public class RegistroHuesped extends JFrame {
 		txtFechaN.getCalendarButton().setEnabled(true);
 		txtNacionalidad.setEnabled(true);
 	}
-	private Date configurarFecha(LocalDate fecha) {
 
-		//Permite cambiar el formato de un LocalDate a Date
-		return Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
 	 private void headerMousePressed(MouseEvent evt) {
 	        xMouse = evt.getX();

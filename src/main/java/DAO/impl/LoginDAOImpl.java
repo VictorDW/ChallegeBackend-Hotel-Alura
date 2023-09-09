@@ -1,9 +1,12 @@
 package DAO.impl;
 
 import DAO.LoginDAO;
+import jakarta.persistence.NoResultException;
 import modelo.Login;
 
 import jakarta.persistence.EntityManager;
+
+import java.util.Optional;
 
 
 public class LoginDAOImpl implements LoginDAO {
@@ -15,10 +18,17 @@ public class LoginDAOImpl implements LoginDAO {
     }
 
     @Override
-    public Login findByUsername(String username) {
-       String query = "SELECT L from Login L WHERE L.username =:username";
-      return entityManager.createQuery(query, Login.class)
-                                      .setParameter("username",username)
-                                      .getSingleResult();
+    public Optional<Login> findByUsername(String username) {
+
+       try {
+           String query = "SELECT L from Login L WHERE L.username =:username";
+
+           return Optional.of(entityManager.createQuery(query, Login.class)
+                   .setParameter("username", username)
+                   .getSingleResult());
+
+       }catch (NoResultException e) {
+           return Optional.empty();
+       }
     }
 }

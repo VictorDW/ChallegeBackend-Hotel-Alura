@@ -2,10 +2,13 @@ package views;
 
 import DTO.GuestRequestDTO;
 import DTO.NationalityRequestDTO;
+import com.toedter.calendar.IDateEditor;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
 import controller.NationalityController;
 import modelo.Nationality;
+import service.util.ConfigureDates;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +31,7 @@ public class UpdateHuespedView extends JFrame {
 	private JTextField txtApellido;
 	private JTextField txtTelefono;
 	private static JDateChooser txtFechaN;
+	private final JTextFieldDateEditor editorFecha;
 	private JComboBox<NationalityRequestDTO> txtNacionalidad;
 	private JLabel labelExit;
 	private JPanel btnexit;
@@ -139,7 +143,8 @@ public class UpdateHuespedView extends JFrame {
 		contentPane.add(lblFechaN);
 
 		txtFechaN = new JDateChooser();
-		txtFechaN.setDate(configurarFecha(this.guestRequestDTO.getDateOfBirth()));
+		editorFecha = (JTextFieldDateEditor) txtFechaN.getDateEditor();
+		txtFechaN.setDate(ConfigureDates.mapperLocalDateToData(this.guestRequestDTO.getDateOfBirth()));
 		txtFechaN.setBounds(560, 328, 285, 35);
 		txtFechaN.getCalendarButton().setIcon(new ImageIcon(UpdateHuespedView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
@@ -272,14 +277,28 @@ public class UpdateHuespedView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				try {
+					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
+				}catch (NullPointerException ignore){}
+
 				if (!(UpdateHuespedView.txtFechaN.getDate() != null &&
 						txtCedula.getText() != null &&
 						txtNombre.getText() != null &&
 						txtApellido.getText() != null &&
 						txtTelefono.getText() != null)) {
 
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+					JOptionPane.showMessageDialog(contentPane,
+																	"Debes llenar todos los campos.",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
 
+				}else if(ConfigureDates.isUnderAge()) {
+
+					JOptionPane.showMessageDialog(contentPane,
+																	"El huesped debe ser mayor de edad",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
+					editorFecha.setText("");
 				}else {
 					modificarHuesped();
 				}
@@ -308,13 +327,6 @@ public class UpdateHuespedView extends JFrame {
 			}
 		});
 	}
-
-	private Date configurarFecha(LocalDate fecha) {
-
-		//Permite cambiar el formato de un LocalDate a Date
-		return Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
 	private void cargarComboNacionalidad() {
 
 		// SE CARGAN TODAS LAS NACIONALIDADES EXCEPTO LA QUE YA POSEÉ COMO REGISTRADA
@@ -331,23 +343,27 @@ public class UpdateHuespedView extends JFrame {
 
 		try {
 			//Permite cambiar el formato de un Date a un LocalDate
-			Instant instantDateBirth = txtFechaN.getDate().toInstant();
-
-			LocalDate dateBirth = instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
+			ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
 
 			NationalityRequestDTO nationalityRequestDTO = (NationalityRequestDTO) txtNacionalidad.getSelectedItem();
 
 			guestRequestDTO.setCedula(txtCedula.getText());
 			guestRequestDTO.setFirsName(txtNombre.getText());
 			guestRequestDTO.setLastName(txtApellido.getText());
-			guestRequestDTO.setDateOfBirth(dateBirth);
+			guestRequestDTO.setDateOfBirth(ConfigureDates.getDateOfBirth());
 			guestRequestDTO.setPhone(txtTelefono.getText());
 			guestRequestDTO.setNationality(nationalityRequestDTO);
 
 			if(this.guestController.updateGuest(this.guestRequestDTO))
-				JOptionPane.showMessageDialog(this,  " Item actualizado con éxito!");
+				JOptionPane.showMessageDialog(contentPane,
+																" Huesped actualizado con éxito!",
+																"Actualización correcta",
+																JOptionPane.INFORMATION_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+				JOptionPane.showMessageDialog(contentPane,
+																" Ha ocurrido un error inesperado",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 
 		}catch (ArrayIndexOutOfBoundsException ignored){}
 

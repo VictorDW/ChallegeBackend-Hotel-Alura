@@ -79,13 +79,13 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 
 		JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
-		labelTitulo.setForeground(SystemColor.textHighlight);
+		labelTitulo.setForeground(new Color(54, 55, 83));
 		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
 		labelTitulo.setBounds(65, 149, 202, 26);
 		panel.add(labelTitulo);
 
 		JLabel LabelUsuario = new JLabel("USUARIO");
-		LabelUsuario.setForeground(SystemColor.textInactiveText);
+		LabelUsuario.setForeground(new Color(54, 55, 83));
 		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		LabelUsuario.setBounds(65, 219, 107, 26);
 		panel.add(LabelUsuario);
@@ -101,7 +101,7 @@ public class Login extends JFrame {
 		txtUsuario.setColumns(10);
 
 		JSeparator separator = new JSeparator();
-		separator.setBackground(new Color(0, 120, 215));
+		separator.setBackground(new Color(54, 55, 83));
 		separator.setBounds(65, 292, 324, 2);
 		panel.add(separator);
 
@@ -121,12 +121,12 @@ public class Login extends JFrame {
 		panel.add(txtContrasena);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBackground(SystemColor.textHighlight);
+		separator_1.setBackground(new Color(54, 55, 83));
 		separator_1.setBounds(65, 393, 324, 2);
 		panel.add(separator_1);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(12, 138, 199));
+		panel_1.setBackground(new Color(54, 55, 83));
 		panel_1.setBounds(484, 0, 304, 527);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -140,7 +140,7 @@ public class Login extends JFrame {
 		eventoSalir();
 		btnExit.setBounds(251, 0, 53, 36);
 		panel_1.add(btnExit);
-		btnExit.setBackground(new Color(12, 138, 199));
+		btnExit.setBackground(new Color(54, 55, 83));
 		btnExit.setLayout(null);
 		btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
@@ -153,7 +153,7 @@ public class Login extends JFrame {
 
 		btnLogin = new JPanel();
 		eventoBtnLogin();
-		btnLogin.setBackground(SystemColor.textHighlight);
+		btnLogin.setBackground(new Color(54, 55, 83));
 		btnLogin.setBounds(65, 431, 122, 44);
 		panel.add(btnLogin);
 		btnLogin.setLayout(null);
@@ -196,7 +196,7 @@ public class Login extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(0, 156, 223));
+				btnLogin.setBackground(new Color(54, 55, 83));
 			}
 
 			@Override
@@ -222,7 +222,7 @@ public class Login extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnExit.setBackground(new Color(12, 138, 199));
+				btnExit.setBackground(new Color(54, 55, 83));
 				labelExit.setForeground(Color.white);
 			}
 		});
@@ -259,14 +259,17 @@ public class Login extends JFrame {
 	}
 	private void login() {
 
-	        String contrasenha=new String (txtContrasena.getPassword());
+	        String contrasenha = new String (txtContrasena.getPassword());
 
-			if(loginController.autenticarUser(txtUsuario.getText(), contrasenha)){
+			if(loginController.autenticarUser(txtUsuario.getText(), contrasenha)) {
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
 	            dispose();	 
 	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
+	            JOptionPane.showMessageDialog(contentPane,
+																"Usuario o Contraseña no válidos",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 	        }
 	} 
 	 private void headerMousePressed(MouseEvent evt) {

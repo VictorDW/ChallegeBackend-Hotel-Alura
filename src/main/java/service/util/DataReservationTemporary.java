@@ -30,22 +30,15 @@ public final class DataReservationTemporary {
 
     public static String createReservationCod(){
 
-        char[] letters = {'A','B','C','D','E','F','G','H','I','J','K','L','N','M','O','P','Q','R','S','T','V','W','K','Y','Z'};
         int[] numbers = {0,1,2,3,4,5,6,7,8,9};
 
-        StringBuilder sequence = new StringBuilder();
+        StringBuilder sequence = new StringBuilder("HAC");
 
         Random random = new Random();
 
-        for (int i = 0; i < 6; i++) {
-            int choice = random.nextInt(2); // Choose between letters and numbers
-            if (choice == 0) {
-                char randomLetter = letters[random.nextInt(letters.length)];
-                sequence.append(randomLetter);
-            } else {
+        for (int i = 0; i < 3; i++) {
                 int randomNumber = numbers[random.nextInt(numbers.length)];
                 sequence.append(randomNumber);
-            }
         }
 
         return sequence.toString();

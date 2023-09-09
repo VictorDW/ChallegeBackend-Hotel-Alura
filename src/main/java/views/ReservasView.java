@@ -2,15 +2,14 @@ package views;
 
 import DTO.ReservationRequestDTO;
 import com.toedter.calendar.JDateChooser;
+import service.util.ConfigureDates;
 import service.util.DataReservationTemporary;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -320,70 +319,61 @@ public class ReservasView extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 
 					if (!(ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null)) {
-						JOptionPane.showMessageDialog(contentPane, "Debes llenar todos los campos.","Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(contentPane,
+																		"Debes llenar todos los campos.",
+																		"Error",
+																		JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 
-					if (validarOrdenFechas()) {
+					if (ConfigureDates.validateDateOrder()) {
 
 						missingReserveData();
 						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);
 						registro.setVisible(true);
 					} else {
-						JOptionPane.showMessageDialog(contentPane, "Error en las fechas", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(contentPane,
+																		"Error en las fechas",
+																		"Error",
+																		JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
 		}
 		private void eventoFechaCheckIn() {
-		txtFechaEntrada.addPropertyChangeListener( evt -> storeReservationData());
-	}
+			txtFechaEntrada.addPropertyChangeListener( evt -> storeReservationData());
+		}
 		private void eventoFechaCheckOut() {
-		txtFechaSalida.addPropertyChangeListener( evt -> storeReservationData());
+			txtFechaSalida.addPropertyChangeListener( evt -> storeReservationData());
 		}
 		private void storeReservationData() {
 
 		try {
 
-			if (validarOrdenFechas()) {
+			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+
+			if (ConfigureDates.validateDateOrder()) {
 				this.reservationRequestDTO =
 						DataReservationTemporary
-								.dataOfReserve(configurarFecha().get(0), configurarFecha().get(1));
+								.dataOfReserve(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());
 
 				txtValor.setText(this.reservationRequestDTO.getCost().toString());
 			}else {
-				JOptionPane.showMessageDialog(contentPane, "Error en las fechas", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(contentPane,
+																"Error en las fechas",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 				txtValor.setText("0");
 			}
 
 		}catch (NullPointerException ignored){}
 	}
-		private boolean validarOrdenFechas(){
-		return txtFechaEntrada.getDate().before(txtFechaSalida.getDate());
-	}
-		private List<LocalDate> configurarFecha() throws NullPointerException{
-
-				Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
-				Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
-
-				LocalDate checkIn  = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
-				LocalDate checkOut= instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
-
-			return  new ArrayList<>(){{
-				add(checkIn);
-				add(checkOut);
-			}};
-		}
 		private void missingReserveData() {
 			this.reservationRequestDTO.setReservationCod(DataReservationTemporary.createReservationCod());
 			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
 		}
 		private void cargarCombo() {
-			List<String> eleccionCombo = new ArrayList<>(){{
-				add("Tarjeta de Crédito");
-				add("Tarjeta de Débito");
-				add("Dinero en efectivo");
-			}};
+			List<String> eleccionCombo = List.of("Tarjeta de Crédito","Tarjeta de Débito","Dinero en efectivo");
 
 			eleccionCombo.forEach(eleccion -> txtFormaPago.addItem(eleccion));
 		}

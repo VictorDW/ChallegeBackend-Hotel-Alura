@@ -5,6 +5,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
 import controller.ReservationController;
+import service.util.ConfigureDates;
 
 import java.awt.*;
 import javax.swing.*;
@@ -362,6 +363,7 @@ public class Busqueda extends JFrame {
 
 	private void eventoTapTablas() {
 
+		//EVENTO QUE CONTROLA CUANDO DEBEN SALIR LOS CAMPOS FECHAS
 		panel.addChangeListener((ChangeEvent e) -> {
 
 					int selectedIndex = panel.getSelectedIndex();
@@ -470,7 +472,6 @@ public class Busqueda extends JFrame {
 						limpiarTabla(modeloHuesped);
 						cargarTablaHuesped(guestController.getAllGuest());
 					}
-
 				}
 			}
 		});
@@ -489,21 +490,28 @@ public class Busqueda extends JFrame {
 
 				if (selectedIndex == 0) {
 
-					LocalDate checkIn = null;
+					/*LocalDate checkIn = null;
 					LocalDate checkOut = null;
+					 */
+					ConfigureDates.resetDates();
 
 					try {
 						//Permite cambiar el formato de un Date a un LocalDate
 
-						Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
+					/*	Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
 						Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
+
 						checkIn = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
 						checkOut = instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
-
+					 */
+						ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 					}catch(NullPointerException ignore){}
 
 					limpiarTabla(modeloReserva);
-					consultaParametrosReserva(txtBuscar.getText().toUpperCase(), checkIn, checkOut);
+					consultaParametrosReserva(txtBuscar.getText().toUpperCase(),
+															ConfigureDates.getCheckIn(),
+															ConfigureDates.getCheckOut());
+
 					placeHolderFechas((JTextFieldDateEditor) txtFechaEntrada.getDateEditor(),"Check In");
 					placeHolderFechas((JTextFieldDateEditor) txtFechaSalida.getDateEditor(),"Check Out");
 				}else{
@@ -616,7 +624,10 @@ public class Busqueda extends JFrame {
 		List<GuestDTO> guestList = guestController.getGuestsByCedula(cedula.equals("Cedula") ? null : cedula);
 
 		if (guestList.isEmpty()){
-			JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
+			JOptionPane.showMessageDialog(contentPane,
+															"No se encontraron coincidencias",
+															"Error",
+															JOptionPane.ERROR_MESSAGE);
 		}
 		else
 			cargarTablaHuesped(guestList);
@@ -673,7 +684,10 @@ public class Busqueda extends JFrame {
 	private void enviarDatosReserva(){
 
 		if(tieneFilaElegida(tbReservas)) {
-			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			JOptionPane.showMessageDialog(contentPane,
+															"Por favor, elije un item",
+															"Error",
+															JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -689,7 +703,9 @@ public class Busqueda extends JFrame {
 					String.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(),5))
 			);
 
-			UpdateReservasView updateReserva = new UpdateReservasView(Busqueda.this, reservationRequestDTO, reservationController);
+			UpdateReservasView updateReserva = new UpdateReservasView(Busqueda.this,
+																											reservationRequestDTO,
+																											reservationController);
 			updateReserva.setVisible(true);
 
 		}catch(ArrayIndexOutOfBoundsException ignored){}
@@ -698,7 +714,10 @@ public class Busqueda extends JFrame {
 	private void enviarDatosHuesped(){
 
 		if(tieneFilaElegida(tbHuespedes)) {
-			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			JOptionPane.showMessageDialog(contentPane,
+															"Por favor, elije un item",
+															"Error",
+															JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -716,7 +735,9 @@ public class Busqueda extends JFrame {
 					(NationalityRequestDTO) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(),5)
 			);
 
-			UpdateHuespedView updateHuespedView = new UpdateHuespedView(Busqueda.this, guestRequestDTO, this.guestController);
+			UpdateHuespedView updateHuespedView = new UpdateHuespedView(Busqueda.this,
+																													guestRequestDTO,
+																													this.guestController);
 			updateHuespedView.setVisible(true);
 
 		}catch (ArrayIndexOutOfBoundsException ignored){}
@@ -725,7 +746,10 @@ public class Busqueda extends JFrame {
 	private void eliminarReserva(){
 
 		if (tieneFilaElegida(tbReservas)) {
-			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			JOptionPane.showMessageDialog(contentPane,
+															"Por favor, elije un item",
+															"Error",
+															JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -735,9 +759,15 @@ public class Busqueda extends JFrame {
 
 			if(this.reservationController.softDeleteReservation(ReservaID)) {
 				modeloReserva.removeRow(tbReservas.getSelectedRow());
-				JOptionPane.showMessageDialog(this, " Item actualizado con éxito!");
+				JOptionPane.showMessageDialog(contentPane,
+																" Reserva eliminado con éxito!",
+																"Delete",
+																JOptionPane.ERROR_MESSAGE);
 			}else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+				JOptionPane.showMessageDialog(contentPane,
+																" Ha ocurrido un error inesperado",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 
 		}catch (ArrayIndexOutOfBoundsException ignore){}
 	}
@@ -755,9 +785,15 @@ public class Busqueda extends JFrame {
 
 			if(this.guestController.softDeleteGuest(huespedID)) {
 				modeloReserva.removeRow(tbReservas.getSelectedRow());
-				JOptionPane.showMessageDialog(this, " Item actualizado con éxito!");
+				JOptionPane.showMessageDialog(contentPane,
+																" Huesped eliminada con éxito!",
+																"Delete",
+																JOptionPane.ERROR_MESSAGE);
 			}else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+				JOptionPane.showMessageDialog(contentPane,
+																" Ha ocurrido un error inesperado",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 
 		}catch (ArrayIndexOutOfBoundsException ignore){}
 	}

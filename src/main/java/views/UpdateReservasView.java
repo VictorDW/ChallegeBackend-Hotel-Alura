@@ -4,6 +4,7 @@ import DTO.ReservationRequestDTO;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controller.ReservationController;
+import service.util.ConfigureDates;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -41,11 +42,6 @@ public class UpdateReservasView extends JFrame {
 	private  final ReservationRequestDTO reservationRequestDTO;
 
 	private final Busqueda jFrameBusqueda;
-
-
-	/**
-	 * Launch the application.
-	 */
 
 
 	/**
@@ -104,7 +100,7 @@ public class UpdateReservasView extends JFrame {
 		panel.add(separator_1_2);
 
 		txtFechaEntrada = new JDateChooser();
-		txtFechaEntrada.setDate(configurarFecha(reservationRequestDTO.getCheckIn()));
+		txtFechaEntrada.setDate(ConfigureDates.mapperLocalDateToData(reservationRequestDTO.getCheckIn()));
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
@@ -124,18 +120,18 @@ public class UpdateReservasView extends JFrame {
 		panel.add(lblCheckOut);
 
 		txtFechaSalida = new JDateChooser();
-		txtFechaSalida.setDate(configurarFecha(reservationRequestDTO.getCheckOut()));
+		txtFechaSalida.setDate(ConfigureDates.mapperLocalDateToData(reservationRequestDTO.getCheckOut()));
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		txtFechaSalida.setBounds(68, 286, 289, 35);
 		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
-		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
+		/*txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
 			}
-		});
+		});*/
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
@@ -239,7 +235,6 @@ public class UpdateReservasView extends JFrame {
 		btnGuardar.add(lblGuardar);
 
 	}
-
 	private void eventoGuardar(){
 
 		this.btnGuardar.addMouseListener(new MouseAdapter() {
@@ -247,10 +242,16 @@ public class UpdateReservasView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				if (!(UpdateReservasView.txtFechaEntrada.getDate() != null && UpdateReservasView.txtFechaSalida.getDate() != null))
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+					JOptionPane.showMessageDialog(contentPane,
+																	"Debes llenar todos los campos",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
 
 				else if(UpdateReservasView.txtFechaEntrada.getDate().after(UpdateReservasView.txtFechaSalida.getDate()))
-					JOptionPane.showMessageDialog(null, "Error en las fechas");
+					JOptionPane.showMessageDialog(contentPane,
+																	"Error en las fechas",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
 
 				else
 					modificarReserva();
@@ -277,50 +278,48 @@ public class UpdateReservasView extends JFrame {
 			}
 		});
 	}
-
 	private void cargarCombo() {
 
 		String eleccionBase = reservationRequestDTO.getMethodPayment();
-		List<String> eleccionCombo = new ArrayList<>(){{
-			add("Tarjeta de Crédito");
-			add("Tarjeta de Débito");
-			add("Dinero en efectivo");
-		}};
+		List<String> eleccionCombo = List.of("Tarjeta de Crédito","Tarjeta de Débito","Dinero en efectivo");
 
 		eleccionCombo.forEach(eleccion ->{
 			if(!eleccion.equals(eleccionBase))
 				txtFormaPago.addItem(eleccion);
 		});
 	}
-	private Date configurarFecha(LocalDate fecha) {
-
-		//Permite cambiar el formato de un LocalDate a Date
-		return Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
 	private void modificarReserva() {
 
 		try {
-			//Permite cambiar el formato de un Date a un LocalDate
-			Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
-			Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
 
-			LocalDate checkIn = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
-			LocalDate checkOut = instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
+			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 
-			this.reservationRequestDTO.setCheckIn(checkIn);
-			this.reservationRequestDTO.setCheckOut(checkOut);
+			if (!ConfigureDates.validateDateOrder()) {
+					JOptionPane.showMessageDialog(contentPane,
+																	"Error en las fechas",
+																	"Error",
+																	JOptionPane.ERROR_MESSAGE);
+					return;
+			}
+
+			this.reservationRequestDTO.setCheckIn(ConfigureDates.getCheckIn());
+			this.reservationRequestDTO.setCheckOut(ConfigureDates.getCheckOut());
 			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
 
 			if(this.reservationController.updateReservation(this.reservationRequestDTO))
-				JOptionPane.showMessageDialog(this,  " Item actualizado con éxito!");
+				JOptionPane.showMessageDialog(contentPane,
+																" Reserva actualizado con éxito!",
+																"Actualización correcta",
+																JOptionPane.INFORMATION_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
+				JOptionPane.showMessageDialog(contentPane,
+																" Ha ocurrido un error inesperado",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 
 		}catch (ArrayIndexOutOfBoundsException ignored){}
 
 	}
-
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
 	 private void headerMousePressed(MouseEvent evt) {

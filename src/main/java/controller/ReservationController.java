@@ -37,6 +37,8 @@ public class ReservationController {
     }
 
     public void createReservation(ReservationRequestDTO reservationRequestDTO, GuestRequestDTO guestDTO) {
+        System.out.println(reservationRequestDTO);
+        System.out.println(guestDTO);
        // reservationService.createReservation(reservationRequestDTO, guestDTO);
     }
 

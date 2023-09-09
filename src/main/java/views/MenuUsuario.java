@@ -80,7 +80,7 @@ public class MenuUsuario extends JFrame {
 		});
 		
 		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(12, 138, 199));
+		panelMenu.setBackground(new Color(54, 55, 83));
 		panelMenu.setBounds(0, 0, 257, 609);
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
@@ -93,7 +93,7 @@ public class MenuUsuario extends JFrame {
 		btnRegistro = new JPanel();
 		eventoBtnRegistrar();
 		btnRegistro.setBounds(0, 255, 257, 56);
-		btnRegistro.setBackground(new Color(12, 138, 199));
+		btnRegistro.setBackground(new Color(54, 55, 83));
 		panelMenu.add(btnRegistro);
 		btnRegistro.setLayout(null);
 		
@@ -108,7 +108,7 @@ public class MenuUsuario extends JFrame {
 		btnBusqueda = new JPanel();
 		eventoBtnBuscardor();
 		btnBusqueda.setBounds(0, 312, 257, 56);
-		btnBusqueda.setBackground(new Color(12, 138, 199));
+		btnBusqueda.setBackground(new Color(54, 55, 83));
 		panelMenu.add(btnBusqueda);
 		btnBusqueda.setLayout(null);
 		
@@ -142,7 +142,7 @@ public class MenuUsuario extends JFrame {
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		
 	    JPanel panelFecha = new JPanel();
-	    panelFecha.setBackground(new Color(118, 187, 223));
+	    panelFecha.setBackground(new Color(29, 27, 49));
 	    panelFecha.setBounds(256, 84, 688, 121);
 	    contentPane.add(panelFecha);
 	    panelFecha.setLayout(null);
@@ -199,11 +199,11 @@ public class MenuUsuario extends JFrame {
 		btnRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnRegistro.setBackground(new Color(118, 187, 223));
+				btnRegistro.setBackground(new Color(29, 27, 49));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnRegistro.setBackground(new Color(12, 138, 199));
+				btnRegistro.setBackground(new Color(54, 55, 83));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -217,11 +217,12 @@ public class MenuUsuario extends JFrame {
 		btnBusqueda.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnBusqueda.setBackground(new Color(118, 187, 223));
+				btnBusqueda.setBackground(new Color(29, 27, 49));
+
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnBusqueda.setBackground(new Color(12, 138, 199));
+				btnBusqueda.setBackground(new Color(54, 55, 83));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {

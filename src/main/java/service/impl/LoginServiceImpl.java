@@ -5,8 +5,11 @@ import DTO.UserDTO;
 import modelo.Login;
 import service.LoginService;
 
+import java.util.Optional;
+
 public class LoginServiceImpl implements LoginService {
     private final LoginDAO loginDAO;
+    private boolean isFount;
 
     public LoginServiceImpl(LoginDAO loginDAO) {
         this.loginDAO = loginDAO;
@@ -14,11 +17,12 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean autenticar(UserDTO userDTO) {
 
-        Login login = loginDAO.findByUsername(userDTO.getUsername());
+        Optional<Login> login = loginDAO.findByUsername(userDTO.getUsername());
 
-        if (login == null)
-            return false;
-        else
-            return login.getPassword().equals(userDTO.getPassword());
+        login.ifPresentOrElse(value ->
+                         isFount = value.getPassword().equals(userDTO.getPassword()),
+                         ()-> isFount = false);
+
+        return isFount;
     }
 }
