@@ -3,9 +3,9 @@ package service.mappers;
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
 import DTO.NationalityRequestDTO;
-import modelo.Guest;
-import modelo.Nationality;
-import modelo.Status;
+import model.Guest;
+import model.Nationality;
+import model.Status;
 
 public final class MapperGuest {
 

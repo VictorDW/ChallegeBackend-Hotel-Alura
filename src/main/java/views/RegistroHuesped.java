@@ -15,11 +15,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +38,7 @@ public class RegistroHuesped extends JFrame {
 
 
 	//
-	private final ReservasView jFrameRegistrarHuesped;
+	private final ReservasView jFrameRegistrarReserva;
 	private final ReservationController reservationController;
 	private final GuestController guestController;
 	private final NationalityController nationalityController;
@@ -53,7 +49,7 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped(ReservasView jFrameRegistrarHuesped, ReservationRequestDTO reservationRequestDTO) {
+	public RegistroHuesped(ReservasView jFrameRegistrarReserva, ReservationRequestDTO reservationRequestDTO) {
 
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
@@ -69,7 +65,7 @@ public class RegistroHuesped extends JFrame {
 
 		// INICIALIZACIÓN DE LAS VARIABLES
 
-		this.jFrameRegistrarHuesped = jFrameRegistrarHuesped;
+		this.jFrameRegistrarReserva = jFrameRegistrarReserva;
 		this.reservationController = new ReservationController();
 		this.guestController = new GuestController();
 		this.nationalityController = new NationalityController();
@@ -79,13 +75,13 @@ public class RegistroHuesped extends JFrame {
 
 		JLabel lblTitulo = new JLabel("Registro Huesped");
 		lblTitulo.setBounds(606, 15, 250, 42);
-		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 24));
+		lblTitulo.setForeground(new Color(54, 55, 83));
+		lblTitulo.setFont(new Font("Roboto Black", Font.BOLD, 24));
 		contentPane.add(lblTitulo);
 
 		JLabel lblCedula = new JLabel("Cedula");
 		lblCedula.setBounds(562, 68, 253, 24);
-		lblCedula.setForeground(SystemColor.textInactiveText);
+		lblCedula.setForeground(new Color(0, 0, 0, 180));
 		lblCedula.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblCedula);
 
@@ -100,13 +96,13 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2_ = new JSeparator();
 		separator_1_2_.setBounds(560, 127, 289, 2);
-		separator_1_2_.setForeground(new Color(12, 138, 199));
-		separator_1_2_.setBackground(new Color(12, 138, 199));
+		separator_1_2_.setForeground(new Color(54, 55, 83));
+		separator_1_2_.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_);
 
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(562, 139, 253, 24);
-		lblNombre.setForeground(SystemColor.textInactiveText);
+		lblNombre.setForeground(new Color(0, 0, 0, 180));
 		lblNombre.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblNombre);
 
@@ -120,13 +116,13 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2 = new JSeparator();
 		separator_1_2.setBounds(560, 197, 289, 2);
-		separator_1_2.setForeground(new Color(12, 138, 199));
-		separator_1_2.setBackground(new Color(12, 138, 199));
+		separator_1_2.setForeground(new Color(54, 55, 83));
+		separator_1_2.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2);
 
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setBounds(560, 205, 255, 24);
-		lblApellido.setForeground(SystemColor.textInactiveText);
+		lblApellido.setForeground(new Color(0, 0, 0, 180));
 		lblApellido.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblApellido);
 
@@ -140,13 +136,13 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2_1 = new JSeparator();
 		separator_1_2_1.setBounds(560, 269, 289, 2);
-		separator_1_2_1.setForeground(new Color(12, 138, 199));
-		separator_1_2_1.setBackground(new Color(12, 138, 199));
+		separator_1_2_1.setForeground(new Color(54, 55, 83));
+		separator_1_2_1.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_1);
 
 		JLabel lblFechaN = new JLabel("Fecha de Nacimiento");
 		lblFechaN.setBounds(560, 281, 255, 24);
-		lblFechaN.setForeground(SystemColor.textInactiveText);
+		lblFechaN.setForeground(new Color(0, 0, 0, 180));
 		lblFechaN.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblFechaN);
 
@@ -156,8 +152,9 @@ public class RegistroHuesped extends JFrame {
 		eventoTxtFecha();
 		txtFechaN.setBounds(560, 308, 285, 36);
 		txtFechaN.getCalendarButton().setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/icon-reservas.png")));
-		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
+		txtFechaN.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaN.getCalendarButton().setBounds(267, 1, 21, 31);
+		txtFechaN.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		txtFechaN.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		txtFechaN.setBackground(Color.WHITE);
@@ -166,33 +163,33 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2_2 = new JSeparator();
 		separator_1_2_2.setBounds(560, 344, 289, 2);
-		separator_1_2_2.setForeground(new Color(12, 138, 199));
-		separator_1_2_2.setBackground(new Color(12, 138, 199));
+		separator_1_2_2.setForeground(new Color(54, 55, 83));
+		separator_1_2_2.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_2);
 
 		JLabel lblNacionalidad = new JLabel("Nacionalidad");
 		lblNacionalidad.setBounds(560, 353, 255, 24);
-		lblNacionalidad.setForeground(SystemColor.textInactiveText);
+		lblNacionalidad.setForeground(new Color(0, 0, 0, 180));
 		lblNacionalidad.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblNacionalidad);
 
 		txtNacionalidad = new JComboBox<>();
 		cargarComboNacionalidad();
 		txtNacionalidad.setBounds(560, 381, 289, 36);
+		txtNacionalidad.setForeground(new Color(54, 55, 83));
 		txtNacionalidad.setBackground(SystemColor.text);
-		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 18));
-
+		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 20));
 		contentPane.add(txtNacionalidad);
 
 		JSeparator separator_1_2_3 = new JSeparator();
 		separator_1_2_3.setBounds(560, 418, 288, 2);
-		separator_1_2_3.setForeground(new Color(12, 138, 199));
-		separator_1_2_3.setBackground(new Color(12, 138, 199));
+		separator_1_2_3.setForeground(new Color(54, 55, 83));
+		separator_1_2_3.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_3);
 
 		JLabel lblTelefono = new JLabel("Teléfono");
 		lblTelefono.setBounds(562, 433, 253, 24);
-		lblTelefono.setForeground(SystemColor.textInactiveText);
+		lblTelefono.setForeground(new Color(0, 0, 0, 180));
 		lblTelefono.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblTelefono);
 
@@ -206,13 +203,13 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2_4 = new JSeparator();
 		separator_1_2_4.setBounds(560, 488, 289, 2);
-		separator_1_2_4.setForeground(new Color(12, 138, 199));
-		separator_1_2_4.setBackground(new Color(12, 138, 199));
+		separator_1_2_4.setForeground(new Color(54, 55, 83));
+		separator_1_2_4.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_4);
 
 		JLabel lblNumeroReserva = new JLabel("Número de Reserva");
 		lblNumeroReserva.setBounds(560, 504, 253, 24);
-		lblNumeroReserva.setForeground(SystemColor.textInactiveText);
+		lblNumeroReserva.setForeground(new Color(0, 0, 0, 180));
 		lblNumeroReserva.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblNumeroReserva);
 
@@ -228,28 +225,28 @@ public class RegistroHuesped extends JFrame {
 
 		JSeparator separator_1_2_5 = new JSeparator();
 		separator_1_2_5.setBounds(560, 559, 289, 2);
-		separator_1_2_5.setForeground(new Color(12, 138, 199));
-		separator_1_2_5.setBackground(new Color(12, 138, 199));
+		separator_1_2_5.setForeground(new Color(54, 55, 83));
+		separator_1_2_5.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_5);
 
 		btnGuardar = new JPanel();
 		eventoGuardar();
 		btnGuardar.setBounds(723, 580, 122, 35);
 		btnGuardar.setLayout(null);
-		btnGuardar.setBackground(new Color(12, 138, 199));
+		btnGuardar.setBackground(new Color(29, 27, 49));
 		contentPane.add(btnGuardar);
 		btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
-		JLabel labelGuardar = new JLabel("GUARDAR");
+		JLabel labelGuardar = new JLabel("Guardar");
 		labelGuardar.setHorizontalAlignment(SwingConstants.CENTER);
 		labelGuardar.setForeground(Color.WHITE);
-		labelGuardar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelGuardar.setFont(new Font("Roboto", Font.BOLD, 18));
 		labelGuardar.setBounds(0, 0, 122, 35);
 		btnGuardar.add(labelGuardar);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 489, 634);
-		panel.setBackground(new Color(12, 138, 199));
+		panel.setBackground(new Color(54, 55, 83));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -303,7 +300,7 @@ public class RegistroHuesped extends JFrame {
 		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				jFrameRegistrarHuesped.setVisible(true);
+				jFrameRegistrarReserva.setVisible(true);
 				setVisible(false);
 			}
 			@Override
@@ -320,6 +317,16 @@ public class RegistroHuesped extends JFrame {
 	}
 	private void eventoGuardar() {
 		btnGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnGuardar.setBackground(new Color(54, 55, 83));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGuardar.setBackground(new Color(29, 27, 49));
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -357,9 +364,14 @@ public class RegistroHuesped extends JFrame {
 																	"Reserva hecha satisfactoriamente",
 																	"Creación Correcta",
 																	JOptionPane.INFORMATION_MESSAGE);
+
+
 					//REGRESAMOS A LA VISTA DE RESERVA
-					jFrameRegistrarHuesped.setVisible(true);
+					jFrameRegistrarReserva.setVisible(true);
 					setVisible(false);
+					//Exito exito = new Exito(jFrameRegistrarReserva, RegistroHuesped.this);
+					//exito.setVisible(true);
+
 				}
 			}
 		});

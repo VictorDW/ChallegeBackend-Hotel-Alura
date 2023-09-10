@@ -1,7 +1,7 @@
 package service;
 
 import DTO.NationalityRequestDTO;
-import modelo.Nationality;
+import model.Nationality;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package service;
 
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
-import modelo.Guest;
+import model.Guest;
 
 import java.util.List;
 

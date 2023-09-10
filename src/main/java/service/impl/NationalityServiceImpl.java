@@ -2,7 +2,7 @@ package service.impl;
 
 import DAO.NationalityDAO;
 import DTO.NationalityRequestDTO;
-import modelo.Nationality;
+import model.Nationality;
 import service.NationalityService;
 import java.util.ArrayList;
 import java.util.List;

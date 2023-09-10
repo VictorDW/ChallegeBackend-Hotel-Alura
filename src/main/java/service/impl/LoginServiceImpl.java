@@ -2,7 +2,7 @@ package service.impl;
 
 import DAO.LoginDAO;
 import DTO.UserDTO;
-import modelo.Login;
+import model.Login;
 import service.LoginService;
 
 import java.util.Optional;

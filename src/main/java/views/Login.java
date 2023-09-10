@@ -78,16 +78,16 @@ public class Login extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
+		JLabel labelTitulo = new JLabel("Iniciar Sesión");
 		labelTitulo.setForeground(new Color(54, 55, 83));
-		labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
-		labelTitulo.setBounds(65, 149, 202, 26);
+		labelTitulo.setFont(new Font("Roboto Black", Font.BOLD, 26));
+		labelTitulo.setBounds(65, 149, 202, 24);
 		panel.add(labelTitulo);
 
-		JLabel LabelUsuario = new JLabel("USUARIO");
+		JLabel LabelUsuario = new JLabel("Usuario");
 		LabelUsuario.setForeground(new Color(54, 55, 83));
-		LabelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-		LabelUsuario.setBounds(65, 219, 107, 26);
+		LabelUsuario.setFont(new Font("Roboto Black", Font.BOLD, 20));
+		LabelUsuario.setBounds(65, 219, 107, 20);
 		panel.add(LabelUsuario);
 
 		txtUsuario = new JTextField();
@@ -105,10 +105,10 @@ public class Login extends JFrame {
 		separator.setBounds(65, 292, 324, 2);
 		panel.add(separator);
 
-		JLabel lblContrasea = new JLabel("CONTRASEÑA");
-		lblContrasea.setForeground(SystemColor.textInactiveText);
-		lblContrasea.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-		lblContrasea.setBounds(65, 316, 140, 26);
+		JLabel lblContrasea = new JLabel("Contraseña");
+		lblContrasea.setForeground(new Color(54, 55, 83));
+		lblContrasea.setFont(new Font("Roboto Black", Font.BOLD, 20));
+		lblContrasea.setBounds(65, 316, 140, 20);
 		panel.add(lblContrasea);
 
 		txtContrasena = new JPasswordField();
@@ -153,18 +153,18 @@ public class Login extends JFrame {
 
 		btnLogin = new JPanel();
 		eventoBtnLogin();
-		btnLogin.setBackground(new Color(54, 55, 83));
+		btnLogin.setBackground(new Color(29, 27, 49));
 		btnLogin.setBounds(65, 431, 122, 44);
 		panel.add(btnLogin);
 		btnLogin.setLayout(null);
 		btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel = new JLabel("ENTRAR");
+		JLabel lblNewLabel = new JLabel("Entrar");
 		lblNewLabel.setBounds(0, 0, 122, 44);
 		btnLogin.add(lblNewLabel);
 		lblNewLabel.setForeground(SystemColor.controlLtHighlight);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -201,7 +201,7 @@ public class Login extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogin.setBackground(SystemColor.textHighlight);
+				btnLogin.setBackground(new Color(29, 27, 49));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {

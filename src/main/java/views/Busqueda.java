@@ -14,9 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 import javax.swing.table.TableColumnModel;
 
@@ -70,10 +68,6 @@ public class Busqueda extends JFrame {
 	 */
 	public Busqueda() {
 
-		//INICIALIZAMOS LOS CONTROLADORES
-		reservationController = new ReservationController();
-		guestController = new GuestController();
-
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -85,15 +79,19 @@ public class Busqueda extends JFrame {
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 
+		//INICIALIZAMOS LOS CONTROLADORES
+		reservationController = new ReservationController();
+		guestController = new GuestController();
 
-		JLabel lblNewLabel_4 = new JLabel("SISTEMA DE BÚSQUEDA");
-		lblNewLabel_4.setForeground(new Color(12, 138, 199));
-		lblNewLabel_4.setFont(new Font("Roboto Black", Font.BOLD, 24));
-		lblNewLabel_4.setBounds(331, 30, 300, 42);
-		contentPane.add(lblNewLabel_4);
+		JLabel lblTitulo = new JLabel("Sistema de Busqueda");
+		lblTitulo.setForeground(new Color(54, 55, 83));
+		lblTitulo.setFont(new Font("Roboto Black", Font.BOLD, 24));
+		lblTitulo.setBounds(331, 30, 300, 42);
+		contentPane.add(lblTitulo);
 
 		panel = new JTabbedPane(JTabbedPane.TOP);
-		panel.setBackground(new Color(12, 138, 199));
+		panel.setBackground(new Color(54, 55, 83));
+		panel.setForeground(Color.WHITE);
 		panel.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
@@ -127,6 +125,7 @@ public class Busqueda extends JFrame {
 		header.setLayout(null);
 		header.setBackground(Color.WHITE);
 		header.setBounds(0, 0, 910, 36);
+
 		contentPane.add(header);
 
 
@@ -138,8 +137,10 @@ public class Busqueda extends JFrame {
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaEntrada.setBounds(200, 115, 150, 35);
+		txtFechaEntrada.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaEntrada.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaEntrada.getCalendarButton().setBounds(368, 0, 21, 33);
+		txtFechaEntrada.setBounds(200, 115, 150, 35);
 		txtFechaEntrada.setBackground(Color.WHITE);
 		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
@@ -152,11 +153,12 @@ public class Busqueda extends JFrame {
 		//EVENTO
 		eventoFechas(editorFechaSalida, "Check Out");
 		txtFechaSalida.transferFocus();
-		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaSalida.setBounds(380, 115, 150, 35);
+		txtFechaSalida.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaSalida.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaSalida.getCalendarButton().setBounds(368, 0, 21, 33);
+		txtFechaSalida.setBounds(380, 115, 150, 35);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setBorder(new LineBorder(SystemColor.window));
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
@@ -175,8 +177,8 @@ public class Busqueda extends JFrame {
 
 		//separado del texto
 		JSeparator separator_1_2 = new JSeparator();
-		separator_1_2.setForeground(new Color(12, 138, 199));
-		separator_1_2.setBackground(new Color(12, 138, 199));
+		separator_1_2.setForeground(new Color(54, 55, 83));
+		separator_1_2.setBackground(new Color(54, 55, 83));
 		separator_1_2.setBounds(589, 148, 150, 2);
 		contentPane.add(separator_1_2);
 
@@ -184,17 +186,17 @@ public class Busqueda extends JFrame {
 		btnbuscar = new JPanel();
 		eventoBtnBuscar(panel);
 		btnbuscar.setLayout(null);
-		btnbuscar.setBackground(new Color(12, 138, 199));
+		btnbuscar.setBackground(new Color(29, 27, 49));
 		btnbuscar.setBounds(748, 115, 122, 35);
 		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnbuscar);
 
-		JLabel lblBuscar = new JLabel("BUSCAR");
+		JLabel lblBuscar = new JLabel("Buscar");
 		lblBuscar.setBounds(0, 0, 122, 35);
 		btnbuscar.add(lblBuscar);
 		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBuscar.setForeground(Color.WHITE);
-		lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblBuscar.setFont(new Font("Roboto", Font.BOLD, 18));
 
 
 		btnLoad = new JPanel();
@@ -220,15 +222,15 @@ public class Busqueda extends JFrame {
 		btnEditar = new JPanel();
 		eventoBtnModificar(panel);
 		btnEditar.setLayout(null);
-		btnEditar.setBackground(new Color(12, 138, 199));
+		btnEditar.setBackground(new Color(29, 27, 49));
 		btnEditar.setBounds(635, 508, 122, 35);
 		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnEditar);
 
-		JLabel lblEditar = new JLabel("EDITAR");
+		JLabel lblEditar = new JLabel("Editar");
 		lblEditar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEditar.setForeground(Color.WHITE);
-		lblEditar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblEditar.setFont(new Font("Roboto", Font.BOLD, 18));
 		lblEditar.setBounds(0, 0, 122, 35);
 		btnEditar.add(lblEditar);
 
@@ -236,15 +238,15 @@ public class Busqueda extends JFrame {
 		btnEliminar = new JPanel();
 		eventoBtnEliminar(panel);
 		btnEliminar.setLayout(null);
-		btnEliminar.setBackground(new Color(12, 138, 199));
+		btnEliminar.setBackground(new Color(29, 27, 49));
 		btnEliminar.setBounds(767, 508, 122, 35);
 		btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnEliminar);
 
-		JLabel lblEliminar = new JLabel("ELIMINAR");
+		JLabel lblEliminar = new JLabel("Eliminar");
 		lblEliminar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEliminar.setForeground(Color.WHITE);
-		lblEliminar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblEliminar.setFont(new Font("Roboto", Font.BOLD, 18));
 		lblEliminar.setBounds(0, 0, 122, 35);
 		btnEliminar.add(lblEliminar);
 		setResizable(false);
@@ -301,7 +303,8 @@ public class Busqueda extends JFrame {
 		modeloReserva.addColumn("Estado");
 		modeloReserva.addColumn("Cedula del Huesped");
 		JScrollPane scroll_table = new JScrollPane(tbReservas);
-		this.panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table, null);
+		this.panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservadoNegro.png")), scroll_table, null);
+		this.panel.setForegroundAt(0, Color.BLACK);
 		scroll_table.setVisible(true);
 
 		//SE DEFINEN EL TAMAÑO DE LAS COLUMNAS
@@ -332,7 +335,8 @@ public class Busqueda extends JFrame {
 
 		tbHuespedes.getTableHeader().setReorderingAllowed(false);
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 14));
+		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbHuespedes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
 		modeloHuesped.addColumn("ID");
 		modeloHuesped.addColumn("Cedula de Huesped");
@@ -343,8 +347,8 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Estado");
 		modeloHuesped.addColumn("Telefono");
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
-
-		this.panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
+		this.panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/buscarUsuariosBlanco.png")), scroll_tableHuespedes, null);
+		this.panel.setForegroundAt(1, null);
 		scroll_tableHuespedes.setVisible(true);
 
 		//SE DEFINEN EL TAMAÑO DE LAS COLUMNAS
@@ -369,12 +373,21 @@ public class Busqueda extends JFrame {
 					int selectedIndex = panel.getSelectedIndex();
 
 					if (selectedIndex == 0) {
+						//PERMITE CAMBIAR EL COLOR DE LETRA Y EL ICONO DEL TAP
+						headerDesignTapPanel(selectedIndex,
+												1,
+												"reservadoNegro",
+												"buscarUsuariosBlanco");
 
 						eventoTxtBuscar();
 						txtFechaEntrada.setVisible(true);
 						txtFechaSalida.setVisible(true);
 
 					} else if (selectedIndex == 1) {
+						headerDesignTapPanel(selectedIndex,
+												0,
+												"buscarUsuariosNegro",
+												"reservadoBlanco");
 
 						eventoTxtBuscar();
 						txtFechaEntrada.setVisible(false);
@@ -382,6 +395,17 @@ public class Busqueda extends JFrame {
 					}
 				}
 		);
+	}
+
+	private void headerDesignTapPanel(int indexSelect, int indexNotSelect, String IconActive, String iconInactive) {
+
+		//Cambiamos el color de la letra y el icono de los Tap que están en el Panel
+		panel.setForegroundAt(indexSelect, Color.BLACK);
+		panel.setIconAt(indexSelect, new ImageIcon(Busqueda.class.getResource("/imagenes/"+IconActive+".png")) );
+
+		panel.setForegroundAt(indexNotSelect, null);
+		panel.setIconAt(indexNotSelect, new ImageIcon(Busqueda.class.getResource("/imagenes/"+iconInactive+".png")) );
+
 	}
 
 	private void eventoFechas(JTextFieldDateEditor editorFecha, String placeHolder) {
@@ -400,6 +424,11 @@ public class Busqueda extends JFrame {
 				}
 			}
 		});
+	}
+
+	private void placeHolderFechas(JTextFieldDateEditor editorFecha, String placeHolder){
+		editorFecha.setText(placeHolder);
+		editorFecha.setForeground(Color.GRAY);
 	}
 
 	private void eventoSalir() {
@@ -479,31 +508,28 @@ public class Busqueda extends JFrame {
 	}
 
 	private void eventoBtnBuscar(JTabbedPane panel){
-
 		btnbuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnbuscar.setBackground(new Color(54, 55, 83));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnbuscar.setBackground(new Color(29, 27, 49));
+			}
 
-			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
 			@Override
 			public void mousePressed(MouseEvent e) {
 
+				//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
 				int selectedIndex = panel.getSelectedIndex();
 
 				if (selectedIndex == 0) {
 
-					/*LocalDate checkIn = null;
-					LocalDate checkOut = null;
-					 */
 					ConfigureDates.resetDates();
 
 					try {
-						//Permite cambiar el formato de un Date a un LocalDate
 
-					/*	Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
-						Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
-
-						checkIn = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
-						checkOut = instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
-					 */
 						ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 					}catch(NullPointerException ignore){}
 
@@ -547,6 +573,15 @@ public class Busqueda extends JFrame {
 
 		this.btnEditar.addMouseListener(new MouseAdapter() {
 
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEditar.setBackground(new Color(54, 55, 83));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEditar.setBackground(new Color(29, 27, 49));
+			}
+
 			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -560,14 +595,20 @@ public class Busqueda extends JFrame {
 					enviarDatosHuesped();
 				}
 			}
-
 		});
 	}
 
 	private void eventoBtnEliminar(JTabbedPane panel){
-
 		this.btnEliminar.addMouseListener(new MouseAdapter() {
 
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEliminar.setBackground(new Color(54, 55, 83));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEliminar.setBackground(new Color(29, 27, 49));
+			}
 			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -595,10 +636,6 @@ public class Busqueda extends JFrame {
 	private void placeHolderTxtBuscar(String placeHolder){
 		txtBuscar.setText(placeHolder);
 		txtBuscar.setForeground(Color.GRAY);
-	}
-	private void placeHolderFechas(JTextFieldDateEditor editorFecha, String placeHolder){
-		editorFecha.setText(placeHolder);
-		editorFecha.setForeground(Color.GRAY);
 	}
 
 	private  void consultaParametrosReserva(String cod, LocalDate checkIn, LocalDate checkOut) {

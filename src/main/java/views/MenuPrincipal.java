@@ -56,7 +56,7 @@ public class MenuPrincipal extends JFrame {
 
 		
 		Panel panel = new Panel();
-		panel.setBackground(SystemColor.window);
+		panel.setBackground(new Color(54, 55, 83));
 		panel.setBounds(0, 0, 910, 537);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -73,14 +73,14 @@ public class MenuPrincipal extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 500, 910, 37);
-		panel_1.setBackground(new Color(54, 55, 83));
+		panel_1.setBackground(new Color(29, 27, 49));
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblCopyR = new JLabel("Desarrollado por Victor Agudelo © 2023");
-		lblCopyR.setBounds(315, 11, 284, 19);
-		lblCopyR.setForeground(new Color(240, 248, 255));
-		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
+		lblCopyR.setBounds(315, 11, 350, 19);
+		lblCopyR.setForeground(Color.WHITE);
+		lblCopyR.setFont(new Font("Roboto", Font.BOLD, 16));
 		panel_1.add(lblCopyR);
 		
 		//Barra para controlar la ventana 
@@ -100,7 +100,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		header.setLayout(null);
-		header.setBackground(Color.WHITE);
+		header.setBackground(new Color(54, 55, 83));
 		panel.add(header);
 		
 		//Botón salir
@@ -112,18 +112,18 @@ public class MenuPrincipal extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
+				btnexit.setBackground(Color.RED);
+				labelExit.setForeground(Color.WHITE);
 			}			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(Color.white);
-			     labelExit.setForeground(Color.black);
+				 btnexit.setBackground(new Color(54, 55, 83));
+			     labelExit.setForeground(Color.WHITE);
 			}
 		});
 		btnexit.setLayout(null);
 		btnexit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		btnexit.setBackground(Color.WHITE);
+		btnexit.setBackground(new Color(54, 55, 83));
 		btnexit.setBounds(857, 0, 53, 36);
 		header.add(btnexit);
 		
@@ -132,6 +132,7 @@ public class MenuPrincipal extends JFrame {
 		btnexit.add(labelExit);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelExit.setForeground(Color.WHITE);
 		
 		//Botón Login
 		JPanel btnLogin = new JPanel(); 
@@ -146,7 +147,7 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnLogin.setLayout(null);
 		btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		btnLogin.setBackground(SystemColor.window);
+		btnLogin.setBackground(new Color(54, 55, 83));
 		panel.add(btnLogin);
 		
 		JLabel imagenLogin = new JLabel("");
@@ -155,13 +156,13 @@ public class MenuPrincipal extends JFrame {
 		imagenLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		imagenLogin.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/login.png")));
 		
-		JLabel lblTitulo = new JLabel("LOGIN");
+		JLabel lblTitulo = new JLabel("Login");
 		lblTitulo.setBounds(754, 265, 83, 24);
 		lblTitulo.setBackground(SystemColor.window);
 		panel.add(lblTitulo);
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setForeground(SystemColor.textHighlight);
-		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Roboto Light", Font.BOLD, 20));
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	

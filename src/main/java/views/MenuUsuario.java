@@ -6,13 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
@@ -97,11 +94,11 @@ public class MenuUsuario extends JFrame {
 		panelMenu.add(btnRegistro);
 		btnRegistro.setLayout(null);
 		
-		labelRegistro = new JLabel("Registro de reservas");
-		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/reservado.png")));
+		labelRegistro = new JLabel("Registro de Reservas");
+		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/reservadoBlanco.png")));
 		labelRegistro.setForeground(SystemColor.text);
-		labelRegistro.setBounds(25, 11, 205, 34);
-		labelRegistro.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelRegistro.setBounds(25, 11, 220, 34);
+		labelRegistro.setFont(new Font("Roboto", Font.BOLD, 18));
 		labelRegistro.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegistro.add(labelRegistro);
 		
@@ -113,11 +110,11 @@ public class MenuUsuario extends JFrame {
 		btnBusqueda.setLayout(null);
 		
 		JLabel lblBusquedaDeReservas = new JLabel("Búsqueda");
-		lblBusquedaDeReservas.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/pessoas.png")));
+		lblBusquedaDeReservas.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/buscarUsuariosBlanco.png")));
 		lblBusquedaDeReservas.setBounds(27, 11, 200, 34);
 		lblBusquedaDeReservas.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBusquedaDeReservas.setForeground(Color.WHITE);
-		lblBusquedaDeReservas.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblBusquedaDeReservas.setFont(new Font("Roboto", Font.BOLD, 18));
 		btnBusqueda.add(lblBusquedaDeReservas);
 		
 		JSeparator separator = new JSeparator();

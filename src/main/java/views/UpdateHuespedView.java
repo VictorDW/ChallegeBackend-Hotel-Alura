@@ -2,12 +2,10 @@ package views;
 
 import DTO.GuestRequestDTO;
 import DTO.NationalityRequestDTO;
-import com.toedter.calendar.IDateEditor;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
 import controller.NationalityController;
-import modelo.Nationality;
 import service.util.ConfigureDates;
 
 import javax.swing.*;
@@ -16,11 +14,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.text.Format;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 @SuppressWarnings("serial")
 public class UpdateHuespedView extends JFrame {
@@ -338,7 +331,6 @@ public class UpdateHuespedView extends JFrame {
 		});
 
 	}
-
 	private void modificarHuesped() {
 
 		try {

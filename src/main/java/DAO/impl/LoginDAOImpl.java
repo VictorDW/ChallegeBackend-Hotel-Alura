@@ -2,7 +2,7 @@ package DAO.impl;
 
 import DAO.LoginDAO;
 import jakarta.persistence.NoResultException;
-import modelo.Login;
+import model.Login;
 
 import jakarta.persistence.EntityManager;
 

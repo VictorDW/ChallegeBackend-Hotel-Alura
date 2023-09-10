@@ -5,14 +5,13 @@ import DTO.GuestRequestDTO;
 import DTO.ReservationByParametersDTO;
 import DTO.ReservationDTO;
 import DTO.ReservationRequestDTO;
-import modelo.Reservation;
+import model.Reservation;
 import service.GuestService;
 import service.ReservationService;
 import service.mappers.MapperReservation;
 import service.util.DataReservationTemporary;
 
 import java.math.BigDecimal;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 

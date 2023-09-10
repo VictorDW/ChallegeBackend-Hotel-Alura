@@ -1,6 +1,6 @@
 package DAO;
 
-import modelo.Login;
+import model.Login;
 
 import java.util.Optional;
 
