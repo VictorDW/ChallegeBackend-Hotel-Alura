@@ -17,8 +17,12 @@ import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
 
-    private final GuestService guestService;
+    private  GuestService guestService;
     private final ReservationDAO reservationDAO;
+
+    public ReservationServiceImpl(ReservationDAO reservationDAO) {
+        this.reservationDAO = reservationDAO;
+    }
 
     public ReservationServiceImpl(ReservationDAO reservationDAO, GuestService guestService) {
 

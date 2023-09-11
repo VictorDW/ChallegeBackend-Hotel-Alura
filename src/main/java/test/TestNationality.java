@@ -9,83 +9,84 @@ import java.util.List;
 public class TestNationality {
     public static void main(String[] args) {
 
-          List<NationalityRequestDTO> nationality = new ArrayList<>(){{
-              add( new NationalityRequestDTO("afgano","afgana"));
-              add( new NationalityRequestDTO("alemán","alemana"));
-              add(new NationalityRequestDTO("árabe", "árabe"));
-              add(new NationalityRequestDTO("argentino","argentina"));
-              add(new NationalityRequestDTO("australiano","australiana"));
-              add(new NationalityRequestDTO("belga","belga"));
-              add(new NationalityRequestDTO("boliviano","boliviana"));
-              add(new NationalityRequestDTO("brasileño","brasileña"));
-              add(new NationalityRequestDTO("camboyano","camboyana"));
-              add(new NationalityRequestDTO("canadiense","canadiense"));
-              add(new NationalityRequestDTO("chileno","chilena"));
-              add(new NationalityRequestDTO("chino","china"));
-              add(new NationalityRequestDTO("coreano","coreana"));
-              add(new NationalityRequestDTO("costarricense","costarricense"));
-              add(new NationalityRequestDTO("cubano","cubana"));
-              add(new NationalityRequestDTO("danés","danesa"));
-              add(new NationalityRequestDTO("ecuatoriano","ecuatoriana"));
-              add(new NationalityRequestDTO("egipcio","egipcia"));
-              add(new NationalityRequestDTO("salvadoreño","salvadoreña"));
-              add(new NationalityRequestDTO("escocés","escocesa"));
-              add(new NationalityRequestDTO("español","española"));
-              add(new NationalityRequestDTO("estadounidense","estadounidense"));
-              add(new NationalityRequestDTO("estonio","estonia"));
-              add(new NationalityRequestDTO("etiope","etiope"));
-              add(new NationalityRequestDTO("filipino","filipina"));
-              add(new NationalityRequestDTO("finlandés","finlandesa"));
-              add(new NationalityRequestDTO("francés","francesa"));
-              add(new NationalityRequestDTO("galés","galesa"));
-              add(new NationalityRequestDTO("griego","griega"));
-              add(new NationalityRequestDTO("guatemalteco","guatemalteca"));
-              add(new NationalityRequestDTO("haitiano","haitiana"));
-              add(new NationalityRequestDTO("holandés","holandesa"));
-              add(new NationalityRequestDTO("hondureño","hondureña"));
-              add(new NationalityRequestDTO("indonés","indonesa"));
-              add(new NationalityRequestDTO("inglés","inglesa"));
-              add(new NationalityRequestDTO("iraquí","iraquí"));
-              add(new NationalityRequestDTO("iraní","iraní"));
-              add(new NationalityRequestDTO("irlandés","irlandesa"));
-              add(new NationalityRequestDTO("israelí","israelí"));
-              add(new NationalityRequestDTO("italiano","italiana"));
-              add(new NationalityRequestDTO("japonés","japonesa"));
-              add(new NationalityRequestDTO("jordano","jordana"));
-              add(new NationalityRequestDTO("laosiano","laosiana"));
-              add(new NationalityRequestDTO("letón","letona"));
-              add(new NationalityRequestDTO("letonés","letonesa"));
-              add(new NationalityRequestDTO("malayo","malaya"));
-              add(new NationalityRequestDTO("marroquí","marroquí"));
-              add(new NationalityRequestDTO("mexicano","mexicana"));
-              add(new NationalityRequestDTO("nicaragüense","nicaragüense"));
-              add(new NationalityRequestDTO("noruego","noruega"));
-              add(new NationalityRequestDTO("neozelandés","neozelandesa"));
-              add(new NationalityRequestDTO("panameño","panameña"));
-              add(new NationalityRequestDTO("paraguayo","paraguaya"));
-              add(new NationalityRequestDTO("peruano","peruana"));
-              add(new NationalityRequestDTO("polaco","polaca"));
-              add(new NationalityRequestDTO("portugués","portuguesa"));
-              add(new NationalityRequestDTO("puertorriqueño","puertorriqueño"));
-              add(new NationalityRequestDTO("dominicano","dominicana"));
-              add(new NationalityRequestDTO("rumano","rumana"));
-              add(new NationalityRequestDTO("ruso","rusa"));
-              add(new NationalityRequestDTO("sueco","sueca"));
-              add(new NationalityRequestDTO("suizo","suiza"));
-              add(new NationalityRequestDTO("tailandés","tailandesa"));
-              add(new NationalityRequestDTO("taiwanes","taiwanesa"));
-              add(new NationalityRequestDTO("turco","turca"));
-              add(new NationalityRequestDTO("ucraniano","ucraniana"));
-              add(new NationalityRequestDTO("uruguayo","uruguaya"));
-              add(new NationalityRequestDTO("venezolano","venezolana"));
-              add(new NationalityRequestDTO("vietnamita","vietnamita"));
-          }};
+          List<NationalityRequestDTO> nationality = List.of(
+
+              (new NationalityRequestDTO("afgano","afgana")),
+              (new NationalityRequestDTO("alemán","alemana")),
+              (new NationalityRequestDTO("árabe", "árabe")),
+              (new NationalityRequestDTO("argentino","argentina")),
+              (new NationalityRequestDTO("australiano","australiana")),
+              (new NationalityRequestDTO("belga","belga")),
+              (new NationalityRequestDTO("boliviano","boliviana")),
+              (new NationalityRequestDTO("brasileño","brasileña")),
+              (new NationalityRequestDTO("camboyano","camboyana")),
+              (new NationalityRequestDTO("canadiense","canadiense")),
+              (new NationalityRequestDTO("chileno","chilena")),
+              (new NationalityRequestDTO("chino","china")),
+              (new NationalityRequestDTO("coreano","coreana")),
+              (new NationalityRequestDTO("costarricense","costarricense")),
+              (new NationalityRequestDTO("cubano","cubana")),
+              (new NationalityRequestDTO("danés","danesa")),
+              (new NationalityRequestDTO("ecuatoriano","ecuatoriana")),
+              (new NationalityRequestDTO("egipcio","egipcia")),
+              (new NationalityRequestDTO("salvadoreño","salvadoreña")),
+              (new NationalityRequestDTO("escocés","escocesa")),
+              (new NationalityRequestDTO("español","española")),
+              (new NationalityRequestDTO("estadounidense","estadounidense")),
+              (new NationalityRequestDTO("estonio","estonia")),
+              (new NationalityRequestDTO("etiope","etiope")),
+              (new NationalityRequestDTO("filipino","filipina")),
+              (new NationalityRequestDTO("finlandés","finlandesa")),
+              (new NationalityRequestDTO("francés","francesa")),
+              (new NationalityRequestDTO("galés","galesa")),
+              (new NationalityRequestDTO("griego","griega")),
+              (new NationalityRequestDTO("guatemalteco","guatemalteca")),
+              (new NationalityRequestDTO("haitiano","haitiana")),
+              (new NationalityRequestDTO("holandés","holandesa")),
+              (new NationalityRequestDTO("hondureño","hondureña")),
+              (new NationalityRequestDTO("indonés","indonesa")),
+              (new NationalityRequestDTO("inglés","inglesa")),
+              (new NationalityRequestDTO("iraquí","iraquí")),
+              (new NationalityRequestDTO("iraní","iraní")),
+              (new NationalityRequestDTO("irlandés","irlandesa")),
+              (new NationalityRequestDTO("israelí","israelí")),
+              (new NationalityRequestDTO("italiano","italiana")),
+              (new NationalityRequestDTO("japonés","japonesa")),
+              (new NationalityRequestDTO("jordano","jordana")),
+              (new NationalityRequestDTO("laosiano","laosiana")),
+              (new NationalityRequestDTO("letón","letona")),
+              (new NationalityRequestDTO("letonés","letonesa")),
+              (new NationalityRequestDTO("malayo","malaya")),
+              (new NationalityRequestDTO("marroquí","marroquí")),
+              (new NationalityRequestDTO("mexicano","mexicana")),
+              (new NationalityRequestDTO("nicaragüense","nicaragüense")),
+              (new NationalityRequestDTO("noruego","noruega")),
+              (new NationalityRequestDTO("neozelandés","neozelandesa")),
+              (new NationalityRequestDTO("panameño","panameña")),
+              (new NationalityRequestDTO("paraguayo","paraguaya")),
+              (new NationalityRequestDTO("peruano","peruana")),
+              (new NationalityRequestDTO("polaco","polaca")),
+              (new NationalityRequestDTO("portugués","portuguesa")),
+              (new NationalityRequestDTO("puertorriqueño","puertorriqueño")),
+              (new NationalityRequestDTO("dominicano","dominicana")),
+              (new NationalityRequestDTO("rumano","rumana")),
+              (new NationalityRequestDTO("ruso","rusa")),
+              (new NationalityRequestDTO("sueco","sueca")),
+              (new NationalityRequestDTO("suizo","suiza")),
+              (new NationalityRequestDTO("tailandés","tailandesa")),
+              (new NationalityRequestDTO("taiwanes","taiwanesa")),
+              (new NationalityRequestDTO("turco","turca")),
+              (new NationalityRequestDTO("ucraniano","ucraniana")),
+              (new NationalityRequestDTO("uruguayo","uruguaya")),
+              (new NationalityRequestDTO("venezolano","venezolana")),
+              (new NationalityRequestDTO("vietnamita","vietnamita"))
+          );
 
         NationalityController nationalityController = new NationalityController();
 
-        //nationality.forEach(nationalityController::createNationality);
+        //nationality.forEach(nationalityController::createNationality),
 
-       // nationalityController.getAllNationality().forEach(System.out::println);
+       // nationalityController.getAllNationality().forEach(System.out::println),
 
     }
 }

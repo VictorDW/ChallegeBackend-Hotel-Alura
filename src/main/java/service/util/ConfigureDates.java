@@ -36,7 +36,21 @@ public final class ConfigureDates {
     }
 
     public static boolean validateDateOrder() {
+
+        /*Se valida de esta manera para que de verificar que la fecha sea el mismo o antes
+        * true: si es antes o el mismo día
+        * false: si es mayor al día de salida
+        */
          return !checkIn.isAfter(checkOut);
+    }
+
+    public static  boolean validateDateCheckIn(LocalDate dateComparation) {
+
+        /*Se valida de esta manera para que de verificar que la fecha sea el mismo o despues
+         * true: si es después o el mismo día
+         * false: si es menor a la ficha actual
+         */
+        return !checkIn.isBefore(dateComparation);
     }
 
     public static boolean isUnderAge() throws NullPointerException {

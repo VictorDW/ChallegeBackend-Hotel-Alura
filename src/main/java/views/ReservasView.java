@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -123,6 +125,7 @@ public class ReservasView extends JFrame {
 		panel.add(separator_1_2);
 
 		txtFechaEntrada = new JDateChooser();
+		txtFechaEntrada.setDate(new Date());
 		eventoFechaCheckIn();
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
@@ -358,7 +361,7 @@ public class ReservasView extends JFrame {
 			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 
 
-			if (ConfigureDates.validateDateOrder()) {
+			if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
 				this.reservationRequestDTO =
 						DataReservationTemporary
 								.CreateReservationRequestDTO(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());

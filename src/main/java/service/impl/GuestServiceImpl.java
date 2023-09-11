@@ -3,6 +3,7 @@ package service.impl;
 import DAO.GuestDAO;
 import DTO.GuestDTO;
 import DTO.GuestRequestDTO;
+import DTO.NationalityRequestDTO;
 import model.Guest;
 import model.Nationality;
 import model.Status;
@@ -20,11 +21,15 @@ public class GuestServiceImpl implements GuestService {
 
     public GuestServiceImpl(GuestDAO guestDAO) {
         this.guestDAO = guestDAO;
+    }
 
+    public GuestServiceImpl(GuestDAO guestDAO, NationalityService nationalityService) {
+        this.guestDAO = guestDAO;
+        this.nationalityService = nationalityService;
     }
     @Override
-    public void loadNationality(NationalityService nationalityService) {
-        this.nationalityService = nationalityService;
+    public Nationality loadNationality(NationalityRequestDTO nationalityRequestDTO) {
+       return nationalityService.getByIdNationality(nationalityRequestDTO);
     }
 
     @Override
@@ -37,8 +42,7 @@ public class GuestServiceImpl implements GuestService {
             return guest;
         }
 
-        Nationality nationality =
-                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+        Nationality nationality = loadNationality(guestRequestDTO.getNationality());
 
         return MapperGuest.mapperGuest(guestRequestDTO, nationality);
     }
@@ -75,12 +79,12 @@ public class GuestServiceImpl implements GuestService {
     @Override
     public Boolean updateGuest(GuestRequestDTO guestRequestDTO) {
 
+        System.out.println(guestRequestDTO);
         Guest guest = guestDAO.getById(guestRequestDTO.getId());
 
         if (guest == null) return false;
 
-        Nationality nationality =
-                nationalityService.getByIdNationality(guestRequestDTO.getNationality());
+        Nationality nationality = loadNationality(guestRequestDTO.getNationality());
 
         guestDAO.update(
                 MapperGuest.mapperGuestToUpdate(guestRequestDTO, guest, nationality)

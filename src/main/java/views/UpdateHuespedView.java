@@ -56,10 +56,12 @@ public class UpdateHuespedView extends JFrame {
 		contentPane.setLayout(null);
 
 		//SE OBTIENEN LOS DATOS PARA AUTOCARGAR EL FORMULARIO
-		this.guestController = guestController;
-		this.guestRequestDTO = guestRequestDTO;
-		this.nationalityController = new NationalityController();
+
 		this.jFrameBusqueda = jFrameBusqueda;
+		this.guestRequestDTO = guestRequestDTO;
+		this.guestController = guestController;
+		this.nationalityController = new NationalityController();
+
 
 		JLabel lblTitulo = new JLabel("Actualizar Datos");
 		lblTitulo.setBounds(606, 15, 234, 42);

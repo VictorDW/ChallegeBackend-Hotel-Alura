@@ -66,9 +66,11 @@ public class RegistroHuesped extends JFrame {
 		// INICIALIZACIÓN DE LAS VARIABLES
 
 		this.jFrameRegistrarReserva = jFrameRegistrarReserva;
-		this.reservationController = new ReservationController();
-		this.guestController = new GuestController();
 		this.nationalityController = new NationalityController();
+		this.guestController = new GuestController(this.nationalityController);
+		this.reservationController = new ReservationController(this.guestController);
+
+
 		this.reservationRequestDTO = reservationRequestDTO;
 		this.findGuest = false;
 

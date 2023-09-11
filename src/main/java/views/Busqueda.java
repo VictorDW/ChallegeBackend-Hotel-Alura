@@ -4,6 +4,7 @@ import DTO.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
+import controller.NationalityController;
 import controller.ReservationController;
 import service.util.ConfigureDates;
 
@@ -35,8 +36,8 @@ public class Busqueda extends JFrame {
 	private final JTextField txtBuscar;
 	public static JDateChooser txtFechaEntrada;
 	public static JDateChooser txtFechaSalida;
-	private JLabel labelAtras;
-	private JLabel labelExit;
+	private final JLabel labelAtras;
+	private final JLabel labelExit;
 	private final JPanel btnExit;
 	private final JPanel btnAtras;
 	int xMouse, yMouse;
@@ -80,8 +81,9 @@ public class Busqueda extends JFrame {
 		setUndecorated(true);
 
 		//INICIALIZAMOS LOS CONTROLADORES
+		guestController = new GuestController(new NationalityController());
 		reservationController = new ReservationController();
-		guestController = new GuestController();
+
 
 		JLabel lblTitulo = new JLabel("Sistema de Busqueda");
 		lblTitulo.setForeground(new Color(54, 55, 83));
@@ -693,6 +695,7 @@ public class Busqueda extends JFrame {
 
 	private void cargarTablaHuesped(List<GuestDTO> guests) {
 
+
 		try {
 			guests.forEach(
 					guest -> this.modeloHuesped.addRow(
@@ -773,7 +776,7 @@ public class Busqueda extends JFrame {
 
 			UpdateHuespedView updateHuespedView = new UpdateHuespedView(Busqueda.this,
 																													guestRequestDTO,
-																													this.guestController);
+																													guestController);
 			updateHuespedView.setVisible(true);
 
 		}catch (ArrayIndexOutOfBoundsException ignored){}

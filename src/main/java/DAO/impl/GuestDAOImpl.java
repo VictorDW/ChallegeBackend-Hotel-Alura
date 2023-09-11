@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.GuestDAO;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.FlushModeType;
 import jakarta.persistence.NoResultException;
 import model.Guest;
 import model.Status;

@@ -255,7 +255,7 @@ public class UpdateReservasView extends JFrame {
 								"Error",
 								JOptionPane.ERROR_MESSAGE);
 
-					}else if(ConfigureDates.validateDateOrder()) {
+					}else if(ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(reservationRequestDTO.getCheckIn())) {
 
 						modificarReserva();
 
