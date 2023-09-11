@@ -8,6 +8,7 @@ import controller.GuestController;
 import controller.NationalityController;
 import service.util.ConfigureDates;
 
+import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -18,17 +19,17 @@ import java.awt.event.MouseMotionAdapter;
 @SuppressWarnings("serial")
 public class UpdateHuespedView extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtCedula;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtTelefono;
-	private static JDateChooser txtFechaN;
+	private final JPanel contentPane;
+	private final JTextField txtCedula;
+	private final JTextField txtNombre;
+	private final JTextField txtApellido;
+	private final JTextField txtTelefono;
+	private final JDateChooser txtFechaN;
 	private final JTextFieldDateEditor editorFecha;
-	private JComboBox<NationalityRequestDTO> txtNacionalidad;
-	private JLabel labelExit;
-	private JPanel btnexit;
-	private JPanel btnguardar;
+	private final JComboBox<NationalityRequestDTO> txtNacionalidad;
+	private final JLabel labelExit;
+	private final JPanel btnExit;
+	private final JPanel btnGuardar;
 	int xMouse, yMouse;
 
 	//
@@ -62,13 +63,13 @@ public class UpdateHuespedView extends JFrame {
 
 		JLabel lblTitulo = new JLabel("Actualizar Datos");
 		lblTitulo.setBounds(606, 15, 234, 42);
-		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 24));
+		lblTitulo.setForeground(new Color(54, 55, 83));
+		lblTitulo.setFont(new Font("Roboto Black", Font.BOLD, 24));
 		contentPane.add(lblTitulo);
 
 		JLabel lblCedula = new JLabel("Cedula");
 		lblCedula.setBounds(562, 70, 253, 24);
-		lblCedula.setForeground(SystemColor.textInactiveText);
+		lblCedula.setForeground(new Color(0, 0, 0, 180));
 		lblCedula.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblCedula);
 
@@ -83,13 +84,13 @@ public class UpdateHuespedView extends JFrame {
 
 		JSeparator separator_1_2_ = new JSeparator();
 		separator_1_2_.setBounds(560, 132, 289, 2);
-		separator_1_2_.setForeground(new Color(12, 138, 199));
-		separator_1_2_.setBackground(new Color(12, 138, 199));
+		separator_1_2_.setForeground(new Color(54, 55, 83));
+		separator_1_2_.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_);
 
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(562, 145, 253, 24);
-		lblNombre.setForeground(SystemColor.textInactiveText);
+		lblNombre.setForeground(new Color(0, 0, 0, 180));
 		lblNombre.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblNombre);
 
@@ -104,13 +105,13 @@ public class UpdateHuespedView extends JFrame {
 
 		JSeparator separator_1_2 = new JSeparator();
 		separator_1_2.setBounds(560, 210, 289, 2);
-		separator_1_2.setForeground(new Color(12, 138, 199));
-		separator_1_2.setBackground(new Color(12, 138, 199));
+		separator_1_2.setForeground(new Color(54, 55, 83));
+		separator_1_2.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2);
 
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setBounds(560, 220, 255, 24);
-		lblApellido.setForeground(SystemColor.textInactiveText);
+		lblApellido.setForeground(new Color(0, 0, 0, 180));
 		lblApellido.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblApellido);
 
@@ -125,13 +126,13 @@ public class UpdateHuespedView extends JFrame {
 
 		JSeparator separator_1_2_1 = new JSeparator();
 		separator_1_2_1.setBounds(560, 282, 289, 2);
-		separator_1_2_1.setForeground(new Color(12, 138, 199));
-		separator_1_2_1.setBackground(new Color(12, 138, 199));
+		separator_1_2_1.setForeground(new Color(54, 55, 83));
+		separator_1_2_1.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_1);
 
 		JLabel lblFechaN = new JLabel("Fecha de Nacimiento");
 		lblFechaN.setBounds(560, 296, 255, 24);
-		lblFechaN.setForeground(SystemColor.textInactiveText);
+		lblFechaN.setForeground(new Color(0, 0, 0, 180));
 		lblFechaN.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblFechaN);
 
@@ -140,8 +141,9 @@ public class UpdateHuespedView extends JFrame {
 		txtFechaN.setDate(ConfigureDates.mapperLocalDateToData(this.guestRequestDTO.getDateOfBirth()));
 		txtFechaN.setBounds(560, 328, 285, 35);
 		txtFechaN.getCalendarButton().setIcon(new ImageIcon(UpdateHuespedView.class.getResource("/imagenes/icon-reservas.png")));
-		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
+		txtFechaN.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaN.getCalendarButton().setBounds(267, 1, 21, 31);
+		txtFechaN.getCalendarButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 		txtFechaN.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		txtFechaN.setBackground(Color.WHITE);
@@ -150,33 +152,34 @@ public class UpdateHuespedView extends JFrame {
 
 		JSeparator separator_1_2_2 = new JSeparator();
 		separator_1_2_2.setBounds(560, 365, 289, 2);
-		separator_1_2_2.setForeground(new Color(12, 138, 199));
-		separator_1_2_2.setBackground(new Color(12, 138, 199));
+		separator_1_2_2.setForeground(new Color(54, 55, 83));
+		separator_1_2_2.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_2);
 
 		JLabel lblNacionalidad = new JLabel("Nacionalidad");
 		lblNacionalidad.setBounds(560, 376, 255, 24);
-		lblNacionalidad.setForeground(SystemColor.textInactiveText);
+		lblNacionalidad.setForeground(new Color(0, 0, 0, 180));
 		lblNacionalidad.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblNacionalidad);
 
 		txtNacionalidad = new JComboBox<>();
 		txtNacionalidad.addItem(guestRequestDTO.getNationality()); // PONEMOS POR DEFECTO LA ELECCÓN DE LA BD
 		txtNacionalidad.setBounds(560, 410, 289, 36);
+		txtNacionalidad.setForeground(new Color(54, 55, 83));
 		txtNacionalidad.setBackground(SystemColor.text);
-		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 20));
 		cargarComboNacionalidad();
 		contentPane.add(txtNacionalidad);
 
 		JSeparator separator_1_2_3 = new JSeparator();
 		separator_1_2_3.setBounds(560, 448, 288, 2);
-		separator_1_2_3.setForeground(new Color(12, 138, 199));
-		separator_1_2_3.setBackground(new Color(12, 138, 199));
+		separator_1_2_3.setForeground(new Color(54, 55, 83));
+		separator_1_2_3.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_3);
 
 		JLabel lblTelefono = new JLabel("Teléfono");
 		lblTelefono.setBounds(562, 463, 253, 24);
-		lblTelefono.setForeground(SystemColor.textInactiveText);
+		lblTelefono.setForeground(new Color(0, 0, 0, 180));
 		lblTelefono.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		contentPane.add(lblTelefono);
 
@@ -191,54 +194,54 @@ public class UpdateHuespedView extends JFrame {
 
 		JSeparator separator_1_2_4 = new JSeparator();
 		separator_1_2_4.setBounds(560, 528, 289, 2);
-		separator_1_2_4.setForeground(new Color(12, 138, 199));
-		separator_1_2_4.setBackground(new Color(12, 138, 199));
+		separator_1_2_4.setForeground(new Color(54, 55, 83));
+		separator_1_2_4.setBackground(new Color(54, 55, 83));
 		contentPane.add(separator_1_2_4);
 
-		btnguardar = new JPanel();
+		btnGuardar = new JPanel();
 		eventoGuardar();
-		btnguardar.setBounds(723, 560, 122, 35);
-		btnguardar.setLayout(null);
-		btnguardar.setBackground(new Color(12, 138, 199));
-		contentPane.add(btnguardar);
-		btnguardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnGuardar.setBounds(723, 560, 122, 35);
+		btnGuardar.setLayout(null);
+		btnGuardar.setBackground(new Color(29, 27, 49));
+		contentPane.add(btnGuardar);
+		btnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
-		JLabel labelGuardar = new JLabel("GUARDAR");
+		JLabel labelGuardar = new JLabel("Guardar");
 		labelGuardar.setHorizontalAlignment(SwingConstants.CENTER);
 		labelGuardar.setForeground(Color.WHITE);
-		labelGuardar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelGuardar.setFont(new Font("Roboto", Font.BOLD, 18));
 		labelGuardar.setBounds(0, 0, 122, 35);
-		btnguardar.add(labelGuardar);
+		btnGuardar.add(labelGuardar);
 
 		//PANEL DEL LOGO
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 489, 634);
-		panel.setBackground(new Color(12, 138, 199));
+		panel.setBackground(new Color(54, 55, 83));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel imagenFondo = new JLabel("");
 		imagenFondo.setBounds(0, 121, 479, 502);
 		panel.add(imagenFondo);
-		imagenFondo.setIcon(new ImageIcon(UpdateHuespedView.class.getResource("/imagenes/registro.png")));
+		imagenFondo.setIcon(new ImageIcon(UpdateHuespedView.class.getResource("/imagenes/updateHuesped.png")));
 		
 		JLabel logo = new JLabel("");
 		logo.setBounds(194, 39, 104, 107);
 		panel.add(logo);
 		logo.setIcon(new ImageIcon(UpdateHuespedView.class.getResource("/imagenes/Ha-100px.png")));
 
-		btnexit = new JPanel();
+		btnExit = new JPanel();
 		eventoSalir();
-		btnexit.setLayout(null);
-		btnexit.setBackground(new Color(12, 138, 199));
-		btnexit.setBounds(857, 0, 53, 36);
-		contentPane.add(btnexit);
+		btnExit.setLayout(null);
+		btnExit.setBackground(Color.WHITE);
+		btnExit.setBounds(857, 0, 53, 36);
+		contentPane.add(btnExit);
 
 		
 		labelExit = new JLabel("X");
-		labelExit.setForeground(Color.WHITE);
+		labelExit.setForeground(Color.BLACK);
 		labelExit.setBounds(0, 0, 53, 36);
-		btnexit.add(labelExit);
+		btnExit.add(labelExit);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 
@@ -265,58 +268,65 @@ public class UpdateHuespedView extends JFrame {
 	}
 
 	private void eventoGuardar(){
-
-	this.btnguardar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				try {
-					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
-				}catch (NullPointerException ignore){}
-
-				if (!(UpdateHuespedView.txtFechaN.getDate() != null &&
-						txtCedula.getText() != null &&
-						txtNombre.getText() != null &&
-						txtApellido.getText() != null &&
-						txtTelefono.getText() != null)) {
-
-					JOptionPane.showMessageDialog(contentPane,
-																	"Debes llenar todos los campos.",
-																	"Error",
-																	JOptionPane.ERROR_MESSAGE);
-
-				}else if(ConfigureDates.isUnderAge()) {
-
-					JOptionPane.showMessageDialog(contentPane,
-																	"El huesped debe ser mayor de edad",
-																	"Error",
-																	JOptionPane.ERROR_MESSAGE);
-					editorFecha.setText("");
-				}else {
-					modificarHuesped();
+		this.btnGuardar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnGuardar.setBackground(new Color(54, 55, 83));
 				}
-			}
-		});
 
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnGuardar.setBackground(new Color(29, 27, 49));
+				}
 
+				@Override
+				public void mousePressed(MouseEvent e) {
+
+					try {
+						ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
+					}catch (NullPointerException ignore){}
+
+						if (txtFechaN.getDate() == null ||
+								txtCedula.getText().isEmpty() ||
+								txtNombre.getText().isEmpty() ||
+								txtApellido.getText().isEmpty() ||
+								txtTelefono.getText().isEmpty()){
+
+							JOptionPane.showMessageDialog(contentPane,
+																			"Debes llenar todos los campos.",
+																			"Error",
+																			JOptionPane.ERROR_MESSAGE);
+
+						}else if(ConfigureDates.isUnderAge()) {
+
+							JOptionPane.showMessageDialog(contentPane,
+																			"El huesped debe ser mayor de edad",
+																			"Error",
+																			JOptionPane.ERROR_MESSAGE);
+							editorFecha.setText("");
+						}else {
+							modificarHuesped();
+						}
+				}
+			});
 	}
 	private void eventoSalir() {
 
-		btnexit.addMouseListener(new MouseAdapter() {
+		btnExit.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				jFrameBusqueda.setVisible(true);
 				setVisible(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
+				btnExit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnexit.setBackground(new Color(12, 138, 199));
-				labelExit.setForeground(Color.white);
+				btnExit.setBackground(Color.WHITE);
+				labelExit.setForeground(Color.BLACK);
 			}
 		});
 	}
@@ -332,10 +342,6 @@ public class UpdateHuespedView extends JFrame {
 
 	}
 	private void modificarHuesped() {
-
-		try {
-			//Permite cambiar el formato de un Date a un LocalDate
-			ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
 
 			NationalityRequestDTO nationalityRequestDTO = (NationalityRequestDTO) txtNacionalidad.getSelectedItem();
 
@@ -356,8 +362,6 @@ public class UpdateHuespedView extends JFrame {
 																" Ha ocurrido un error inesperado",
 																"Error",
 																JOptionPane.ERROR_MESSAGE);
-
-		}catch (ArrayIndexOutOfBoundsException ignored){}
 
 	}
 

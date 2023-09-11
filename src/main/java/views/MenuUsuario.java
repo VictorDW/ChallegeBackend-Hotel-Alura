@@ -145,10 +145,10 @@ public class MenuUsuario extends JFrame {
 	    panelFecha.setLayout(null);
 	    
 	    JLabel lblNewLabel_1 = new JLabel("Sistema de reservas Hotel Alura");
-	    lblNewLabel_1.setBounds(180, 11, 356, 42);
+	    lblNewLabel_1.setBounds(180, 11, 400, 42);
 	    panelFecha.add(lblNewLabel_1);
 	    lblNewLabel_1.setForeground(Color.WHITE);
-	    lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 24));
+	    lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 24));
 	    
 	    JLabel labelFecha = new JLabel("New label");
 	    labelFecha.setBounds(35, 64, 294, 36);
@@ -203,7 +203,7 @@ public class MenuUsuario extends JFrame {
 				btnRegistro.setBackground(new Color(54, 55, 83));
 			}
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				ReservasView reservas = new ReservasView();
 				reservas.setVisible(true);
 				dispose();
@@ -222,7 +222,7 @@ public class MenuUsuario extends JFrame {
 				btnBusqueda.setBackground(new Color(54, 55, 83));
 			}
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				Busqueda busqueda = new Busqueda();
 				busqueda.setVisible(true);
 				dispose();
@@ -232,7 +232,7 @@ public class MenuUsuario extends JFrame {
 	private void eventoSalir() {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				System.exit(0);
 			}
 			@Override

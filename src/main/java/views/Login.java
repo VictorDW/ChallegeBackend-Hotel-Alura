@@ -204,7 +204,7 @@ public class Login extends JFrame {
 				btnLogin.setBackground(new Color(29, 27, 49));
 			}
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				login();
 			}
 		});

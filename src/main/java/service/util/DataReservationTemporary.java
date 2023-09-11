@@ -8,7 +8,7 @@ import java.time.Period;
 import java.util.Random;
 
 public final class DataReservationTemporary {
-    public static ReservationRequestDTO dataOfReserve(LocalDate dateOfEntry, LocalDate departureDate) {
+    public static ReservationRequestDTO CreateReservationRequestDTO(LocalDate dateOfEntry, LocalDate departureDate) {
 
 
         return new ReservationRequestDTO(dateOfEntry,

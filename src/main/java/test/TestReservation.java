@@ -1,12 +1,14 @@
 package test;
 
 import DTO.ReservationByParametersDTO;
+import DTO.ReservationRequestDTO;
 import controller.ReservationController;
 
 import java.time.LocalDate;
 
 public class TestReservation {
     public static void main(String[] args) {
+
 
         /*
         ReservationRequestDTO reservationDTO =

@@ -35,5 +35,4 @@ public class Guest {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
 }

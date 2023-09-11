@@ -22,18 +22,18 @@ import java.util.Optional;
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtCedula;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtTelefono;
-	private JTextField txtNreserva;
-	private JDateChooser txtFechaN;
+	private final JPanel contentPane;
+	private final JTextField txtCedula;
+	private final JTextField txtNombre;
+	private final JTextField txtApellido;
+	private final JTextField txtTelefono;
+	private final JTextField txtNreserva;
+	private final JDateChooser txtFechaN;
 	private final JTextFieldDateEditor editorFecha;
 	private final JComboBox<NationalityRequestDTO> txtNacionalidad;
 	private final JPanel btnExit;
 	private final JPanel btnGuardar;
-	private JLabel labelExit;
+	private final JLabel labelExit;
 	int xMouse, yMouse;
 
 
@@ -111,7 +111,7 @@ public class RegistroHuesped extends JFrame {
 		txtNombre.setBounds(560, 163, 285, 33);
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setColumns(10);
-		txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtNombre.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtNombre);
 
 		JSeparator separator_1_2 = new JSeparator();
@@ -131,7 +131,7 @@ public class RegistroHuesped extends JFrame {
 		txtApellido.setBounds(560, 235, 285, 33);
 		txtApellido.setColumns(10);
 		txtApellido.setBackground(Color.WHITE);
-		txtApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtApellido.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtApellido);
 
 		JSeparator separator_1_2_1 = new JSeparator();
@@ -154,7 +154,7 @@ public class RegistroHuesped extends JFrame {
 		txtFechaN.getCalendarButton().setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaN.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaN.getCalendarButton().setBounds(267, 1, 21, 31);
-		txtFechaN.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaN.getCalendarButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 		txtFechaN.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		txtFechaN.setBackground(Color.WHITE);
@@ -198,7 +198,7 @@ public class RegistroHuesped extends JFrame {
 		txtTelefono.setBounds(560, 454, 285, 33);
 		txtTelefono.setColumns(10);
 		txtTelefono.setBackground(Color.WHITE);
-		txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtTelefono.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(txtTelefono);
 
 		JSeparator separator_1_2_4 = new JSeparator();
@@ -235,7 +235,7 @@ public class RegistroHuesped extends JFrame {
 		btnGuardar.setLayout(null);
 		btnGuardar.setBackground(new Color(29, 27, 49));
 		contentPane.add(btnGuardar);
-		btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		JLabel labelGuardar = new JLabel("Guardar");
 		labelGuardar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -328,51 +328,55 @@ public class RegistroHuesped extends JFrame {
 			}
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 
 				try {
+					/*
+						SE TOMA DE NUEVO LA FECHA EN CASO DE QUE NO SE ACTIVE EL EVENTO DEL BOTÓN DE LA FECHA
+						Y ASI VALIDARLA DE NUEVO.
+					 */
 					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
+
 				}catch (NullPointerException ignore){}
 
-				if (!(txtFechaN.getDate() != null &&
-						txtCedula.getText() != null &&
-						txtNombre.getText() != null &&
-						txtApellido.getText() != null &&
-						txtTelefono.getText() != null)) {
-
-					JOptionPane.showMessageDialog(contentPane,
-																	"Debes llenar todos los campos.",
-																	"Error",
-																	JOptionPane.ERROR_MESSAGE);
-
-				}else if(ConfigureDates.isUnderAge()){
-					JOptionPane.showMessageDialog(contentPane,
-																	"El huesped debe ser mayor de edad",
-																	"Error",
-																	JOptionPane.ERROR_MESSAGE);
-				}else {
-					//ENVIAMOS LOS DATOS PARA EL REGISTRO
-					reservationController
-							.createReservation(
-									reservationRequestDTO,
-									findGuest ?
-											guestRequestDTO :
-											newHuesped()
-							);
-
-					JOptionPane.showMessageDialog(contentPane,
-																	"Reserva hecha satisfactoriamente",
-																	"Creación Correcta",
-																	JOptionPane.INFORMATION_MESSAGE);
 
 
-					//REGRESAMOS A LA VISTA DE RESERVA
-					jFrameRegistrarReserva.setVisible(true);
-					setVisible(false);
-					//Exito exito = new Exito(jFrameRegistrarReserva, RegistroHuesped.this);
-					//exito.setVisible(true);
+					if (!(txtFechaN.getDate() != null &&
+							txtCedula.getText() != null &&
+							txtNombre.getText() != null &&
+							txtApellido.getText() != null &&
+							txtTelefono.getText() != null)) {
 
-				}
+						JOptionPane.showMessageDialog(contentPane,
+																		"Debes llenar todos los campos.",
+																		"Error",
+																		JOptionPane.ERROR_MESSAGE);
+
+					}else if(ConfigureDates.isUnderAge()){
+						JOptionPane.showMessageDialog(contentPane,
+																		"El huesped debe ser mayor de edad",
+																		"Error",
+																		JOptionPane.ERROR_MESSAGE);
+					}else {
+						//ENVIAMOS LOS DATOS PARA EL REGISTRO
+						reservationController
+								.createReservation(
+										reservationRequestDTO,
+										findGuest ?
+												guestRequestDTO :
+												newHuesped()
+								);
+
+						JOptionPane.showMessageDialog(contentPane,
+																		"Reserva hecha satisfactoriamente",
+																		"Creación Correcta",
+																		JOptionPane.INFORMATION_MESSAGE);
+
+
+						//REGRESAMOS A LA VISTA DE RESERVA
+						jFrameRegistrarReserva.setVisible(true);
+						setVisible(false);
+					}
 			}
 		});
 	}

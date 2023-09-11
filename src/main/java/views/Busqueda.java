@@ -335,8 +335,7 @@ public class Busqueda extends JFrame {
 
 		tbHuespedes.getTableHeader().setReorderingAllowed(false);
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		tbHuespedes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 14));
 		modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
 		modeloHuesped.addColumn("ID");
 		modeloHuesped.addColumn("Cedula de Huesped");
@@ -462,7 +461,7 @@ public class Busqueda extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnAtras.setBackground(new Color(12, 138, 199));
+				btnAtras.setBackground(new Color(29, 27, 49));
 				labelAtras.setForeground(Color.white);
 			}
 			@Override

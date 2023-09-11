@@ -22,8 +22,8 @@ public class ReservasView extends JFrame {
 	private static JDateChooser txtFechaSalida;
 	private static JComboBox<String> txtFormaPago;
 	int xMouse, yMouse;
-	private JLabel labelExit;
-	private JLabel labelAtras;
+	private final JLabel labelExit;
+	private final JLabel labelAtras;
 	private final JPanel btnExit;
 	private final JPanel btnAtras;
 	private final JPanel btnSiguiente;
@@ -260,7 +260,7 @@ public class ReservasView extends JFrame {
 		btnSiguiente.setBackground(new Color(29, 27, 49));
 		btnSiguiente.setBounds(238, 493, 122, 35);
 		panel.add(btnSiguiente);
-		btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnSiguiente.setCursor(new Cursor(java.awt.Cursor.HAND_CURSOR));
 
 		JLabel lblSiguiente = new JLabel("Siguiente");
 		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
@@ -331,10 +331,8 @@ public class ReservasView extends JFrame {
 																		"Debes llenar todos los campos.",
 																		"Error",
 																		JOptionPane.ERROR_MESSAGE);
-						return;
-					}
 
-					if (ConfigureDates.validateDateOrder()) {
+					} else if (ConfigureDates.validateDateOrder()) {
 
 						missingReserveData();
 						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);
@@ -357,13 +355,13 @@ public class ReservasView extends JFrame {
 		private void storeReservationData() {
 
 		try {
-
 			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+
 
 			if (ConfigureDates.validateDateOrder()) {
 				this.reservationRequestDTO =
 						DataReservationTemporary
-								.dataOfReserve(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());
+								.CreateReservationRequestDTO(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());
 
 				txtValor.setText(this.reservationRequestDTO.getCost().toString());
 			}else {
@@ -373,7 +371,6 @@ public class ReservasView extends JFrame {
 																JOptionPane.ERROR_MESSAGE);
 				txtValor.setText("0");
 			}
-
 		}catch (NullPointerException ignored){}
 	}
 		private void missingReserveData() {
