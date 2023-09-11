@@ -335,7 +335,7 @@ public class ReservasView extends JFrame {
 																		"Error",
 																		JOptionPane.ERROR_MESSAGE);
 
-					} else if (ConfigureDates.validateDateOrder()) {
+					} else if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
 
 						missingReserveData();
 						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);

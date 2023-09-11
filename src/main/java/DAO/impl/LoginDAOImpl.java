@@ -18,6 +18,13 @@ public class LoginDAOImpl implements LoginDAO {
     }
 
     @Override
+    public void registerUser(Login user) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(user);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
     public Optional<Login> findByUsername(String username) {
 
        try {

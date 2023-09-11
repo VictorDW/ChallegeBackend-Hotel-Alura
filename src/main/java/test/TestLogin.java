@@ -1,5 +1,6 @@
 package test;
 
+import DTO.UserDTO;
 import controller.LoginController;
 
 
@@ -7,16 +8,14 @@ public class TestLogin {
 
     public static void main(String[] args) {
 
-        String username = "victor";
-        String password = "1223";
+        String username = "admin";
+        String password = "admin";
+
+        UserDTO userDTO = new UserDTO(username, password);
 
         LoginController loginController = new LoginController();
 
-        if (loginController.autenticarUser(username,password)){
-            System.out.println("Entro");
-        }else
-            System.out.println("no entro");
-
+        //loginController.registerUser(userDTO);
     }
 
 }
