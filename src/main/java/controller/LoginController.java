@@ -26,4 +26,8 @@ public class LoginController {
         UserDTO userDTO = new UserDTO(username, password);
         return loginService.autenticar(userDTO);
     }
+
+    public boolean userExists() {
+        return loginService.userExists();
+    }
 }

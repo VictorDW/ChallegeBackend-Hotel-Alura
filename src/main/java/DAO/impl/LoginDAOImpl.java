@@ -6,6 +6,7 @@ import model.Login;
 
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -38,4 +39,20 @@ public class LoginDAOImpl implements LoginDAO {
            return Optional.empty();
        }
     }
+
+    @Override
+    public Optional<Login> getUser() {
+
+        try {
+           String query = "SELECT L FROM Login L";
+
+           return Optional.of(entityManager.createQuery(query, Login.class)
+                   .getSingleResult());
+
+        }catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
+
 }

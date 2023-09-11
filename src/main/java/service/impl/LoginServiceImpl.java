@@ -5,6 +5,7 @@ import DTO.UserDTO;
 import com.password4j.Hash;
 import com.password4j.Password;
 import model.Login;
+import org.hibernate.query.spi.QueryOptionsAdapter;
 import service.LoginService;
 
 import java.util.Optional;
@@ -42,9 +43,9 @@ public class LoginServiceImpl implements LoginService  {
     @Override
     public boolean autenticar(UserDTO userDTO) {
 
-        Optional<Login> login = loginDAO.findByUsername(userDTO.getUsername());
+        Optional<Login> userLogin = loginDAO.findByUsername(userDTO.getUsername());
 
-        login.ifPresentOrElse(
+        userLogin.ifPresentOrElse(
                 value ->{
                         String hashFromDB = value.getPassword();
                         isFount =  Password.check(userDTO.getPassword(), hashFromDB).withBcrypt();
@@ -52,5 +53,13 @@ public class LoginServiceImpl implements LoginService  {
                 ()-> isFount = false);
 
         return isFount;
+    }
+
+    @Override
+    public boolean userExists() {
+
+         Optional<Login> userLogin = loginDAO.getUser();
+
+        return userLogin.isEmpty();
     }
 }

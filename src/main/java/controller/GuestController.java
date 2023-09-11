@@ -27,7 +27,6 @@ public class GuestController {
         guestService = new GuestServiceImpl(guestDAO, nationalityController.getNationalityService());
     }
 
-
     public GuestService getGuestService() {
         return guestService;
     }

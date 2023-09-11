@@ -6,7 +6,7 @@ import controller.LoginController;
 
 public class TestLogin {
 
-    public static void main(String[] args) {
+    public void run() {
 
         String username = "admin";
         String password = "admin";
@@ -15,7 +15,10 @@ public class TestLogin {
 
         LoginController loginController = new LoginController();
 
-        //loginController.registerUser(userDTO);
+        if (loginController.userExists())
+            loginController.registerUser(userDTO);
+        else
+            System.out.println("si funciona");
     }
 
 }

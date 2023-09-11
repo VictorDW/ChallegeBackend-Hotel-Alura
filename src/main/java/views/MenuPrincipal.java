@@ -1,5 +1,7 @@
 package views;
 
+import test.TestLogin;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -140,6 +142,8 @@ public class MenuPrincipal extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				TestLogin testLogin = new TestLogin();
+				testLogin.run();
 				Login login = new Login();
 				login.setVisible(true);
 				dispose();
