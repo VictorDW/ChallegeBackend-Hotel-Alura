@@ -4,6 +4,7 @@ import DTO.ReservationRequestDTO;
 import com.toedter.calendar.JDateChooser;
 import service.util.ConfigureDates;
 import service.util.DataReservationTemporary;
+import util.MessageBox;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +19,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame {
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	private static JTextField txtValor;
 	private static JDateChooser txtFechaEntrada;
 	private static JDateChooser txtFechaSalida;
@@ -96,8 +97,8 @@ public class ReservasView extends JFrame {
 
 		txtValor = new JTextField();
 		txtValor.setBackground(SystemColor.text);
-		txtValor.setHorizontalAlignment(SwingConstants.LEFT);
-		txtValor.setBounds(68, 328, 169, 33);
+		txtValor.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtValor.setBounds(68, 328, 289, 33);
 		txtValor.setEditable(false);
 		txtValor.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -330,21 +331,17 @@ public class ReservasView extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 
 					if (!(ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null)) {
-						JOptionPane.showMessageDialog(contentPane,
-																		"Debes llenar todos los campos.",
-																		"Error",
-																		JOptionPane.ERROR_MESSAGE);
+
+						MessageBox.messageBasic(contentPane,"Debes llenar todos los campos");
 
 					} else if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
 
 						missingReserveData();
 						RegistroHuesped registro = new RegistroHuesped(ReservasView.this, reservationRequestDTO);
 						registro.setVisible(true);
+
 					} else {
-						JOptionPane.showMessageDialog(contentPane,
-																		"Error en las fechas",
-																		"Error",
-																		JOptionPane.ERROR_MESSAGE);
+						MessageBox.messageBasic(contentPane, "Error en las fechas");
 					}
 				}
 			});
@@ -360,19 +357,17 @@ public class ReservasView extends JFrame {
 		try {
 			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 
-
 			if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
+
 				this.reservationRequestDTO =
 						DataReservationTemporary
 								.CreateReservationRequestDTO(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());
 
-				txtValor.setText(this.reservationRequestDTO.getCost().toString());
+				txtValor.setText(this.reservationRequestDTO.getCost().toString() + " COP");
+
 			}else {
-				JOptionPane.showMessageDialog(contentPane,
-																"Error en las fechas",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
-				txtValor.setText("0");
+				MessageBox.messageBasic(contentPane, "Error en las fechas");
+				txtValor.setText("0"+" COP");
 			}
 		}catch (NullPointerException ignored){}
 	}

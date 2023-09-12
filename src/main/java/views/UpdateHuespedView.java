@@ -7,6 +7,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import controller.GuestController;
 import controller.NationalityController;
 import service.util.ConfigureDates;
+import util.MessageBox;
 
 import javax.sound.midi.Soundbank;
 import javax.swing.*;
@@ -294,17 +295,11 @@ public class UpdateHuespedView extends JFrame {
 								txtApellido.getText().isEmpty() ||
 								txtTelefono.getText().isEmpty()){
 
-							JOptionPane.showMessageDialog(contentPane,
-																			"Debes llenar todos los campos.",
-																			"Error",
-																			JOptionPane.ERROR_MESSAGE);
+							MessageBox.messageBasic(contentPane,"Debes llenar todos los campos.");
 
 						}else if(ConfigureDates.isUnderAge()) {
 
-							JOptionPane.showMessageDialog(contentPane,
-																			"El huesped debe ser mayor de edad",
-																			"Error",
-																			JOptionPane.ERROR_MESSAGE);
+							MessageBox.messageBasic(contentPane,"El huesped debe ser mayor de edad");
 							editorFecha.setText("");
 						}else {
 							modificarHuesped();
@@ -345,6 +340,12 @@ public class UpdateHuespedView extends JFrame {
 	}
 	private void modificarHuesped() {
 
+		int result = MessageBox.messageTypeOption(contentPane,
+				"¿Estas Seguro(a) que deseas Actualizar los Datos?",
+				"Actualización de la Reserva");
+
+		if (MessageBox.validateOption(result)) {
+
 			NationalityRequestDTO nationalityRequestDTO = (NationalityRequestDTO) txtNacionalidad.getSelectedItem();
 
 			guestRequestDTO.setCedula(txtCedula.getText());
@@ -354,17 +355,15 @@ public class UpdateHuespedView extends JFrame {
 			guestRequestDTO.setPhone(txtTelefono.getText());
 			guestRequestDTO.setNationality(nationalityRequestDTO);
 
-			if(this.guestController.updateGuest(this.guestRequestDTO))
-				JOptionPane.showMessageDialog(contentPane,
-																" Huesped actualizado con éxito!",
-																"Actualización correcta",
-																JOptionPane.INFORMATION_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(contentPane,
-																" Ha ocurrido un error inesperado",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
-
+			if (this.guestController.updateGuest(this.guestRequestDTO)) {
+				MessageBox.messageBasic(contentPane,
+														"Se actualizo el Huesped con éxito!",
+														"Actualización correcta",
+														JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				MessageBox.messageBasic(contentPane, " Ha ocurrido un error inesperado");
+			}
+		}
 	}
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	

@@ -10,6 +10,7 @@ import controller.GuestController;
 import controller.NationalityController;
 import controller.ReservationController;
 import service.util.ConfigureDates;
+import util.MessageBox;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -341,24 +342,17 @@ public class RegistroHuesped extends JFrame {
 
 				}catch (NullPointerException ignore){}
 
+					if (txtFechaN.getDate() == null ||
+							txtCedula.getText().isEmpty() ||
+							txtNombre.getText().isEmpty() ||
+							txtApellido.getText().isEmpty() ||
+							txtTelefono.getText().isEmpty()) {
 
-
-					if (!(txtFechaN.getDate() != null &&
-							txtCedula.getText() != null &&
-							txtNombre.getText() != null &&
-							txtApellido.getText() != null &&
-							txtTelefono.getText() != null)) {
-
-						JOptionPane.showMessageDialog(contentPane,
-																		"Debes llenar todos los campos.",
-																		"Error",
-																		JOptionPane.ERROR_MESSAGE);
+						MessageBox.messageBasic(contentPane, "Debes llenar todos los campos.");
 
 					}else if(ConfigureDates.isUnderAge()){
-						JOptionPane.showMessageDialog(contentPane,
-																		"El huesped debe ser mayor de edad",
-																		"Error",
-																		JOptionPane.ERROR_MESSAGE);
+						MessageBox.messageBasic(contentPane, "El huesped debe ser mayor de edad");
+
 					}else {
 						//ENVIAMOS LOS DATOS PARA EL REGISTRO
 						reservationController
@@ -369,10 +363,10 @@ public class RegistroHuesped extends JFrame {
 												newHuesped()
 								);
 
-						JOptionPane.showMessageDialog(contentPane,
-																		"Reserva hecha satisfactoriamente",
-																		"Creación Correcta",
-																		JOptionPane.INFORMATION_MESSAGE);
+						MessageBox.messageBasic(contentPane,
+																"Reserva hecha satisfactoriamente",
+																"Creación Correcta",
+																JOptionPane.INFORMATION_MESSAGE);
 
 
 						//REGRESAMOS A LA VISTA DE RESERVA
@@ -417,10 +411,7 @@ public class RegistroHuesped extends JFrame {
 					ConfigureDates.mapperDataToLocalDate(txtFechaN.getDate());
 
 					if (ConfigureDates.isUnderAge()) {
-						JOptionPane.showMessageDialog(contentPane,
-																		"El huesped debe ser mayor de edad",
-																		"Error",
-																		JOptionPane.ERROR_MESSAGE);
+						MessageBox.messageBasic(contentPane, "El huesped debe ser mayor de edad");
 						editorFecha.setText("");
 					}
 				}catch (NullPointerException ignore){}

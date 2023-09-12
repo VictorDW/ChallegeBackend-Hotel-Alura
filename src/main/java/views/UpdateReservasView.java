@@ -4,6 +4,7 @@ import DTO.ReservationRequestDTO;
 import com.toedter.calendar.JDateChooser;
 import controller.ReservationController;
 import service.util.ConfigureDates;
+import util.MessageBox;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -300,20 +301,26 @@ public class UpdateReservasView extends JFrame {
 	}
 	private void modificarReserva() {
 
+		int result = MessageBox.messageTypeOption(contentPane,
+				"¿Estas Seguro(a) que deseas Actualizar los Datos?",
+				"Actualización de la Reserva");
+
+		if(MessageBox.validateOption(result)) {
+
 			this.reservationRequestDTO.setCheckIn(ConfigureDates.getCheckIn());
 			this.reservationRequestDTO.setCheckOut(ConfigureDates.getCheckOut());
 			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
 
-			if(this.reservationController.updateReservation(this.reservationRequestDTO))
-				JOptionPane.showMessageDialog(contentPane,
-																" Reserva actualizado con éxito!",
-																"Actualización correcta",
-																JOptionPane.INFORMATION_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(contentPane,
-																" Ha ocurrido un error inesperado",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
+			if(this.reservationController.updateReservation(this.reservationRequestDTO)) {
+
+				MessageBox.messageBasic(contentPane,
+						"Se actualizo la Reserva con éxito!",
+						"Actualización correcta",
+						JOptionPane.INFORMATION_MESSAGE);
+			}else {
+				MessageBox.messageBasic(contentPane, "Ha ocurrido un error inesperado");
+			}
+		}
 	}
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"

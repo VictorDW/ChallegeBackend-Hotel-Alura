@@ -1,6 +1,7 @@
 package views;
 
 import controller.LoginController;
+import util.MessageBox;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -22,18 +23,15 @@ import java.awt.event.MouseMotionAdapter;
 
 public class Login extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtUsuario;
-	private JPasswordField txtContrasena;
+	private final JPanel contentPane;
+	private final JTextField txtUsuario;
+	private final JPasswordField txtContrasena;
 
 	private final JPanel btnLogin;
 	private final JPanel btnExit;
 	int xMouse, yMouse;
-	private JLabel labelExit;
+	private final JLabel labelExit;
 
 	private final LoginController loginController;
 
@@ -266,10 +264,7 @@ public class Login extends JFrame {
 	            menu.setVisible(true);
 	            dispose();	 
 	        }else {
-	            JOptionPane.showMessageDialog(contentPane,
-																"Usuario o Contraseña no válidos",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
+	            MessageBox.messageBasic(contentPane, "Usuario o Contraseña no válidos");
 	        }
 	} 
 	 private void headerMousePressed(MouseEvent evt) {

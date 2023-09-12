@@ -7,6 +7,7 @@ import controller.GuestController;
 import controller.NationalityController;
 import controller.ReservationController;
 import service.util.ConfigureDates;
+import util.MessageBox;
 
 import java.awt.*;
 import javax.swing.*;
@@ -139,7 +140,7 @@ public class Busqueda extends JFrame {
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaEntrada.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaEntrada.getCalendarButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 		txtFechaEntrada.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaEntrada.getCalendarButton().setBounds(368, 0, 21, 33);
 		txtFechaEntrada.setBounds(200, 115, 150, 35);
@@ -157,7 +158,7 @@ public class Busqueda extends JFrame {
 		txtFechaSalida.transferFocus();
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaSalida.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaSalida.getCalendarButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 		txtFechaSalida.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaSalida.getCalendarButton().setBounds(368, 0, 21, 33);
 		txtFechaSalida.setBounds(380, 115, 150, 35);
@@ -190,7 +191,7 @@ public class Busqueda extends JFrame {
 		btnbuscar.setLayout(null);
 		btnbuscar.setBackground(new Color(29, 27, 49));
 		btnbuscar.setBounds(748, 115, 122, 35);
-		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnbuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(btnbuscar);
 
 		JLabel lblBuscar = new JLabel("Buscar");
@@ -206,7 +207,7 @@ public class Busqueda extends JFrame {
 		btnLoad.setLayout(null);
 		btnLoad.setBackground(Color.WHITE);
 		btnLoad.setBounds(570, 508, 40, 40);
-		btnLoad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnLoad.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		//btnLoad.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
 		contentPane.add(btnLoad);
 
@@ -226,7 +227,7 @@ public class Busqueda extends JFrame {
 		btnEditar.setLayout(null);
 		btnEditar.setBackground(new Color(29, 27, 49));
 		btnEditar.setBounds(635, 508, 122, 35);
-		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(btnEditar);
 
 		JLabel lblEditar = new JLabel("Editar");
@@ -242,7 +243,7 @@ public class Busqueda extends JFrame {
 		btnEliminar.setLayout(null);
 		btnEliminar.setBackground(new Color(29, 27, 49));
 		btnEliminar.setBounds(767, 508, 122, 35);
-		btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		contentPane.add(btnEliminar);
 
 		JLabel lblEliminar = new JLabel("Eliminar");
@@ -283,6 +284,7 @@ public class Busqueda extends JFrame {
 
 	private void tablaReserva() {
 
+		//INHABILITAMOS TODAS LAS COLUMNAS PARA QUE NO PUEDAS EDITARSE
 		this.tbReservas = new JTable() {
 
 			//Se habilitan para editar solo las columna que se necesitan
@@ -325,6 +327,7 @@ public class Busqueda extends JFrame {
 
 	private void tablaHuesped() {
 
+		//INHABILITAMOS TODAS LAS COLUMNAS PARA QUE NO PUEDAS EDITARSE
 		this.tbHuespedes = new JTable() {
 
 			//Se habilitan para editar solo las columna que se necesitan
@@ -610,6 +613,7 @@ public class Busqueda extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnEliminar.setBackground(new Color(29, 27, 49));
 			}
+
 			//permite detectar de que Tap Panel está activo y asi poder llamar los metodos necesarios según el Tap
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -649,9 +653,8 @@ public class Busqueda extends JFrame {
 
 		List<ReservationDTO> reservationList = this.reservationController.getReservationByParameters(reservationByParametersDTO);
 
-		if (reservationList.isEmpty()){
-			JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
-		}
+		if (reservationList.isEmpty())
+			MessageBox.messageBasic(contentPane, "No se encontraron coincidencias");
 		else
 			cargarTablaReserva(reservationList);
 
@@ -661,12 +664,8 @@ public class Busqueda extends JFrame {
 
 		List<GuestDTO> guestList = guestController.getGuestsByCedula(cedula.equals("Cedula") ? null : cedula);
 
-		if (guestList.isEmpty()){
-			JOptionPane.showMessageDialog(contentPane,
-															"No se encontraron coincidencias",
-															"Error",
-															JOptionPane.ERROR_MESSAGE);
-		}
+		if (guestList.isEmpty())
+			JOptionPane.showMessageDialog(contentPane, "No se encontraron coincidencias");
 		else
 			cargarTablaHuesped(guestList);
 	}
@@ -723,10 +722,7 @@ public class Busqueda extends JFrame {
 	private void enviarDatosReserva(){
 
 		if(tieneFilaElegida(tbReservas)) {
-			JOptionPane.showMessageDialog(contentPane,
-															"Por favor, elije un item",
-															"Error",
-															JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contentPane, "Por favor, elige una Reserva");
 			return;
 		}
 
@@ -753,10 +749,7 @@ public class Busqueda extends JFrame {
 	private void enviarDatosHuesped(){
 
 		if(tieneFilaElegida(tbHuespedes)) {
-			JOptionPane.showMessageDialog(contentPane,
-															"Por favor, elije un item",
-															"Error",
-															JOptionPane.ERROR_MESSAGE);
+			MessageBox.messageBasic(contentPane, "Por favor, elige un Huesped");
 			return;
 		}
 
@@ -785,56 +778,67 @@ public class Busqueda extends JFrame {
 	private void eliminarReserva(){
 
 		if (tieneFilaElegida(tbReservas)) {
-			JOptionPane.showMessageDialog(contentPane,
-															"Por favor, elije un item",
-															"Error",
-															JOptionPane.ERROR_MESSAGE);
+			MessageBox.messageBasic(contentPane, "Por favor, elige una Reserva");
 			return;
 		}
 
 		try {
 
-			Long ReservaID = Long.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+			Long reservaID = Long.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+			String reservaCod = String.valueOf(modeloReserva.getValueAt(tbReservas.getSelectedRow(), 1).toString());
 
-			if(this.reservationController.softDeleteReservation(ReservaID)) {
-				modeloReserva.removeRow(tbReservas.getSelectedRow());
-				JOptionPane.showMessageDialog(contentPane,
-																" Reserva eliminado con éxito!",
-																"Delete",
-																JOptionPane.ERROR_MESSAGE);
-			}else
-				JOptionPane.showMessageDialog(contentPane,
-																" Ha ocurrido un error inesperado",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
+			//CLASE DEFINIDA PARA MANEJAR LAS VENTANAS DE INFORMACIÓN
+			int result = MessageBox.messageTypeOption(contentPane,
+							"¿Estas Seguro(a) que deseas Eliminar la Reserva "+ reservaCod +"?",
+							"Eliminación de la Reserva");
 
+			if (MessageBox.validateOption(result)) {
+
+				if(this.reservationController.softDeleteReservation(reservaID)) {
+					modeloReserva.removeRow(tbReservas.getSelectedRow());
+
+					MessageBox.messageBasic(contentPane,
+														" Reserva eliminado con éxito!",
+														"Eliminado correctamente",
+														JOptionPane.INFORMATION_MESSAGE);
+				}else
+					MessageBox.messageBasic(contentPane, " Ha ocurrido un error inesperado");
+			}
 		}catch (ArrayIndexOutOfBoundsException ignore){}
 	}
 
 	private void eliminarHuesped(){
 
 		if (tieneFilaElegida(tbHuespedes)) {
-			JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+			MessageBox.messageBasic(contentPane, "Por favor, elige una Huesped");
 			return;
 		}
 
 		try {
 
 			Long huespedID = Long.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
+			String huespedCedula = String.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 1).toString());
 
-			if(this.guestController.softDeleteGuest(huespedID)) {
-				modeloReserva.removeRow(tbReservas.getSelectedRow());
-				JOptionPane.showMessageDialog(contentPane,
-																" Huesped eliminada con éxito!",
-																"Delete",
-																JOptionPane.ERROR_MESSAGE);
-			}else
-				JOptionPane.showMessageDialog(contentPane,
-																" Ha ocurrido un error inesperado",
-																"Error",
-																JOptionPane.ERROR_MESSAGE);
+			//CLASE DEFINIDA PARA MANEJAR LAS VENTANAS DE INFORMACIÓN
+			int result = MessageBox.messageTypeOption(contentPane,
+					"¿Estas Seguro(a) que deseas Eliminar el Huesped con CC. "+ huespedCedula +"?",
+					"Eliminación del Huesped");
 
-		}catch (ArrayIndexOutOfBoundsException ignore){}
+			if (MessageBox.validateOption(result)) {
+
+				if(this.guestController.softDeleteGuest(huespedID)) {
+					modeloReserva.removeRow(tbReservas.getSelectedRow());
+					MessageBox.messageBasic(contentPane,
+															" Huesped eliminada con éxito!",
+															"Delete",
+															JOptionPane.ERROR_MESSAGE);
+				}else
+					MessageBox.messageBasic(contentPane, "Ha ocurrido un error inesperado");
+			}
+
+		}catch (ArrayIndexOutOfBoundsException ignore){
+			System.out.println("esta tirando al excepción");
+		}
 	}
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"

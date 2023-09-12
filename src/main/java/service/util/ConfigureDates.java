@@ -37,7 +37,7 @@ public final class ConfigureDates {
 
     public static boolean validateDateOrder() {
 
-        /*Se valida de esta manera para que de verificar que la fecha sea el mismo o antes
+        /*Se valida de esta manera para que de verificar que la fecha sea el mismo día o antes
         * true: si es antes o el mismo día
         * false: si es mayor al día de salida
         */
@@ -46,7 +46,7 @@ public final class ConfigureDates {
 
     public static  boolean validateDateCheckIn(LocalDate dateComparation) {
 
-        /*Se valida de esta manera para que de verificar que la fecha sea el mismo o despues
+        /*Se valida de esta manera para que de verificar que la fecha sea el mismo día o después
          * true: si es después o el mismo día
          * false: si es menor a la ficha actual
          */
