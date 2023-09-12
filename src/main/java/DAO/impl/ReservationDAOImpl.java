@@ -4,8 +4,8 @@ import DAO.ReservationDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
-import modelo.Reservation;
-import modelo.Status;
+import model.Reservation;
+import model.Status;
 
 import java.time.LocalDate;
 import java.util.List;

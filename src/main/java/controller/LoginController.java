@@ -17,9 +17,17 @@ public class LoginController {
         loginService = new LoginServiceImpl(loginDAO);
     }
 
+    public void registerUser(UserDTO userDTO) {
+        loginService.registerUser(userDTO);
+    }
+
     public boolean autenticarUser(String username, String password) {
 
         UserDTO userDTO = new UserDTO(username, password);
         return loginService.autenticar(userDTO);
+    }
+
+    public boolean userExists() {
+        return loginService.userExists();
     }
 }

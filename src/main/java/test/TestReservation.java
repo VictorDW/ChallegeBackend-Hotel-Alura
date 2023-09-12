@@ -1,16 +1,14 @@
 package test;
 
-import DTO.GuestRequestDTO;
 import DTO.ReservationByParametersDTO;
 import DTO.ReservationRequestDTO;
 import controller.ReservationController;
-import modelo.Nationality;
-import service.util.DataReservationTemporary;
 
 import java.time.LocalDate;
 
 public class TestReservation {
     public static void main(String[] args) {
+
 
         /*
         ReservationRequestDTO reservationDTO =

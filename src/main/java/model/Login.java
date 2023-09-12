@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +15,4 @@ public class Login {
     private Long id;
     private String username;
     private String password;
-
-    public Login(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 }

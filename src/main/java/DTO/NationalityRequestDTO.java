@@ -8,8 +8,8 @@ import lombok.Getter;
 public class NationalityRequestDTO {
 
     private Long id;
-    private String gentilicioMan;
-    private String gentilicioWoman;
+    private final String gentilicioMan;
+    private final String gentilicioWoman;
 
     public NationalityRequestDTO(Long id, String gentilicioMan, String gentilicioWoman) {
         this.id = id;
@@ -21,8 +21,6 @@ public class NationalityRequestDTO {
         this.gentilicioMan = gentilicioMan;
         this.gentilicioWoman = gentilicioWoman;
     }
-
-
 
     @Override
     public String toString() {

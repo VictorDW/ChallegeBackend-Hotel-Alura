@@ -2,9 +2,9 @@ package service.mappers;
 
 import DTO.ReservationDTO;
 import DTO.ReservationRequestDTO;
-import modelo.Guest;
-import modelo.Reservation;
-import modelo.Status;
+import model.Guest;
+import model.Reservation;
+import model.Status;
 
 import java.math.BigDecimal;
 

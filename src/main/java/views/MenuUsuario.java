@@ -6,13 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
@@ -28,6 +25,9 @@ public class MenuUsuario extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelRegistro;
+	private final JPanel btnRegistro;
+	private final JPanel btnBusqueda;
+	private final JPanel btnexit;
 
 	/**
 	 * Launch the application.
@@ -49,6 +49,7 @@ public class MenuUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuUsuario() {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuUsuario.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 944, 609);
@@ -76,7 +77,7 @@ public class MenuUsuario extends JFrame {
 		});
 		
 		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(12, 138, 199));
+		panelMenu.setBackground(new Color(54, 55, 83));
 		panelMenu.setBounds(0, 0, 257, 609);
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
@@ -86,64 +87,34 @@ public class MenuUsuario extends JFrame {
 		panelMenu.add(lblNewLabel_2);
 		lblNewLabel_2.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/aH-150px.png")));
 		
-		JPanel btnRegistro = new JPanel();
-		btnRegistro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnRegistro.setBackground(new Color(118, 187, 223));				
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnRegistro.setBackground(new Color(12, 138, 199));	
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ReservasView reservas = new ReservasView();
-				reservas.setVisible(true);
-				dispose();
-			}
-		});
+		btnRegistro = new JPanel();
+		eventoBtnRegistrar();
 		btnRegistro.setBounds(0, 255, 257, 56);
-		btnRegistro.setBackground(new Color(12, 138, 199));
+		btnRegistro.setBackground(new Color(54, 55, 83));
 		panelMenu.add(btnRegistro);
 		btnRegistro.setLayout(null);
 		
-		labelRegistro = new JLabel("Registro de reservas");
-		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/reservado.png")));
+		labelRegistro = new JLabel("Registro de Reservas");
+		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/reservadoBlanco.png")));
 		labelRegistro.setForeground(SystemColor.text);
-		labelRegistro.setBounds(25, 11, 205, 34);
-		labelRegistro.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelRegistro.setBounds(25, 11, 220, 34);
+		labelRegistro.setFont(new Font("Roboto", Font.BOLD, 18));
 		labelRegistro.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegistro.add(labelRegistro);
 		
-		JPanel btnBusqueda = new JPanel();
-		btnBusqueda.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnBusqueda.setBackground(new Color(118, 187, 223));				
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnBusqueda.setBackground(new Color(12, 138, 199));	
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Busqueda busqueda = new Busqueda();
-				busqueda.setVisible(true);
-				dispose();
-			}
-		});
+		btnBusqueda = new JPanel();
+		eventoBtnBuscardor();
 		btnBusqueda.setBounds(0, 312, 257, 56);
-		btnBusqueda.setBackground(new Color(12, 138, 199));
+		btnBusqueda.setBackground(new Color(54, 55, 83));
 		panelMenu.add(btnBusqueda);
 		btnBusqueda.setLayout(null);
 		
 		JLabel lblBusquedaDeReservas = new JLabel("Búsqueda");
-		lblBusquedaDeReservas.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/pessoas.png")));
+		lblBusquedaDeReservas.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/buscarUsuariosBlanco.png")));
 		lblBusquedaDeReservas.setBounds(27, 11, 200, 34);
 		lblBusquedaDeReservas.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBusquedaDeReservas.setForeground(Color.WHITE);
-		lblBusquedaDeReservas.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblBusquedaDeReservas.setFont(new Font("Roboto", Font.BOLD, 18));
 		btnBusqueda.add(lblBusquedaDeReservas);
 		
 		JSeparator separator = new JSeparator();
@@ -154,24 +125,8 @@ public class MenuUsuario extends JFrame {
 		header.setBounds(0, 0, 944, 36);
 		contentPane.add(header);
 		
-		JPanel btnexit = new JPanel();
-		btnexit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(Color.white);
-			     labelExit.setForeground(Color.black);
-			}
-		});
-		
+		btnexit = new JPanel();
+		eventoSalir();
 		btnexit.setLayout(null);
 		btnexit.setBackground(Color.WHITE);
 		btnexit.setBounds(891, 0, 53, 36);
@@ -184,16 +139,16 @@ public class MenuUsuario extends JFrame {
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		
 	    JPanel panelFecha = new JPanel();
-	    panelFecha.setBackground(new Color(118, 187, 223));
+	    panelFecha.setBackground(new Color(29, 27, 49));
 	    panelFecha.setBounds(256, 84, 688, 121);
 	    contentPane.add(panelFecha);
 	    panelFecha.setLayout(null);
 	    
 	    JLabel lblNewLabel_1 = new JLabel("Sistema de reservas Hotel Alura");
-	    lblNewLabel_1.setBounds(180, 11, 356, 42);
+	    lblNewLabel_1.setBounds(180, 11, 400, 42);
 	    panelFecha.add(lblNewLabel_1);
 	    lblNewLabel_1.setForeground(Color.WHITE);
-	    lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 24));
+	    lblNewLabel_1.setFont(new Font("Roboto", Font.BOLD, 24));
 	    
 	    JLabel labelFecha = new JLabel("New label");
 	    labelFecha.setBounds(35, 64, 294, 36);
@@ -212,7 +167,6 @@ public class MenuUsuario extends JFrame {
 	    String textoDescripcion = "<html><body>Sistema de reserva de hotel. Controle y administre de forma óptima y fácil <br> el flujo de reservas y de huespédes del hotel   </body></html>";
 	    JLabel labelDescripcion = new JLabel(textoDescripcion);
 	    labelDescripcion.setFont(new Font("Roboto", Font.PLAIN, 17));
-	   
 	    labelDescripcion.setBounds(312, 291, 598, 66);
 	    contentPane.add(labelDescripcion);
 	    
@@ -237,7 +191,62 @@ public class MenuUsuario extends JFrame {
 	    lblNewLabel_3_2.setBounds(312, 520, 295, 27);
 	    contentPane.add(lblNewLabel_3_2);
 	}
-	
+
+	private void eventoBtnRegistrar() {
+		btnRegistro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnRegistro.setBackground(new Color(29, 27, 49));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnRegistro.setBackground(new Color(54, 55, 83));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ReservasView reservas = new ReservasView();
+				reservas.setVisible(true);
+				dispose();
+			}
+		});
+	}
+	private void eventoBtnBuscardor() {
+		btnBusqueda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBusqueda.setBackground(new Color(29, 27, 49));
+
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBusqueda.setBackground(new Color(54, 55, 83));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Busqueda busqueda = new Busqueda();
+				busqueda.setVisible(true);
+				dispose();
+			}
+		});
+	}
+	private void eventoSalir() {
+		btnexit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnexit.setBackground(Color.red);
+				labelExit.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnexit.setBackground(Color.white);
+				labelExit.setForeground(Color.black);
+			}
+		});
+	}
 	private void headerMousePressed(MouseEvent evt) {
         xMouse = evt.getX();
         yMouse = evt.getY();

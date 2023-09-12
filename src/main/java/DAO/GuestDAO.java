@@ -1,6 +1,6 @@
 package DAO;
 
-import modelo.Guest;
+import model.Guest;
 
 public interface GuestDAO extends JpaPersistence<Guest> {
 

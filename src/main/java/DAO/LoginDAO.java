@@ -1,7 +1,11 @@
 package DAO;
 
-import modelo.Login;
+import model.Login;
+import java.util.Optional;
 
 public interface LoginDAO {
-    Login findByUsername(String username);
+
+    void registerUser(Login user);
+    Optional<Login> findByUsername(String username);
+    Optional<Login> getUser();
 }

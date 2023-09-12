@@ -1,5 +1,5 @@
 package DAO;
 
-import modelo.Nationality;
+import model.Nationality;
 
 public interface NationalityDAO extends JpaPersistence<Nationality> { }

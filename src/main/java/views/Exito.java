@@ -3,12 +3,8 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -20,25 +16,16 @@ import java.awt.Toolkit;
 public class Exito extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Exito dialog = new Exito();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private final ReservasView jFrameRegistrarReserva;
+	private final RegistroHuesped jFrameRegistrarHuesped;
 
 	/**
 	 * Create the dialog.
 	 */
-	public Exito() {
+	public Exito(ReservasView jFrameRegistrarReserva, RegistroHuesped jFrameRegistrarHuesped) {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Exito.class.getResource("/imagenes/aH-40px.png")));
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 394, 226);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.control);
@@ -46,15 +33,20 @@ public class Exito extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		setLocationRelativeTo(null);
 		contentPanel.setLayout(null);
-		{
+
+		//
+
+		this.jFrameRegistrarReserva = jFrameRegistrarReserva;
+		this.jFrameRegistrarHuesped = jFrameRegistrarHuesped;
+
 			JLabel lblNewLabel = new JLabel("");
 			lblNewLabel.setIcon(new ImageIcon(Exito.class.getResource("/imagenes/Ha-100px.png")));
 			lblNewLabel.setBounds(123, 11, 100, 100);
 			contentPanel.add(lblNewLabel);
-		}
+
 		{
 			JLabel lblNewLabel_1 = new JLabel("Datos guardados satisfactoriamente");
-			lblNewLabel_1.setForeground(new Color (12, 138, 199));
+			lblNewLabel_1.setForeground(new Color(54, 55, 83));
 			lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 18));
 			lblNewLabel_1.setBounds(27, 122, 322, 21);
 			contentPanel.add(lblNewLabel_1);
@@ -65,11 +57,15 @@ public class Exito extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.setBackground(new Color(54, 55, 83));
+				okButton.setFont(new Font("Roboto", Font.PLAIN, 16));
+				okButton.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+				okButton.setForeground(Color.white);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();//sirve para cerrar la ventana actual
-						MenuUsuario usuario = new MenuUsuario(); 
-						usuario.setVisible(true);
+						jFrameRegistrarHuesped.setVisible(false);
+						jFrameRegistrarReserva.setVisible(true);
+						setVisible(false);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -78,6 +74,10 @@ public class Exito extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.setBackground(new Color(54, 55, 83));
+				cancelButton.setFont(new Font("Roboto", Font.PLAIN, 16));
+				cancelButton.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+				cancelButton.setForeground(Color.white);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

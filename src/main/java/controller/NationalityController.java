@@ -17,12 +17,17 @@ public class NationalityController {
         NationalityDAO nationalityDAO = new NationalityDAOImpl(JPAUtils.getEntityManager());
         this.nationalityService = new NationalityServiceImpl(nationalityDAO);
     }
-
+    public NationalityService getNationalityService() {
+        return nationalityService;
+    }
     public void createNationality(NationalityRequestDTO nationalityRequestDTO) {
         this.nationalityService.createNationality(nationalityRequestDTO);
     }
-
     public List<NationalityRequestDTO> getAllNationality() {
         return nationalityService.getAllNationality();
+    }
+
+    public Boolean nationalityExists() {
+        return nationalityService.nationalityExists();
     }
 }

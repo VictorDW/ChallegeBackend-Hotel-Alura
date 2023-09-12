@@ -2,8 +2,8 @@ package views;
 
 import DTO.ReservationRequestDTO;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JTextFieldDateEditor;
 import controller.ReservationController;
+import service.util.ConfigureDates;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,14 +12,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
 import java.util.List;
 
 
@@ -27,9 +19,9 @@ import java.util.List;
 public class UpdateReservasView extends JFrame {
 
 	private final JPanel contentPane;
-	public static JDateChooser txtFechaEntrada;
-	public static JDateChooser txtFechaSalida;
-	public static JComboBox<String> txtFormaPago;
+	public JDateChooser txtFechaEntrada;
+	public JDateChooser txtFechaSalida;
+	public JComboBox<String> txtFormaPago;
 	int xMouse, yMouse;
 	private final JPanel btnGuardar;
 	private final JPanel btnexit;
@@ -41,11 +33,6 @@ public class UpdateReservasView extends JFrame {
 	private  final ReservationRequestDTO reservationRequestDTO;
 
 	private final Busqueda jFrameBusqueda;
-
-
-	/**
-	 * Launch the application.
-	 */
 
 
 	/**
@@ -85,31 +72,33 @@ public class UpdateReservasView extends JFrame {
 		// Código que crea los elementos de la interfáz gráfica
 
 		JLabel lblTitulo = new JLabel("Actualizar Datos");
-		lblTitulo.setBounds(109, 80, 250, 42);
-		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 24));
+		lblTitulo.setBounds(0, 80, 428, 42);
+		lblTitulo.setForeground(new Color(54, 55, 83));
+		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 26));
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblTitulo);
 
 
 		JLabel lblCheckIn = new JLabel("Fecha Check In");
-		lblCheckIn.setForeground(SystemColor.textInactiveText);
+		lblCheckIn.setForeground(new Color(0, 0, 0, 180));
 		lblCheckIn.setBounds(68, 176, 169, 24);
 		lblCheckIn.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		panel.add(lblCheckIn);
 
 		JSeparator separator_1_2 = new JSeparator();
-		separator_1_2.setForeground(SystemColor.textHighlight);
 		separator_1_2.setBounds(68, 235, 289, 2);
-		separator_1_2.setBackground(SystemColor.textHighlight);
+		separator_1_2.setForeground(new Color(54, 55, 83));
+		separator_1_2.setBackground(new Color(54, 55, 83));
 		panel.add(separator_1_2);
 
 		txtFechaEntrada = new JDateChooser();
-		txtFechaEntrada.setDate(configurarFecha(reservationRequestDTO.getCheckIn()));
-		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
+		txtFechaEntrada.setDate(ConfigureDates.mapperLocalDateToData(reservationRequestDTO.getCheckIn()));
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		txtFechaEntrada.setBounds(68, 201, 289, 35);
+		txtFechaEntrada.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		txtFechaEntrada.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
+		txtFechaEntrada.setBounds(68, 201, 289, 35);
 		txtFechaEntrada.setBackground(Color.WHITE);
 		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
@@ -118,44 +107,44 @@ public class UpdateReservasView extends JFrame {
 
 		
 		JLabel lblCheckOut = new JLabel("Fecha Check Out");
-		lblCheckOut.setForeground(SystemColor.textInactiveText);
+		lblCheckOut.setForeground(new Color(0, 0, 0, 180));
 		lblCheckOut.setBounds(68, 261, 187, 24);
 		lblCheckOut.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		panel.add(lblCheckOut);
 
 		txtFechaSalida = new JDateChooser();
-		txtFechaSalida.setDate(configurarFecha(reservationRequestDTO.getCheckOut()));
+		txtFechaSalida.setDate(ConfigureDates.mapperLocalDateToData(reservationRequestDTO.getCheckOut()));
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
-		txtFechaSalida.setBounds(68, 286, 289, 35);
+		txtFechaSalida.getCalendarButton().setBackground(new Color(29, 27, 49));
 		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
+		txtFechaSalida.setBounds(68, 286, 289, 35);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
-		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
+		/*txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
 			}
-		});
+		});*/
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
-		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtFechaSalida);
 
 		JSeparator separator_1_1 = new JSeparator();
-		separator_1_1.setForeground(SystemColor.textHighlight);
+		separator_1_1.setForeground(new Color(54, 55, 83));
 		separator_1_1.setBounds(68, 321, 289, 11);
-		separator_1_1.setBackground(SystemColor.textHighlight);
+		separator_1_1.setBackground(new Color(54, 55, 83));
 		panel.add(separator_1_1);
 
 		JLabel lblFormaPago = new JLabel("Forma de Pago");
-		lblFormaPago.setForeground(SystemColor.textInactiveText);
+		lblFormaPago.setForeground(new Color(0, 0, 0, 180));
 		lblFormaPago.setBounds(68, 352, 187, 24);
 		lblFormaPago.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		panel.add(lblFormaPago);
 
 		JSeparator separator_1_3 = new JSeparator();
-		separator_1_3.setForeground(SystemColor.textHighlight);
-		separator_1_3.setBackground(SystemColor.textHighlight);
+		separator_1_3.setForeground(new Color(54, 55, 83));
+		separator_1_3.setBackground(new Color(54, 55, 83));
 		separator_1_3.setBounds(68, 425, 289, 2);
 		panel.add(separator_1_3);
 
@@ -164,16 +153,15 @@ public class UpdateReservasView extends JFrame {
 		txtFormaPago.setBounds(68, 387, 289, 38);
 		txtFormaPago.setBackground(SystemColor.text);
 		txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
-		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
+		txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 20));
 		cargarCombo();
-		//txtFormaPago.setModel(new DefaultComboBoxModel<>(new String[] {"Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo"}));
 		panel.add(txtFormaPago);
 
 
 		//PANEL DEL LOGO
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(428, 0, 482, 560);
-		panel_1.setBackground(new Color(12, 138, 199));
+		panel_1.setBackground(new Color(54, 55, 83));
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -186,14 +174,14 @@ public class UpdateReservasView extends JFrame {
 		imagenFondo.setBounds(0, 140, 500, 409);
 		panel_1.add(imagenFondo);
 		imagenFondo.setBackground(Color.WHITE);
-		imagenFondo.setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/reservas-img-3.png")));
+		imagenFondo.setIcon(new ImageIcon(UpdateReservasView.class.getResource("/imagenes/updateReserve.png")));
 
 												
 		// Componentes para dejar la interfaz con estilo Material Design
 		btnexit = new JPanel();
 		eventoSalir();
 		btnexit.setLayout(null);
-		btnexit.setBackground(new Color(12, 138, 199));
+		btnexit.setBackground(new Color(54, 55, 83));
 		btnexit.setBounds(429, 0, 53, 36);
 		panel_1.add(btnexit);
 		
@@ -226,34 +214,57 @@ public class UpdateReservasView extends JFrame {
 		btnGuardar = new JPanel();
 		eventoGuardar();
 		btnGuardar.setLayout(null);
-		btnGuardar.setBackground(SystemColor.textHighlight);
+		btnGuardar.setBackground(new Color(29, 27, 49));
 		btnGuardar.setBounds(238, 493, 122, 35);
 		panel.add(btnGuardar);
 		btnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
-		lblGuardar = new JLabel("GUARDAR");
+		lblGuardar = new JLabel("Guardar");
 		lblGuardar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGuardar.setForeground(Color.WHITE);
-		lblGuardar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblGuardar.setFont(new Font("Roboto", Font.BOLD, 18));
 		lblGuardar.setBounds(0, 0, 122, 35);
 		btnGuardar.add(lblGuardar);
 
 	}
-
 	private void eventoGuardar(){
 
 		this.btnGuardar.addMouseListener(new MouseAdapter() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseEntered(MouseEvent e) {
+				btnGuardar.setBackground(new Color(54, 55, 83));
+			}
 
-				if (!(UpdateReservasView.txtFechaEntrada.getDate() != null && UpdateReservasView.txtFechaSalida.getDate() != null))
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnGuardar.setBackground(new Color(29, 27, 49));
+			}
 
-				else if(UpdateReservasView.txtFechaEntrada.getDate().after(UpdateReservasView.txtFechaSalida.getDate()))
-					JOptionPane.showMessageDialog(null, "Error en las fechas");
+			@Override
+			public void mousePressed(MouseEvent e) {
 
-				else
-					modificarReserva();
+				try {
+					//CAMBIAMOS EL FORMATO DE LA FECHA PARA PODER VALIDAR
+					ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+				}catch (NullPointerException ignore){}
+
+					if (!(txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null)) {
+						JOptionPane.showMessageDialog(contentPane,
+								"Debes llenar todos los campos",
+								"Error",
+								JOptionPane.ERROR_MESSAGE);
+
+					}else if(ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(reservationRequestDTO.getCheckIn())) {
+
+						modificarReserva();
+
+					} else{
+						JOptionPane.showMessageDialog(contentPane,
+								"Error en las fechas",
+								"Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 			}
 		});
 	}
@@ -261,7 +272,7 @@ public class UpdateReservasView extends JFrame {
 
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				jFrameBusqueda.setVisible(true);
 				setVisible(false);
 			}
@@ -272,55 +283,38 @@ public class UpdateReservasView extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnexit.setBackground(new Color(12, 138, 199));
+				btnexit.setBackground(new Color(54, 55, 83));
 				labelExit.setForeground(Color.white);
 			}
 		});
 	}
-
 	private void cargarCombo() {
 
 		String eleccionBase = reservationRequestDTO.getMethodPayment();
-		List<String> eleccionCombo = new ArrayList<>(){{
-			add("Tarjeta de Crédito");
-			add("Tarjeta de Débito");
-			add("Dinero en efectivo");
-		}};
+		List<String> eleccionCombo = List.of("Tarjeta de Crédito","Tarjeta de Débito","Dinero en efectivo");
 
 		eleccionCombo.forEach(eleccion ->{
 			if(!eleccion.equals(eleccionBase))
 				txtFormaPago.addItem(eleccion);
 		});
 	}
-	private Date configurarFecha(LocalDate fecha) {
-
-		//Permite cambiar el formato de un LocalDate a Date
-		return Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
 	private void modificarReserva() {
 
-		try {
-			//Permite cambiar el formato de un Date a un LocalDate
-			Instant instantCheckIn = txtFechaEntrada.getDate().toInstant();
-			Instant instantCheckOut= txtFechaSalida.getDate().toInstant();
-
-			LocalDate checkIn = instantCheckIn.atZone(ZoneId.systemDefault()).toLocalDate();
-			LocalDate checkOut = instantCheckOut.atZone(ZoneId.systemDefault()).toLocalDate();
-
-			this.reservationRequestDTO.setCheckIn(checkIn);
-			this.reservationRequestDTO.setCheckOut(checkOut);
+			this.reservationRequestDTO.setCheckIn(ConfigureDates.getCheckIn());
+			this.reservationRequestDTO.setCheckOut(ConfigureDates.getCheckOut());
 			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));
 
 			if(this.reservationController.updateReservation(this.reservationRequestDTO))
-				JOptionPane.showMessageDialog(this,  " Item actualizado con éxito!");
+				JOptionPane.showMessageDialog(contentPane,
+																" Reserva actualizado con éxito!",
+																"Actualización correcta",
+																JOptionPane.INFORMATION_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(this,  " Ha ocurrido un error inesperado");
-
-		}catch (ArrayIndexOutOfBoundsException ignored){}
-
+				JOptionPane.showMessageDialog(contentPane,
+																" Ha ocurrido un error inesperado",
+																"Error",
+																JOptionPane.ERROR_MESSAGE);
 	}
-
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
 	 private void headerMousePressed(MouseEvent evt) {

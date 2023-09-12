@@ -5,20 +5,24 @@ import DTO.GuestRequestDTO;
 import DTO.ReservationByParametersDTO;
 import DTO.ReservationDTO;
 import DTO.ReservationRequestDTO;
-import modelo.Reservation;
+import model.Reservation;
 import service.GuestService;
 import service.ReservationService;
 import service.mappers.MapperReservation;
+import service.util.DataReservationTemporary;
 
 import java.math.BigDecimal;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
 
-    private final GuestService guestService;
+    private  GuestService guestService;
     private final ReservationDAO reservationDAO;
+
+    public ReservationServiceImpl(ReservationDAO reservationDAO) {
+        this.reservationDAO = reservationDAO;
+    }
 
     public ReservationServiceImpl(ReservationDAO reservationDAO, GuestService guestService) {
 
@@ -57,11 +61,9 @@ public class ReservationServiceImpl implements ReservationService {
 
         if (reservation == null) return false;
 
-        Period period = Period.between(reservationRequestDTO.getCheckIn(),
-                                                        reservationRequestDTO.getCheckOut());
-
-        BigDecimal cost = new BigDecimal(period.getDays() * 43300);
-
+        BigDecimal cost = DataReservationTemporary.calculateReservationCost(
+                                                                                reservationRequestDTO.getCheckIn(),
+                                                                                reservationRequestDTO.getCheckOut());
         reservationDAO.update(
                 MapperReservation.mapperReservationToUpdate(
                         reservationRequestDTO,

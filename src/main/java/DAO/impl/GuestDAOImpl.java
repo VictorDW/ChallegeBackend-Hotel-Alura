@@ -3,8 +3,8 @@ package DAO.impl;
 import DAO.GuestDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import modelo.Guest;
-import modelo.Status;
+import model.Guest;
+import model.Status;
 
 import java.util.List;
 

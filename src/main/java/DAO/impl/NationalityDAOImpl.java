@@ -3,8 +3,7 @@ package DAO.impl;
 import DAO.NationalityDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import modelo.Nationality;
-import modelo.Reservation;
+import model.Nationality;
 
 import java.util.List;
 

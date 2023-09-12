@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -35,5 +35,4 @@ public class Guest {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
 }

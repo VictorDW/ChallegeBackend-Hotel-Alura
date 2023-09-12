@@ -1,6 +1,6 @@
 package DAO;
 
-import modelo.Reservation;
+import model.Reservation;
 
 import java.time.LocalDate;
 import java.util.List;
