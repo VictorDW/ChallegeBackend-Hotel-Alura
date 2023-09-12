@@ -6,6 +6,7 @@ import model.Nationality;
 import service.NationalityService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class NationalityServiceImpl implements NationalityService {
 
@@ -48,6 +49,14 @@ public class NationalityServiceImpl implements NationalityService {
     public Nationality getByIdNationality(NationalityRequestDTO nationalityRequestDTO) {
 
         return nationalityDAO.getById(nationalityRequestDTO.getId());
+    }
+
+    @Override
+    public Boolean nationalityExists() {
+
+        Optional<Nationality> nationalityList = nationalityDAO.getAll().stream().findFirst();
+
+        return nationalityList.isEmpty();
     }
 
 

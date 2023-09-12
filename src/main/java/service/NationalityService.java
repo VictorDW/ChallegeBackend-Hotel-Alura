@@ -10,5 +10,6 @@ public interface NationalityService {
     void createNationality(NationalityRequestDTO nationalityRequestDTO);
     List<NationalityRequestDTO> getAllNationality();
     Nationality getByIdNationality(NationalityRequestDTO nationalityRequestDTO);
+    Boolean nationalityExists();
 
 }

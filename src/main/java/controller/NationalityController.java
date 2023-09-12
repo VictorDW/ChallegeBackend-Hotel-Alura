@@ -23,8 +23,11 @@ public class NationalityController {
     public void createNationality(NationalityRequestDTO nationalityRequestDTO) {
         this.nationalityService.createNationality(nationalityRequestDTO);
     }
-
     public List<NationalityRequestDTO> getAllNationality() {
         return nationalityService.getAllNationality();
+    }
+
+    public Boolean nationalityExists() {
+        return nationalityService.nationalityExists();
     }
 }

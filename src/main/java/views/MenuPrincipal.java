@@ -1,18 +1,14 @@
 package views;
 
 import test.TestLogin;
+import test.TestNationality;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
-import java.awt.Color;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -124,7 +120,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnexit.setLayout(null);
-		btnexit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnexit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnexit.setBackground(new Color(54, 55, 83));
 		btnexit.setBounds(857, 0, 53, 36);
 		header.add(btnexit);
@@ -142,15 +138,14 @@ public class MenuPrincipal extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TestLogin testLogin = new TestLogin();
-				testLogin.run();
+				initializeData();
 				Login login = new Login();
 				login.setVisible(true);
 				dispose();
 			}
 		});
 		btnLogin.setLayout(null);
-		btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnLogin.setBackground(new Color(54, 55, 83));
 		panel.add(btnLogin);
 		
@@ -167,6 +162,19 @@ public class MenuPrincipal extends JFrame {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Roboto Light", Font.BOLD, 20));
+	}
+
+	/**
+	 *  Se inicializan datos como la creación del usuario y las nacionalidades,
+	 *  Solo si es la primera vez que se ejecuta el programa
+	 */
+	private void initializeData() {
+
+		TestLogin testLogin = new TestLogin();
+		TestNationality testNationality = new TestNationality();
+
+		testLogin.initializeUser();
+		testNationality.initializeNationality();
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
