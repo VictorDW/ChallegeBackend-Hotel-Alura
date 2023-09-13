@@ -26,6 +26,7 @@ public final class ConfigureDates {
         Instant instantDateBirth = dateOfBirth.toInstant();
         ConfigureDates.dateOfBirth= instantDateBirth.atZone(ZoneId.systemDefault()).toLocalDate();
     }
+
     public static Date mapperLocalDateToData(LocalDate dateOfBirth) {
        return Date.from(dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
@@ -44,13 +45,19 @@ public final class ConfigureDates {
          return !checkIn.isAfter(checkOut);
     }
 
-    public static  boolean validateDateCheckIn(LocalDate dateComparation) {
+    public static  boolean validateDateCheckIn(LocalDate dateComparator) {
 
         /*Se valida de esta manera para que de verificar que la fecha sea el mismo día o después
          * true: si es después o el mismo día
          * false: si es menor a la ficha actual
          */
-        return !checkIn.isBefore(dateComparation);
+        return !checkIn.isBefore(dateComparator);
+    }
+
+    public static Integer getDaysReservation() {
+
+        Period periodOfDays = Period.between(checkIn, checkOut);
+        return periodOfDays.getDays()+1;
     }
 
     public static boolean isUnderAge() throws NullPointerException {

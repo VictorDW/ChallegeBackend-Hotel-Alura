@@ -8,23 +8,23 @@ import java.time.Period;
 import java.util.Random;
 
 public final class DataReservationTemporary {
-    public static ReservationRequestDTO CreateReservationRequestDTO(LocalDate dateOfEntry, LocalDate departureDate) {
+    public static ReservationRequestDTO CreateReservationRequestDTO() {
 
 
-        return new ReservationRequestDTO(dateOfEntry,
-                                                            departureDate,
-                                                            calculateReservationCost(dateOfEntry, departureDate));
+        return new ReservationRequestDTO(ConfigureDates.getCheckIn(),
+                                                            ConfigureDates.getCheckOut(),
+                                                            calculateReservationCost());
     }
 
-    public static BigDecimal calculateReservationCost(LocalDate dateOfEntry, LocalDate departureDate) {
+    public static BigDecimal calculateReservationCost() {
 
-        Period period =  Period.between(dateOfEntry,departureDate);
+        Integer periodOfDays =  ConfigureDates.getDaysReservation();
         int costDay = 43300;
 
         return new BigDecimal(
-                period.getDays() != 0 ?
-                        (period.getDays()+1) * costDay :
-                        costDay
+                periodOfDays != 0 ?
+                        (periodOfDays) * costDay :
+                         costDay
         );
     }
 

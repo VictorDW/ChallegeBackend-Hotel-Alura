@@ -361,12 +361,14 @@ public class ReservasView extends JFrame {
 
 				this.reservationRequestDTO =
 						DataReservationTemporary
-								.CreateReservationRequestDTO(ConfigureDates.getCheckIn(), ConfigureDates.getCheckOut());
+								.CreateReservationRequestDTO();
 
-				txtValor.setText(this.reservationRequestDTO.getCost().toString() + " COP");
+				txtValor.setText(this.reservationRequestDTO.getCost().toString() + " COP (" +
+										ConfigureDates.getDaysReservation() + " noches)");
 
 			}else {
 				MessageBox.messageBasic(contentPane, "Error en las fechas");
+				txtFechaEntrada.setDate(new Date());
 				txtValor.setText("0"+" COP");
 			}
 		}catch (NullPointerException ignored){}

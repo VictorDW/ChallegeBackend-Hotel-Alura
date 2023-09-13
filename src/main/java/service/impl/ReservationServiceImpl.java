@@ -61,9 +61,8 @@ public class ReservationServiceImpl implements ReservationService {
 
         if (reservation == null) return false;
 
-        BigDecimal cost = DataReservationTemporary.calculateReservationCost(
-                                                                                reservationRequestDTO.getCheckIn(),
-                                                                                reservationRequestDTO.getCheckOut());
+        BigDecimal cost = DataReservationTemporary.calculateReservationCost();
+
         reservationDAO.update(
                 MapperReservation.mapperReservationToUpdate(
                         reservationRequestDTO,
