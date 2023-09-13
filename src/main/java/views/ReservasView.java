@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -347,32 +349,63 @@ public class ReservasView extends JFrame {
 			});
 		}
 		private void eventoFechaCheckIn() {
-		txtFechaEntrada.addPropertyChangeListener( evt -> storeReservationData());
-		}
+
+			//PERMITE CAPTURAR CUALQUIER EVENTO QUE SUCEDA, SIN EMBARGO LE ESPECIFICAMOS QUE SOLO ESCUCHE LOS DE FECHA
+			txtFechaEntrada.addPropertyChangeListener("date", evt -> {
+
+					if ("date".equals(evt.getPropertyName())) {
+
+						try {
+							//VALIDAMOS QUE SI LA FECHA DE SALIDA NO ESTA AÚN, TOME LA FECHA ACTUAL
+							ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(),
+																						txtFechaSalida.getDate() == null ?
+																							new Date() :
+																							txtFechaSalida.getDate());
+
+							//VERIFICAMOS QUE EL ORDEN DE LAS FECHAS SEA CORRECTO Y QUE LA FECHA DE ENTRADA NO SEA MENOR A LA FECHA ACTUAL
+							if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
+
+								storeReservationData();
+
+							}else{
+								MessageBox.messageBasic(contentPane, "Error en las fechas");
+								txtValor.setText("0"+" COP");
+							}
+						}catch (NullPointerException ignored){}
+					}
+				});
+			}
 		private void eventoFechaCheckOut() {
-			txtFechaSalida.addPropertyChangeListener( evt -> storeReservationData());
+
+		//PERMITE CAPTURAR CUALQUIER EVENTO QUE SUCEDA, SIN EMBARGO LE ESPECIFICAMOS QUE SOLO ESCUCHE LOS DE FECHA
+			txtFechaSalida.addPropertyChangeListener("date", evt -> {
+
+				if ("date".equals(evt.getPropertyName())) {
+
+					try {
+						ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+
+						//VERIFICAMOS QUE EL ORDEN DE LAS FECHAS SEA CORRECTO Y QUE LA FECHA DE SALIDA NO SEA MENOR A LA FECHA ACTUAL
+						if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckOut(LocalDate.now())) {
+
+							storeReservationData();
+
+						}else {
+							MessageBox.messageBasic(contentPane, "Error en las fechas");
+							txtValor.setText("0"+" COP");
+						}
+					}catch (NullPointerException ignored){}
+
+				}
+			});
 		}
 		private void storeReservationData() {
 
-		try {
-			ConfigureDates.mapperDataToLocalDate(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
+			this.reservationRequestDTO = DataReservationTemporary.CreateReservationRequestDTO();
 
-			if (ConfigureDates.validateDateOrder() && ConfigureDates.validateDateCheckIn(LocalDate.now())) {
-
-				this.reservationRequestDTO =
-						DataReservationTemporary
-								.CreateReservationRequestDTO();
-
-				txtValor.setText(this.reservationRequestDTO.getCost().toString() + " COP (" +
-										ConfigureDates.getDaysReservation() + " noches)");
-
-			}else {
-				MessageBox.messageBasic(contentPane, "Error en las fechas");
-				txtFechaEntrada.setDate(new Date());
-				txtValor.setText("0"+" COP");
-			}
-		}catch (NullPointerException ignored){}
-	}
+			txtValor.setText(this.reservationRequestDTO.getCost().toString() + " COP (" +
+									ConfigureDates.getDaysReservation() + " noches)");
+		}
 		private void missingReserveData() {
 			this.reservationRequestDTO.setReservationCod(DataReservationTemporary.createReservationCod());
 			this.reservationRequestDTO.setMethodPayment(String.valueOf(txtFormaPago.getSelectedItem()));

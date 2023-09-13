@@ -49,9 +49,18 @@ public final class ConfigureDates {
 
         /*Se valida de esta manera para que de verificar que la fecha sea el mismo día o después
          * true: si es después o el mismo día
-         * false: si es menor a la ficha actual
+         * false: si es menor a la fecha actual
          */
         return !checkIn.isBefore(dateComparator);
+    }
+
+    public static  boolean validateDateCheckOut(LocalDate dateComparator) {
+
+        /*Se valida de esta manera para que de verificar que la fecha sea el mismo día o después
+         * true: si es después o el mismo día
+         * false: si es menor a la fecha actual
+         */
+        return !checkOut.isBefore(dateComparator);
     }
 
     public static Integer getDaysReservation() {
