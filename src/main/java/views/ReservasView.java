@@ -344,6 +344,7 @@ public class ReservasView extends JFrame {
 
 					} else {
 						MessageBox.messageBasic(contentPane, "Error en las fechas");
+						txtValor.setText("0"+" COP");
 					}
 				}
 			});
