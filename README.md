@@ -32,6 +32,7 @@
 - MySQL
 - JPA Hibernate
 - Biblioteca Password4j (Bcrypt)
+- Lombok
 
 ## :pushpin: Arquitectura
 
