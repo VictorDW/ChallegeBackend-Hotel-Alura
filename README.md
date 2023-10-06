@@ -41,7 +41,7 @@
 - Patrón de diseño Data Access Object (DAO)
 
 ## 📜 Descripción
-<p>El Sistema de Gestión de Reservas de Hospedaje es una aplicación web diseñada para simplificar y automatizar la gestión de reservas en un establecimiento de hospedaje, como un hotel o una posada. Esta herramienta proporciona una solución integral para administrar todas las actividades relacionadas con las reservas de habitaciones y huéspedes, optimizando la eficiencia operativa y mejorando la experiencia del cliente.</p>
+<p>El Sistema de Gestión de Reservas de Hospedaje es una aplicación dekstop diseñada para simplificar y automatizar la gestión de reservas en un establecimiento de hospedaje, como un hotel o una posada. Esta herramienta proporciona una solución integral para administrar todas las actividades relacionadas con las reservas de habitaciones y huéspedes, optimizando la eficiencia operativa y mejorando la experiencia del cliente.</p>
 
 ## 📖 Funcionalidades de la Aplicación :
 
